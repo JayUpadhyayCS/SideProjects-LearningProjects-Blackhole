@@ -16,6 +16,7 @@ void Game::initWindow()
 
 void Game::initShape()
 {
+	ball.initCirc();
 	rect.setSize(sf::Vector2f(512.f, 212.f));
 	rect.setFillColor(sf::Color::Black);
 	rect.setPosition(94.f, 93.f);
@@ -23,6 +24,13 @@ void Game::initShape()
 	line.rotate(90);
 	line.setFillColor(sf::Color::White);
 	line.setPosition(350.f, 93.f);
+}
+void Ball::initCirc()
+{
+	circle.setRadius(10);
+	circle.setFillColor(sf::Color(150, 50, 250));
+	circle.setPosition(350.f, 199.f);
+	circle.setFillColor(sf::Color::Red);
 }
 
 //Constructors/Destrutors
@@ -64,6 +72,7 @@ void Game::render()
 	this->window->clear(sf::Color::Blue);
 	this->window->draw(rect);
 	this->window->draw(line);
+	this->window->draw(ball.circle);
 	// Render items
 	this->window->display();
 }

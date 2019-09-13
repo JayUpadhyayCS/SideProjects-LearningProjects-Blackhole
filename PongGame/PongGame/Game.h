@@ -1,10 +1,18 @@
 #pragma once
+#include <ctime>
 #include <SFML\Graphics.hpp>
 #include <SFML\System.hpp>
 #include <SFML\Audio.hpp>
 #include <SFML\Network.hpp>
 #include <SFML\Window.hpp>
+class Ball
+{
+public:
+	void initCirc();
+	sf::CircleShape circle;
+	void move();
 
+};
 class Game
 {
 private:
@@ -12,6 +20,7 @@ private:
 	sf::Event sfEvent;
 	sf::RectangleShape rect;
 	sf::RectangleShape line;
+	Ball ball;
 	void initWindow();
 	void initShape();
 public:
@@ -24,4 +33,7 @@ public:
 	void run();
 
 };
+
+
+
 
