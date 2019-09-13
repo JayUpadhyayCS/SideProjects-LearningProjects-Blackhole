@@ -11,6 +11,7 @@ public:
 	void initCirc();
 	sf::CircleShape circle;
 	void move();
+	int speed=5;
 
 };
 class Game

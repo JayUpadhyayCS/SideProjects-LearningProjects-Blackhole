@@ -64,6 +64,7 @@ void Game::update()
 {
 	// To check the state of event
 	this->updateSFMLEvents();
+	ball.move();
 }
 
 void Game::render()
@@ -85,4 +86,18 @@ void Game::run()
 		this->update();
 		this->render();
 	}
+}
+void Ball::move()
+{
+	float velocityX = 0.1;
+	float velocityY = 0.1;
+	float moveX;
+	float moveY;
+	moveX=circle.getPosition().x;
+	moveY=circle.getPosition().y;
+	if(moveY>=211)// Left off here.
+
+	moveY+=velocityY;
+	moveX+=velocityX;
+	circle.setPosition(moveX, moveY);
 }
