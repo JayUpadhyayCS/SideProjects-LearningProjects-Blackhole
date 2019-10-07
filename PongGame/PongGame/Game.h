@@ -8,10 +8,17 @@
 class Ball
 {
 public:
+	float velocityX = 0.1;
+	float velocityY = 0.1;
 	void initCirc();
 	sf::CircleShape circle;
 	void move();
-	int speed=5;
+	void setX(float x);
+	void setY(float y);
+	float getX();
+	float getY();
+
+
 
 };
 class Game

@@ -89,15 +89,37 @@ void Game::run()
 }
 void Ball::move()
 {
-	float velocityX = 0.1;
-	float velocityY = 0.1;
+	
 	float moveX;
 	float moveY;
 	moveX=circle.getPosition().x;
 	moveY=circle.getPosition().y;
-	if(moveY>=211)// Left off here.
+	if (moveY >= 285|| moveY<=90)// Left off here.
+		setY(-getY());
+	if (moveX >= 590 || moveX<=94)// 
+		setX(-getX());
 
-	moveY+=velocityY;
-	moveX+=velocityX;
+	moveY+=getY();
+	moveX+=getX();
 	circle.setPosition(moveX, moveY);
+}
+
+void Ball::setX(float x)
+{
+	this->velocityX = x;
+}
+
+void Ball::setY(float y)
+{
+	this->velocityY = y;
+}
+
+float Ball::getX()
+{
+	return this->velocityX;
+}
+
+float Ball::getY()
+{
+	return this->velocityY;
 }
