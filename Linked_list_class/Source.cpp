@@ -9,7 +9,6 @@ public:
 	//constructors
 	Node()
 	{
-
 		ptr = NULL; // Could cause error
 	}
 	Node(int input)
@@ -23,6 +22,23 @@ public:
 		//BROKEN
 	}
 	//Insert
+	void insert(int index, int input)
+	{
+		// Find fix for inserting first element
+		Node*  ptr2=this;
+		Node* ptr3= ptr2;
+		while (index != 0)
+		{
+			index--;
+			ptr3 = ptr2;
+			ptr2 = ptr2->ptr;
+		}
+		Node* ptr4 = new Node(input);
+		ptr4->ptr = ptr2;
+		ptr3->ptr = ptr4;
+
+
+	}
 
 	// counter
 	void count()
@@ -90,7 +106,18 @@ public:
 		cout << ptr2->val<< endl;
 	}
 	// delete
-	
+	void remove(int index)
+	{
+		Node* ptr2 = this;//points to element after
+		Node* ptr3 = ptr2;// points to element before
+		while (index != 0)
+		{
+			index--;
+			ptr3 = ptr2;
+			ptr2 = ptr2->ptr;
+		}
+		delete ptr2;
+	}
 
 };
 
@@ -105,5 +132,8 @@ int main()
 	node.display();
 	node.count();
 	node.display2(2);
+	node.insert(2, 10);
+	node.display2(2);
+	node.display();
 
 }
