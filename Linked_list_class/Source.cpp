@@ -21,9 +21,11 @@ public:
 	{
 		//BROKEN
 	}
+	bool rejectInput();
 	//Insert
 	void insert(int index, int input)
 	{
+		Node* ptr4 = new Node(input);
 		// Find fix for inserting first element
 		Node*  ptr2=this;
 		Node* ptr3= ptr2;
@@ -33,7 +35,12 @@ public:
 			ptr3 = ptr2;
 			ptr2 = ptr2->ptr;
 		}
-		Node* ptr4 = new Node(input);
+		if (ptr3 == ptr2)
+		{
+			ptr4->ptr = ptr2;
+			ptr2 = this;
+			
+		}
 		ptr4->ptr = ptr2;
 		ptr3->ptr = ptr4;
 
@@ -62,7 +69,6 @@ public:
 			ptr2 = ptr2->ptr;
 		}
 		ptr2->ptr = new Node(input);
-		ptr2 = NULL;
 	}
 
 	void push_back2(int input, Node* ptr2)// recursive
@@ -110,30 +116,48 @@ public:
 	{
 		Node* ptr2 = this;//points to element after
 		Node* ptr3 = ptr2;// points to element before
-		while (index != 0)
+		
+		if (index == 0)
 		{
-			index--;
-			ptr3 = ptr2;
+			
 			ptr2 = ptr2->ptr;
+			ptr3->ptr = NULL;
+			delete ptr3;
+			ptr3=this;
+			ptr3 = ptr2;
 		}
-		delete ptr2;
+		else {
+			while (index != 0)
+			{
+				index--;
+				ptr3 = ptr2;
+				ptr2 = ptr2->ptr;
+			}
+			Node* ptr4 = ptr2->ptr;
+			delete ptr2;
+			ptr3->ptr = ptr4;
+		}
+		
+		
 	}
 
 };
 
 int main()
 {
-	Node node(1);
-	Node* ptr = &node;
-	node.push_back(2);
-	node.push_back2(3, ptr);
-	node.push_back(4);
-	node.push_back2(5, ptr);
-	node.display();
-	node.count();
-	node.display2(2);
-	node.insert(2, 10);
-	node.display2(2);
-	node.display();
-
+	Node* node=new Node(1);
+	Node* ptr = node;
+	node->push_back(2);
+	node->push_back2(3, ptr);
+	node->push_back(4);
+	node->push_back2(5, ptr);
+	node->display();
+	node->count();
+	node->display2(2);
+	node->insert(2, 10);
+	node->display2(2);
+	node->display();
+	node->remove(2);
+	node->display();
+	
 }
