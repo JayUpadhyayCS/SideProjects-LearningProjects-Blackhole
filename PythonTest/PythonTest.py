@@ -1,19 +1,22 @@
-import sys
+
 import pygame
 import importlib
-from aisettings import Settings
+from aisettings import *
+
 def run_game():
     pygame.init()
     ai_settings=Settings()
+    
 
-    screen=pygame.display.set_mode((ai_settings.screen_width,800))
-    bg_color=(230,230,230)
+
+    screen=pygame.display.set_mode((ai_settings.screen_width,ai_settings.screen_height))
+    ship=Ship(screen)
+    
     pygame.display.set_caption("Alien Invasion")
     while True:
-        for event in pygame.event.get():
-            screen.fill(bg_color)
-            pygame.display.update()
-            if event.type==pygame.QUIT:
-                sys.exit()
-    pygame.display.flip()
+        check_events(ship)
+        ship.update()
+        update_screen(screen,ai_settings.bg_color,ship)
+            
+    
 run_game()
