@@ -18,34 +18,50 @@ class Ship():
         self.left=False
         self.up=False
         self.down=False
-        self.rect.centerx=self.screen_rect.centerx
+        self.rect.centerx=float(self.screen_rect.centerx)
         self.rect.bottom=self.screen_rect.bottom
-        self.speed=1
+        self.speed=1.5
     def update(self):
-        if self.right==True and self.rect.centerx<=1176:
-            self.rect.centerx+=self.speed
-        if self.left==True and self.rect.centerx>=24:
+        if self.right and self.rect.right<self.screen_rect.right:#1176
+            self.rect.centerx+=self.speed+1
+        if self.left and self.rect.left>self.screen_rect.left:
             self.rect.centerx-=self.speed
-        if self.up==True and self.rect.bottom>54:
+        if self.up and self.rect.top>self.screen_rect.top:
             self.rect.bottom-=self.speed
-        if self.down==True and self.rect.bottom <796:
-            self.rect.bottom+=self.speed
+        if self.down and self.rect.bottom <self.screen_rect.bottom:
+            self.rect.bottom+=self.speed+1
 
 
     def blitme(self):
         self.screen.blit(self.image,self.rect)
 def check_events(ship):
     for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
+        checkKeyDown(event,ship)
+        checkKeyUp(event,ship)
+        if event.type==pygame.QUIT:
+            sys.exit()
+
+def update_screen(screen,color,ship):
+    screen.fill(color)
+    ship.blitme()
+    pygame.display.flip()
+    pygame.display.update()
+
+
+def checkKeyDown(event,ship):
+    if event.type == pygame.KEYDOWN:
             if event.key==pygame.K_RIGHT:
                 ship.right=True
-            elif event.key==pygame.K_LEFT:
+            if event.key==pygame.K_LEFT:
                 ship.left=True
             if event.key==pygame.K_UP:
                 ship.up=True
-            elif event.key==pygame.K_DOWN:
+            if event.key==pygame.K_DOWN:
                 ship.down=True
-        elif event.type == pygame.KEYUP:
+
+
+def checkKeyUp(event,ship):
+     if event.type == pygame.KEYUP:
             if event.key==pygame.K_RIGHT:
                 ship.right=False
             if event.key==pygame.K_LEFT:
@@ -54,11 +70,3 @@ def check_events(ship):
                 ship.up=False
             if event.key==pygame.K_DOWN:
                 ship.down=False
-        elif event.type==pygame.QUIT:
-            sys.exit()
-
-def update_screen(screen,color,ship):
-    screen.fill(color)
-    ship.blitme()
-    pygame.display.flip()
-    pygame.display.update()
