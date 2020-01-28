@@ -3,7 +3,7 @@ import pygame
 import importlib
 from aisettings import *
 from pygame.sprite import Group
- 
+from bullet import *
 def run_game():
     pygame.init()
     ai_settings=Settings()
@@ -19,7 +19,9 @@ def run_game():
     while True:
         check_events(screen,ai_settings,ship,bullets)
         ship.update()
-        bullets.update()
+        update_bullets(bullets)
+        
+        
         update_screen(screen,ai_settings.bg_color,ship,bullets)
             
     

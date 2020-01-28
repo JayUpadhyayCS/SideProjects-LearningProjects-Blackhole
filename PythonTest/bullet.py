@@ -23,5 +23,15 @@ class Bullet(Sprite):
         #Move bullet up screen
         self.y-=self.speed_factor
         self.rect.y=self.y
+
     def draw_bullet(self):
         pygame.draw.rect(self.screen,self.color,self.rect)
+
+def update_bullets(bullets):
+    bullets.update()
+    for bullet in bullets.copy():
+        if bullet.rect.bottom<=0:
+            bullets.remove(bullet)
+
+
+    

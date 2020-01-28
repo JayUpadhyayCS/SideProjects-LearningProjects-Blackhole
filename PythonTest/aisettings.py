@@ -12,6 +12,7 @@ class Settings():
         self.bullet_width=3
         self.bullet_height=15
         self.bullet_color=(60,60,60)
+        self.bullets_allowed=3
     
 
 class Ship():
@@ -66,7 +67,7 @@ def checkKeyDown(screen,ai_settings,event,ship,bullets):
                 ship.up=True
             if event.key==pygame.K_DOWN:
                 ship.down=True
-            if event.key==pygame.K_SPACE:
+            if event.key==pygame.K_SPACE and ai_settings.bullets_allowed>len(bullets):
                 new_bullet=Bullet(ai_settings,screen,ship)
                 bullets.add(new_bullet)
 
@@ -81,3 +82,4 @@ def checkKeyUp(event,ship):
                 ship.up=False
             if event.key==pygame.K_DOWN:
                 ship.down=False
+
