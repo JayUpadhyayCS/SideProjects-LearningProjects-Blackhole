@@ -1,4 +1,4 @@
-
+from Alien import Alien
 import pygame
 import importlib
 from aisettings import *
@@ -15,6 +15,11 @@ def run_game():
     ship=Ship(screen)
     #Set bullet
     bullets=Group()
+    aliens=Group()
+    create_fleet(ai_settings,screen,aliens)
+
+    
+    
     pygame.display.set_caption("Alien Invasion")
     while True:
         check_events(screen,ai_settings,ship,bullets)
@@ -22,7 +27,7 @@ def run_game():
         update_bullets(bullets)
         
         
-        update_screen(screen,ai_settings.bg_color,ship,bullets)
+        update_screen(screen,ai_settings.bg_color,ship,bullets,aliens)
             
     
 run_game()

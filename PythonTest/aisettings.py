@@ -1,6 +1,7 @@
 import pygame
 import sys
 from bullet import *
+from Alien import *
 class Settings():
     def __init__(self):
         #screen settings
@@ -48,9 +49,11 @@ def check_events(screen,ai_settings,ship,bullets):
         if event.type==pygame.QUIT:
             sys.exit()
 
-def update_screen(screen,color,ship,bullets):
+def update_screen(screen,color,ship,bullets,aliens):
     screen.fill(color)
     ship.blitme()
+    for alien in aliens.sprites():
+        alien.blitme()
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     pygame.display.flip()
@@ -61,16 +64,17 @@ def checkKeyDown(screen,ai_settings,event,ship,bullets):
     if event.type == pygame.KEYDOWN:
             if event.key==pygame.K_RIGHT:
                 ship.right=True
-            if event.key==pygame.K_LEFT:
+            elif event.key==pygame.K_LEFT:
                 ship.left=True
             if event.key==pygame.K_UP:
                 ship.up=True
-            if event.key==pygame.K_DOWN:
+            elif event.key==pygame.K_DOWN:
                 ship.down=True
             if event.key==pygame.K_SPACE and ai_settings.bullets_allowed>len(bullets):
                 new_bullet=Bullet(ai_settings,screen,ship)
                 bullets.add(new_bullet)
-
+            if event.key==pygame.K_q:
+                sys.exit()
 
 def checkKeyUp(event,ship):
      if event.type == pygame.KEYUP:
