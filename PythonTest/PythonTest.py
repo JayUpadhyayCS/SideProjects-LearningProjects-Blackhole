@@ -16,7 +16,7 @@ def run_game():
     #Set bullet
     bullets=Group()
     aliens=Group()
-    create_fleet(ai_settings,screen,aliens)
+    create_fleet(ai_settings,screen,ship,aliens)
 
     
     

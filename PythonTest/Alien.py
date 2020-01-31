@@ -16,21 +16,25 @@ class Alien(Sprite):
         self.x=float(self.rect.x)
     def blitme(self):
         self.screen.blit(self.image,self.rect)
-def create_fleet(ai_settings,screen,aliens):
+def create_fleet(ai_settings,screen,ship,aliens):
     alien=Alien(ai_settings,screen)
-    alien_width=alien.rect.width
-    
+    alien_width,alien_height=alien.rect.size
+    ship_height=ship.rect.height
+
+    number_rows=get_number_rows(ai_settings,ship_height,alien_height)
     number_aliens_x=get_number_aliens_x(ai_settings,alien.rect.width)
-    for alien_number in range(number_aliens_x):
-        create_alien(ai_settings,screen,aliens,alien_number)
+    for row_number in range(number_rows):
+        for alien_number in range(number_aliens_x):
+            create_alien(ai_settings,screen,aliens,alien_number,row_number)
     
 def get_number_aliens_x(ai_settings,alien_width):
     available_space_x=ai_settings.screen_width-2*alien_width
     return int(available_space_x/(2*alien_width))
 
-def create_alien(ai_settings,screen,aliens,alien_number):
+def create_alien(ai_settings,screen,aliens,alien_number,row_number):
         alien=Alien(ai_settings,screen)
         alien_width=alien.rect.width
+        alien.rect.y= alien.rect.height+2*alien.rect.height*row_number
         alien.x=alien_width +2*alien_width*alien_number
         alien.rect.x=alien.x
         aliens.add(alien)
