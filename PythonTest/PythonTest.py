@@ -25,7 +25,7 @@ def run_game():
         check_events(screen,ai_settings,ship,bullets)
         ship.update()
         update_bullets(bullets)
-        
+        update_aliens(aliens)
         
         update_screen(screen,ai_settings.bg_color,ship,bullets,aliens)
             
