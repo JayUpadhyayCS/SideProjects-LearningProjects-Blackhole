@@ -7,6 +7,7 @@
 #include <iostream>
 #include <iomanip>
 const int SPACE = 15;
+const int ARRSIZE = 10;
 using namespace std;
 struct InventoryItem{
 	string uniqId;// item id
@@ -40,6 +41,18 @@ public:
 			cout  << left << setw(SPACE)<< vecItms.at(x).uniqId  <<left << setw(SPACE)  << left << vecItms.at(x).itmName << setw(SPACE)<< vecItms.at(x).numItems <<left <<  setw(SPACE) << vecItms.at(x).itmPrice << endl;
 		}
 	}
+	void sortPrint() {
+		
+		InventoryItem* sortedList[ARRSIZE];
+		for (int i = 0; i < vecItms.size(); i++)// Initialize array of pointers
+		{
+			sortedList[i] = &vecItms[i];
+		}
+		cout << sortedList[vecItms.size()-1]->itmName<< endl;// Testing couting a value
+		//Change the pointers depending on the parameters what is to be searched
+		//Problem is how to write this so you can sort each parameter
+
+	}
 
 
 };
@@ -48,7 +61,7 @@ int main()
 	int userInput;
 	InventoryItems itmList;
 	bool errorFound = itmList.InputRecords();
-	errorFound ? cout << "Error taking input." << endl : cout << "Success taking input.\n" << endl;
+	errorFound ? cout << "Error taking input.\n" : cout << "Success taking input.\nEnter your choice which I need to list later." << endl;
 	cin >> userInput;
 	switch (userInput)
 	{
@@ -56,6 +69,7 @@ int main()
 		itmList.UnsortPrint();
 		break;
 	case 2: // Print inventory sorted in ascending order by any field
+		itmList.sortPrint();
 		break;
 	case 3: // Search for item by ID or name
 		break;
