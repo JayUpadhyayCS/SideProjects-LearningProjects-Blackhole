@@ -1,8 +1,8 @@
 // Lab1 Upadhyay, Jay 2/9/20
 //LAB 1 GRIGORIANTS, NATALIA T TH
 // UNIQUEID InventoryItemName QUANTITY PRICE
-
-
+//vet user input
+#include <cctype>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -11,6 +11,7 @@
 const int SPACE = 15;
 const int ARRSIZE = 10;
 using namespace std;
+void strLower(string& tempStr);
 struct InventoryItem{
 	string uniqId;// item id
 	string itmName;// item name
@@ -26,19 +27,27 @@ class InventoryItems{
 public:
 	vector<InventoryItem> vecItms;
 	vector<InventoryItem*> sortedItms;
+	double numTotPrice=0;
+	int numTotAmnt = 0;
+
 	
-	int numUniqItms=0;
 	bool InputRecords() {
 		ifstream inputStream;
 		inputStream.open("input.txt");
 		if (!inputStream) return true;// error found
 		InventoryItem* bufferItm = new InventoryItem;
-		while (!inputStream.eof() && vecItms.size()<100) {
-			inputStream >> bufferItm->uniqId >> bufferItm->itmName // Need to remove caps off item names
+		while (!inputStream.eof() && vecItms.size()<10) {
+			inputStream >> bufferItm->uniqId >> bufferItm->itmName 
 				>> bufferItm->numItems >> bufferItm->itmPrice;
+			if (!inputStream) return true;// error founds
+			numTotPrice += bufferItm->itmPrice;
+			numTotAmnt += bufferItm->numItems;
+			
+			strLower( bufferItm->itmName);
+			
 			vecItms.push_back(*bufferItm);
 		}
-		if (vecItms.size() >= 100)
+		if (vecItms.size() >= 10)
 		{
 			cout << "There were more than 100 items in datafile. Stopped at \n";// Put buffer items details here
 		}
@@ -122,8 +131,8 @@ public:
 	}
 	void searchList(string userInput)
 	{
-		bool found = false;
-		for (int x = 0; x < vecItms.size()||found; x++)
+		bool found = false;// Terrible var name
+		for (int x = 0;!found && x<vecItms.size(); x++)
 		{
 			if (vecItms.at(x).itmName == userInput || vecItms.at(x).uniqId == userInput)
 			{
@@ -139,6 +148,10 @@ public:
 		}
 	}
 
+	void printRecords()
+	{
+		cout << "Number of unique items: " << vecItms.size() << "\nTotal Price of Current Inventory: " << numTotPrice << "\nTotal Amount of Items in Inventory: " << numTotAmnt << endl;
+	}
 };
 
 
@@ -148,47 +161,67 @@ int main()
 	string strInput;
 	int userInput;
 	InventoryItems itmList;
-	bool errorFound = itmList.InputRecords();
-	errorFound ? cout << "Error taking input.\n" : cout << "Success taking input.\nEnter your choice which I need to list later." << endl;
-	cin >> userInput;
-	bool runProg=true;
-	while (runProg)
-	{
-		switch (userInput)
+	bool errorFound = itmList.InputRecords();// What happens when error gets hit?
+	if (errorFound) { cout << "Error taking input. File may be missing or empty.\n"; }
+	else {
+		bool runProg = true;
+		while (runProg)
 		{
-		case 1: // Print Unsorted
-			itmList.UnsortPrint();
-			break;
-		case 2: // Print inventory sorted in ascending order by any field
-			cout << "What would you like to sort by? 1:ID 2:Name 3:Quantity 4:Price"; cin >> userInput;
+			cout << "\nEnter a numeric choice that corresponds to the desired operation.\n"
+				<< "1: Print Inventory Unsorted\n2: Print Inventory Sorted\n3. Search Record with ID or Name\n4. Print Totals Report\n5. End Program" << endl;
+			cin >> userInput;
 			switch (userInput)
 			{
-			case 1:
-				itmList.sortPtrs(userInput);
+			case 1: // Print Unsorted
+				itmList.UnsortPrint();
 				break;
-			case 2:
-				itmList.sortPtrs(userInput);
+			case 2: // Print inventory sorted in ascending order by any field
+				cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n"; cin >> userInput;
+				switch (userInput)
+				{
+				case 1:
+					itmList.sortPtrs(userInput);
+					break;
+				case 2:
+					itmList.sortPtrs(userInput);
+					break;
+				case 3:
+					itmList.sortPtrs(userInput);
+					break;
+				case 4:
+					itmList.sortPtrs(userInput);
+					break;
+				default:
+					cout << "Putting you back into main menu. Could not understand input.\n";
+					cin.clear();
+					cin.ignore(1000, '\n');
+				}
 				break;
-			case 3:
-				itmList.sortPtrs(userInput);
-				break;
-			case 4:
-				itmList.sortPtrs(userInput);
-				break;
-			}
-			break;
-		case 3: // Search for item by ID or name
-			
-			cout << "Enter name or ID of an item you are searching for.\n"; cin >> strInput;
-			itmList.searchList(strInput);
-			break;
-		case 4: // Print report of number of unique items, and total count/worth of items
-			break;
-		case 5:// End program
-			runProg = false;
-			break;
+			case 3: // Search for item by ID or name
 
+				cout << "Enter name or ID of an item you are searching for.\n"; cin >> strInput;
+				strLower(strInput);
+				itmList.searchList(strInput);
+				break;
+			case 4: // Print report of number of unique items, and total count/worth of items
+				itmList.printRecords();
+				break;
+			case 5:// End program
+				runProg = false;
+				break;
+			default: cout << "Please retry. Could not understand input.\n";
+				cin.clear();
+				cin.ignore(1000, '\n');
+				
+			}
 		}
 	}
-
+}
+void strLower(string& tempStr)
+{
+	tempStr.at(0) = toupper(tempStr.at(0));// What if they send empty string
+	for (int x = 1; x < tempStr.size(); x++)
+	{
+		tempStr.at(x) = tolower(tempStr.at(x));
+	}
 }
