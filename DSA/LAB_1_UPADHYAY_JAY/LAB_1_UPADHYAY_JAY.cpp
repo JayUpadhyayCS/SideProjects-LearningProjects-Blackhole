@@ -71,6 +71,8 @@ int main()
 			case 3: // Search for item by ID or name
 
 				cout << "Enter name or ID of an item you are searching for.\n"; cin >> strInput;
+				cin.clear();
+				cin.ignore(1000, '\n');
 				strLower(strInput);
 				itmList.searchList(strInput);
 				break;
@@ -131,8 +133,6 @@ void InventoryItems::UnsortPrint()
 	}
 }
 void InventoryItems::initPtrs() {
-
-
 	for (int i = 0; i < vecItms.size(); i++)// Initialize array of pointers
 	{
 		sortedItms.push_back(&vecItms.at(i));
@@ -214,3 +214,71 @@ template <class InventoryItems>
 bool compVar(InventoryItems a, InventoryItems b) {
 	return (a > b ? true : false);
 }
+/*
+There were more than 10 items in datafile. Stopped at 6767 Paper 1000 0.1
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+1
+Item ID        Item Name      Quantity       Price
+1228           Apple          1              1.00
+9653           Orange         9              1.50
+1338           Banana         2              0.50
+9658           Bagels         10             0.40
+1010           Bread          15             0.15
+1991           Coke           12             1.00
+92             Fanta          12             1.00
+388            Granolabar     1              1.50
+2828           Tissues        50             0.05
+6767           Paper          1000           0.10
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+2
+What would you like to sort by?
+1:ID
+2:Name
+3:Quantity
+4:Price
+1
+Item ID        Item Name      Quantity       Price
+1010           Bread          15             0.15
+1228           Apple          1              1.00
+1338           Banana         2              0.50
+1991           Coke           12             1.00
+2828           Tissues        50             0.05
+388            Granolabar     1              1.50
+6767           Paper          1000           0.10
+92             Fanta          12             1.00
+9653           Orange         9              1.50
+9658           Bagels         10             0.40
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+3
+Enter name or ID of an item you are searching for.
+4
+Record not found. Sorry, Please retry with different data.
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+5
+
+D:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe (process 10100) exited with code 0.
+Press any key to close this window . . .
+*/
