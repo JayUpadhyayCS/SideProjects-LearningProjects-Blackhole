@@ -1,8 +1,5 @@
 // Lab1 Upadhyay, Jay 2/9/20
 //LAB 1 GRIGORIANTS, NATALIA T TH
-// UNIQUEID InventoryItemName QUANTITY PRICE
-//vet user input
-//Fix error with calculating total cost
 #include <cctype>
 #include <string>
 #include <vector>
@@ -28,13 +25,13 @@ public:
 	vector<InventoryItem*> sortedItms;//pointers toward inventory items sorted some way.
 	double numTotPrice=0;// total price
 	int numTotAmnt = 0;// Amount of items includign quantity
-	bool InputRecords();
-	void UnsortPrint();
-	void initPtrs();
-	void sortPtrs(int userInput);
-	void printPtr();
-	void searchList(string userInput);
-	void printRecords();
+	bool InputRecords();// Input records into unsorted vec
+	void UnsortPrint();//Print Unsorted vec
+	void initPtrs();// initialize pointers to unsorted vec
+	void sortPtrs(int userInput); // sort ptr to a field based on userinput
+	void printPtr(); // print data sortedvec ptr pointing to
+	void searchList(string userInput); // Search unsorted vec for id/name
+	void printRecords();// print uniqueitems 
 };
 
 
@@ -44,13 +41,13 @@ int main()
 	string strInput;
 	int userInput;
 	InventoryItems itmList;
-	bool errorFound = itmList.InputRecords();// What happens when error gets hit?
+	bool errorFound = itmList.InputRecords();// Input datafile and check for errors
 	
 	if (errorFound) { cout << "Error taking input. File may be missing or empty.\n"; }
-	else {
-		itmList.initPtrs();
+	else {// if no errors then continue
+		itmList.initPtrs();// initialize vector of pointers toward unsorted vecotr
 		bool runProg = true;
-		while (runProg)
+		while (runProg)// continue until user wants to quit
 		{
 			cout << "\nEnter a numeric choice that corresponds to the desired operation.\n"
 				<< "1: Print Inventory Unsorted\n2: Print Inventory Sorted\n3. Search Record with ID or Name\n4. Print Totals Report\n5. End Program" << endl;
@@ -62,21 +59,10 @@ int main()
 				break;
 			case 2: // Print inventory sorted in ascending order by any field
 				cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n"; cin >> userInput;
-				switch (userInput)
+				if(userInput>0&&userInput<5)//check if it is  one of the options
+					itmList.sortPtrs(userInput);
+				else
 				{
-				case 1:
-					itmList.sortPtrs(userInput);
-					break;
-				case 2:
-					itmList.sortPtrs(userInput);
-					break;
-				case 3:
-					itmList.sortPtrs(userInput);
-					break;
-				case 4:
-					itmList.sortPtrs(userInput);
-					break;
-				default:
 					cout << "Putting you back into main menu. Could not understand input.\n";
 					cin.clear();
 					cin.ignore(1000, '\n');
@@ -92,9 +78,9 @@ int main()
 				itmList.printRecords();
 				break;
 			case 5:// End program
-				runProg = false;
+				runProg = false;// end switch statement
 				break;
-			default: cout << "Please retry. Could not understand input.\n";
+			default: cout << "Please retry. Could not understand input.\n"; // Input error, clear cin and retry
 				cin.clear();
 				cin.ignore(1000, '\n');
 				
@@ -132,6 +118,7 @@ bool InventoryItems:: InputRecords() {
 		cout << "There were more than 10 items in datafile. Stopped at " << bufferItm->uniqId << " " << bufferItm->itmName << " " << bufferItm->numItems << " " << bufferItm->itmPrice << "\n";// Put buffer items details here
 	}
 	delete bufferItm;
+	inputStream.close();
 	return false;// no errors1
 }
 void InventoryItems::UnsortPrint()
