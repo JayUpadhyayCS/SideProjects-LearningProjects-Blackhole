@@ -1,4 +1,4 @@
-// Lab1 Upadhyay, Jay 2/9/20
+// Lab1 Upadhyay, Jay 2/18/20
 //LAB 1 GRIGORIANTS, NATALIA T TH
 #include <cctype>
 #include <string>
@@ -102,7 +102,7 @@ void strLower(string& tempStr)
 }
 bool InventoryItems:: InputRecords() {
 	ifstream inputStream;
-	inputStream.open("input.txt");
+	inputStream.open("input1.txt");
 	//inputStream.open("E:\\SideProjects\\LAB_1_UPADHYAY_JAY\\input.txt");
 	if (!inputStream) return true;// error found
 	InventoryItem* bufferItm = new InventoryItem;
@@ -214,7 +214,7 @@ template <class InventoryItems>
 bool compVar(InventoryItems a, InventoryItems b) {
 	return (a > b ? true : false);
 }
-/*
+/*// More than 10 pieces of data and regular input.
 There were more than 10 items in datafile. Stopped at 6767 Paper 1000 0.1
 
 Enter a numeric choice that corresponds to the desired operation.
@@ -281,4 +281,58 @@ Enter a numeric choice that corresponds to the desired operation.
 
 D:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe (process 10100) exited with code 0.
 Press any key to close this window . . .
+///////////////////////////////////////// BAD USER INPUT GIVEN
+There were more than 10 items in datafile. Stopped at 6767 Paper 1000 0.1
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+hello
+Please retry. Could not understand input.
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+2
+What would you like to sort by?
+1:ID
+2:Name
+3:Quantity
+4:Price
+hello
+Putting you back into main menu. Could not understand input.
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+3
+Enter name or ID of an item you are searching for.
+hello
+Record not found. Sorry, Please retry with different data.
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+5
+
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe (process 16552) exited with code 0.
+Press any key to close this window . . .
+
+//////// NO INPUT/FILE
+Error taking input. File may be missing or empty.
+
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe (process 13184) exited with code 0.
+Press any key to close this window . . .
+
 */
