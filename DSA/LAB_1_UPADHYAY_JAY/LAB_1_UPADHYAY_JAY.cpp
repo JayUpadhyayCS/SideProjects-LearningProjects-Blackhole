@@ -52,7 +52,6 @@ int main()
 			cout << "\nEnter a numeric choice that corresponds to the desired operation.\n"
 				<< "1: Print Inventory Unsorted\n2: Print Inventory Sorted\n3. Search Record with ID or Name\n4. Print Totals Report\n5. End Program" << endl;
 			cin >> userInput;
-			
 			switch (userInput)
 			{
 			case 1: // Print Unsorted
@@ -220,7 +219,8 @@ bool compVar(InventoryItems a, InventoryItems b) {
 	return (a > b ? true : false);
 }
 /*// More than 10 pieces of data and regular input.
-There were more than 10 items in datafile. Stopped at 6767 Paper 1000 0.1
+There were more than 10 items in datafile. Stopped after data:
+6767 Paper 1000 0.10
 
 Enter a numeric choice that corresponds to the desired operation.
 1: Print Inventory Unsorted
@@ -274,8 +274,21 @@ Enter a numeric choice that corresponds to the desired operation.
 5. End Program
 3
 Enter name or ID of an item you are searching for.
+banana
+Record has been found!
+1338           Banana         2              0.50
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
 4
-Record not found. Sorry, Please retry with different data.
+Number of unique items: 10
+Total Price of Current Inventory: $149.75
+Total Amount of Items in Inventory: 1112
+
 Enter a numeric choice that corresponds to the desired operation.
 1: Print Inventory Unsorted
 2: Print Inventory Sorted
@@ -284,8 +297,9 @@ Enter a numeric choice that corresponds to the desired operation.
 5. End Program
 5
 
-D:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe (process 10100) exited with code 0.
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe (process 16532) exited with code 0.
 Press any key to close this window . . .
+
 ///////////////////////////////////////// BAD USER INPUT GIVEN
 There were more than 10 items in datafile. Stopped at 6767 Paper 1000 0.1
 

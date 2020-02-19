@@ -1,1 +1,8 @@
-﻿  LAB_1_UPADHYAY_JAY.vcxproj -> E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe
+﻿  LAB_1_UPADHYAY_JAY.cpp
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(98,20): warning C4018: '<': signed/unsigned mismatch
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(132,20): warning C4018: '<': signed/unsigned mismatch
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(139,20): warning C4018: '<': signed/unsigned mismatch
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(152,21): warning C4018: '<': signed/unsigned mismatch
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(187,20): warning C4018: '<': signed/unsigned mismatch
+E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(196,32): warning C4018: '<': signed/unsigned mismatch
+  LAB_1_UPADHYAY_JAY.vcxproj -> E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe
