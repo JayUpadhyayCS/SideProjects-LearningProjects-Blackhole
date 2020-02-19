@@ -1,4 +1,4 @@
-// Lab1 Upadhyay, Jay 2/18/20
+// Lab1 Upadhyay, Jay 2/20/20
 //LAB 1 GRIGORIANTS, NATALIA T TH
 #include <cctype>
 #include <string>
@@ -52,13 +52,15 @@ int main()
 			cout << "\nEnter a numeric choice that corresponds to the desired operation.\n"
 				<< "1: Print Inventory Unsorted\n2: Print Inventory Sorted\n3. Search Record with ID or Name\n4. Print Totals Report\n5. End Program" << endl;
 			cin >> userInput;
+			
 			switch (userInput)
 			{
 			case 1: // Print Unsorted
 				itmList.UnsortPrint();
 				break;
 			case 2: // Print inventory sorted in ascending order by any field
-				cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n"; cin >> userInput;
+				cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n"; 
+				cin >> userInput;
 				if(userInput>0&&userInput<5)//check if it is  one of the options
 					itmList.sortPtrs(userInput);
 				else
@@ -85,7 +87,6 @@ int main()
 			default: cout << "Please retry. Could not understand input.\n"; // Input error, clear cin and retry
 				cin.clear();
 				cin.ignore(1000, '\n');
-				
 			}
 		}
 	}
@@ -102,14 +103,16 @@ void strLower(string& tempStr)
 }
 bool InventoryItems:: InputRecords() {
 	ifstream inputStream;
-	inputStream.open("input1.txt");
-	//inputStream.open("E:\\SideProjects\\LAB_1_UPADHYAY_JAY\\input.txt");
-	if (!inputStream) return true;// error found
+	inputStream.open("input.txt");
+	//inputStream.open("E:\\SideProjects\\DSA\\LAB_1_UPADHYAY_JAY\\input.txt");
+	if (!inputStream) 
+		return true;// error found
 	InventoryItem* bufferItm = new InventoryItem;
 	while (!inputStream.eof() && vecItms.size() < 10) {
 		inputStream >> bufferItm->uniqId >> bufferItm->itmName
 			>> bufferItm->numItems >> bufferItm->itmPrice;
-		if (!inputStream) return true;// error founds
+		if (!inputStream) 
+			return true;// error founds
 		numTotPrice += bufferItm->itmPrice * bufferItm->numItems;
 		numTotAmnt += bufferItm->numItems;
 		strLower(bufferItm->itmName);
@@ -117,7 +120,8 @@ bool InventoryItems:: InputRecords() {
 	}
 	if (vecItms.size() >= ARRSIZE)
 	{
-		cout << "There were more than 10 items in datafile. Stopped at " << bufferItm->uniqId << " " << bufferItm->itmName << " " << bufferItm->numItems << " " << bufferItm->itmPrice << "\n";// Put buffer items details here
+		cout << "There were more than 10 items in datafile. Stopped after data:\n" << bufferItm->uniqId << " " << bufferItm->itmName << " " 
+			<< bufferItm->numItems << " " <<fixed << showpoint << setprecision(2) << bufferItm->itmPrice << "\n";// Put buffer items details here
 	}
 	delete bufferItm;
 	inputStream.close();
@@ -141,43 +145,44 @@ void InventoryItems::initPtrs() {
 void InventoryItems::sortPtrs(int userInput) {
 	InventoryItem* temp;
 	bool isSwap = true;
-	bool switchVar = false;
-	while (isSwap)
+	bool errorFound = true;
+	while (errorFound)
 	{
+		errorFound = false;// No error in data position yet
 		isSwap = false;
 		for (int i = 0; i < sortedItms.size() - 1; i++)
 		{
-			switchVar = false;
+			isSwap = false;
 			//Write one function, that can sort by any field using array of pointers. 
 			//Do not copy and paste sort code five times into the same function. Bubble sort  is the easiest to modify.
 			switch (userInput)
 			{
 			case 1:
-				switchVar = compVar(sortedItms.at(i)->uniqId, sortedItms.at(i + 1)->uniqId);
+				isSwap = compVar(sortedItms.at(i)->uniqId, sortedItms.at(i + 1)->uniqId);
 				break;
 			case 2:
-				switchVar = compVar(sortedItms.at(i)->itmName, sortedItms.at(i + 1)->itmName);
+				isSwap = compVar(sortedItms.at(i)->itmName, sortedItms.at(i + 1)->itmName);
 				break;
 			case 3:
-				switchVar = compVar(sortedItms.at(i)->numItems, sortedItms.at(i + 1)->numItems);
+				isSwap = compVar(sortedItms.at(i)->numItems, sortedItms.at(i + 1)->numItems);
 				break;
 			case 4:
-				switchVar = compVar(sortedItms.at(i)->itmPrice, sortedItms.at(i + 1)->itmPrice);
+				isSwap = compVar(sortedItms.at(i)->itmPrice, sortedItms.at(i + 1)->itmPrice);
 				break;
 
 			}
-			if (switchVar)
+			if (isSwap)
 			{
-				isSwap = true;
+				errorFound=true;// Error in data position, rerun loop to check all pieces of data.
 				temp = sortedItms.at(i);
 				sortedItms.at(i) = sortedItms.at(i + 1);
 				sortedItms.at(i + 1) = temp;
 			}
 		}
 	}
-	printPtr();
+	printPtr();// Print array of pointer values
 }
-void InventoryItems::printPtr()
+void InventoryItems::printPtr()// Print array of pointer values
 {
 	cout << left << setw(SPACE) << "Item ID" << left << setw(SPACE) << "Item Name" << left << setw(SPACE) << "Quantity" << left << setw(SPACE) << "Price" << endl;
 	for (int x = 0; x < sortedItms.size(); x++)
@@ -188,23 +193,23 @@ void InventoryItems::printPtr()
 }
 void InventoryItems::searchList(string userInput)
 {
-	bool found = false;// Terrible var name
-	for (int x = 0; !found && x < vecItms.size(); x++)
+	bool notFound = true;
+	for (int x = 0; notFound && x < vecItms.size(); x++)// Loop unless finds data or end of vector data
 	{
 		if (vecItms.at(x).itmName == userInput || vecItms.at(x).uniqId == userInput)
 		{
 			cout << "Record has been found!" << endl;
 			cout << left << setw(SPACE) << vecItms.at(x).uniqId << left << setw(SPACE) << left << vecItms.at(x).itmName << setw(SPACE)
 				<< vecItms.at(x).numItems << left << setw(SPACE) << vecItms.at(x).itmPrice << endl;
-			found = true;
+			notFound = false;
 		}
 	}
-	if (!found)
+	if (notFound)
 	{
 		cout << "Record not found. Sorry, Please retry with different data.";
 	}
 }
-void InventoryItems::printRecords()
+void InventoryItems::printRecords()// Basic print records function
 {
 	
 	cout << "Number of unique items: " << vecItms.size() << "\nTotal Price of Current Inventory: $" <<fixed << showpoint << setprecision(2)<<  numTotPrice
