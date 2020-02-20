@@ -43,7 +43,8 @@ int main()
 	InventoryItems itmList;
 	bool errorFound = itmList.InputRecords();// Input datafile and check for errors
 	
-	if (errorFound) { cout << "Error taking input. File may be missing or empty.\n"; }
+	if (errorFound)  
+		cout << "Error taking input. File may be missing or empty.\n"; 
 	else {// if no errors then continue
 		itmList.initPtrs();// initialize vector of pointers toward unsorted vecotr
 		bool runProg = true;

@@ -1,19 +1,20 @@
 #include <iostream>
+const int MAXNUM = 10;// Maximum number for base, exponent, and sum of squares input
+const int MINNUM = -10;// Minumum number for base, exponent input
+const int MINPOS = 1;// Minimum input for sum of squares input
+float recPower(double , int&);//Recursive exponenet power function
+int sumSquaresUp(int numInput);// Sum of squares start low then ascend
+int sumSquaresDown(int numInput);// sum of squares, start max then descend
 
-float recPow(double , int&);//Recursive exponenet power function
-int sumSquaresUp(int numInput);// Sum of squares 
-int sumSquaresDown(int numInput);
-const int MAXNUM = 10;
-const int MINNUM = -10;
-const int MINPOS = 0;
 using namespace std;
 int main()
 {
 	double answer;
 	int numInput;
 	int userInput;
-	bool repeat = true;
-	while (repeat)
+	bool continueProg = true;// Repeat menu until user wants out
+	bool errorCatch = false;// no errors caught so far
+	while (continueProg)
 	{
 		cout << "\n1. Use power function\n2. Sum of Squares(low to high)\n3. Sum of Squares(high to low)\n4. End program\n";
 		cin >> userInput;
@@ -24,42 +25,43 @@ int main()
 			int exponent;
 			do
 			{
+				errorCatch = false;
 				cin.clear();
 				cin.ignore(1000, '\n');
 				cout << "Enter a base and exponent. Example: 1 3" << endl;
 				cin >> base >> exponent;
-				if (!cin || base>MAXNUM || base<MINNUM||exponent >MAXNUM|| exponent<MINNUM)
+				if (!cin || base > MAXNUM || base<MINNUM || exponent >MAXNUM || exponent < MINNUM)
+				{
 					cout << "Please reenter input. Two integers with a space between please. Must be in range of -10 to 10." << endl;
-			} while (!cin);
-			answer = recPow(base, exponent);
+					errorCatch = true;
+				}
+			} while (errorCatch);
+			answer = recPower(base, exponent);
 			cout << answer;
 			break;
 		case 2:
+		case 3:
 			do {
+				errorCatch = false;
 				cin.clear();
 				cin.ignore(1000, '\n');
 				cout << "Enter numerical input" << endl;
 				cin >> numInput;
-				if (!cin||numInput>MAXNUM||numInput<MINPOS)
+				if (!cin || numInput > MAXNUM || numInput < MINPOS)
+				{
 					cout << "Please reenter input. One integer within 1-10." << endl;
-			} while (!cin);
-			answer = sumSquaresUp(numInput);
+					errorCatch = true;
+				}
+			} while (errorCatch);
+			if (userInput == 2)
+				answer = sumSquaresUp(numInput);
+			else
+				answer = sumSquaresDown(numInput);
 			cout << "=" <<  answer;
 			break;
-		case 3:
-			do {
-				cin.clear();
-				cin.ignore(1000, '\n');
-			cout << "Enter numerical input" << endl;
-			cin >> numInput;
-			if (!cin || numInput > MAXNUM || numInput < MINPOS)
-				cout << "Please reenter input. One integer within 1-10." << endl;
-			} while (!cin);
-			answer = sumSquaresDown(numInput);
-			cout << "=" << answer;
-			break;
+		//case 3:
 		case 4: // end program
-			repeat = false;
+			continueProg = false;
 			break;
 		default:
 			cout << "Putting you back into main menu. Could not understand input.\n";
@@ -68,7 +70,7 @@ int main()
 		}
 	}
 }
-float recPow(double base, int &exponent)
+float recPower(double base, int &exponent)// Recursive power function
 {
 	if (exponent < 0)// If its negative exponent, I need to multiple 1/base against itself. Otherwise base*base;
 	{
@@ -78,28 +80,27 @@ float recPow(double base, int &exponent)
 	else if (!exponent)
 		return 1;
 	exponent--;
-	return base * recPow(base, exponent);
+	return base * recPower(base, exponent);
 }
 int sumSquaresUp(int numInput)
 {
 	int answer;
-	if (numInput == 1)
+	if (numInput == 1)// end condition 
 	{
 		cout << "1";
 		return 1;
 	}
 	else
 	{
-		answer=sumSquaresUp(numInput - 1);
+		answer=sumSquaresUp(numInput - 1);// Recursion first, then outputs next line when recursive portion finishes.
 		cout << "+(" << numInput << "*" << numInput << ")";
-		//cout << "\nTEST:" << numInput*numInput + answer << " \n";
 		return (numInput*numInput)+answer;
 	}
 }
 int sumSquaresDown(int numInput)
 {
 	int answer;
-	if (numInput == 1)
+	if (numInput == 1)// end condition
 	{
 		cout << "1";
 		return 1;
@@ -107,8 +108,7 @@ int sumSquaresDown(int numInput)
 	else
 	{
 		cout << "(" << numInput << "*" << numInput << ")+";
-		answer = sumSquaresDown(numInput - 1);
-		//cout << "\nTEST:" << numInput*numInput + answer << " \n";
+		answer = sumSquaresDown(numInput - 1);// Recursion second, outputs data in function first.
 		return (numInput * numInput) + answer;
 	}
 }
@@ -149,4 +149,48 @@ Enter numerical input
 
 E:\SideProjects\DSA\LAB_2_UPADHYAY_JAY\Debug\LAB_2_UPADHYAY_JAY.exe (process 14232) exited with code 0.
 Press any key to close this window . . .
+
+////// Error input, testing bounds.
+
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+0
+Putting you back into main menu. Could not understand input.
+
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+1
+Enter a base and exponent. Example: 1 3
+-11 2
+Please reenter input. Two integers with a space between please. Must be in range of -10 to 10.
+Enter a base and exponent. Example: 1 3
+-2 -1
+-0.5
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+2
+Enter numerical input
+11
+Please reenter input. One integer within 1-10.
+Enter numerical input
+0
+Please reenter input. One integer within 1-10.
+Enter numerical input
+3
+1+(2*2)+(3*3)=14
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+4
+
+E:\SideProjects\DSA\LAB_2_UPADHYAY_JAY\Debug\LAB_2_UPADHYAY_JAY.exe (process 16272) exited with code 0.
+Press any key to close this window . . .
+
 */
