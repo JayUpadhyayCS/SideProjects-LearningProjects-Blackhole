@@ -1,10 +1,11 @@
+// Lab1 Upadhyay, Jay T TH  2/20/20
 #include <iostream>
 const int MAXNUM = 10;// Maximum number for base, exponent, and sum of squares input
 const int MINNUM = -10;// Minumum number for base, exponent input
 const int MINPOS = 1;// Minimum input for sum of squares input
-float recPower(double , int&);//Recursive exponenet power function
-int sumSquaresUp(int numInput);// Sum of squares start low then ascend
-int sumSquaresDown(int numInput);// sum of squares, start max then descend
+float RecPower(double , int&);//Recursive exponenet power function
+int SumSquaresUp(int numInput);// Sum of squares start low then ascend
+int SumSquaresDown(int numInput);// sum of squares, start max then descend
 
 using namespace std;
 int main()
@@ -36,7 +37,7 @@ int main()
 					errorCatch = true;
 				}
 			} while (errorCatch);
-			answer = recPower(base, exponent);
+			answer = RecPower(base, exponent);
 			cout << answer;
 			break;
 		case 2:
@@ -54,9 +55,9 @@ int main()
 				}
 			} while (errorCatch);
 			if (userInput == 2)
-				answer = sumSquaresUp(numInput);
+				answer = SumSquaresUp(numInput);
 			else
-				answer = sumSquaresDown(numInput);
+				answer = SumSquaresDown(numInput);
 			cout << "=" <<  answer;
 			break;
 		//case 3:
@@ -70,7 +71,7 @@ int main()
 		}
 	}
 }
-float recPower(double base, int &exponent)// Recursive power function
+float RecPower(double base, int &exponent)// Recursive power function
 {
 	if (exponent < 0)// If its negative exponent, I need to multiple 1/base against itself. Otherwise base*base;
 	{
@@ -80,9 +81,9 @@ float recPower(double base, int &exponent)// Recursive power function
 	else if (!exponent)
 		return 1;
 	exponent--;
-	return base * recPower(base, exponent);
+	return base * RecPower(base, exponent);
 }
-int sumSquaresUp(int numInput)
+int SumSquaresUp(int numInput)
 {
 	int answer;
 	if (numInput == 1)// end condition 
@@ -92,12 +93,12 @@ int sumSquaresUp(int numInput)
 	}
 	else
 	{
-		answer=sumSquaresUp(numInput - 1);// Recursion first, then outputs next line when recursive portion finishes.
+		answer=SumSquaresUp(numInput - 1);// Recursion first, then outputs next line when recursive portion finishes.
 		cout << "+(" << numInput << "*" << numInput << ")";
 		return (numInput*numInput)+answer;
 	}
 }
-int sumSquaresDown(int numInput)
+int SumSquaresDown(int numInput)
 {
 	int answer;
 	if (numInput == 1)// end condition
@@ -108,7 +109,7 @@ int sumSquaresDown(int numInput)
 	else
 	{
 		cout << "(" << numInput << "*" << numInput << ")+";
-		answer = sumSquaresDown(numInput - 1);// Recursion second, outputs data in function first.
+		answer = SumSquaresDown(numInput - 1);// Recursion second, outputs data in function first.
 		return (numInput * numInput) + answer;
 	}
 }
