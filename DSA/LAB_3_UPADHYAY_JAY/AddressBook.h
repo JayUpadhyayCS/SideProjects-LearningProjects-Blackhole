@@ -8,7 +8,7 @@ struct RecordList {
 class AddressBook
 {
 public:
-	RecordList* head;
+	RecordList* head=nullptr;
 	AddressBook();
 	~AddressBook();
 	void Load();// Load and stores into structure

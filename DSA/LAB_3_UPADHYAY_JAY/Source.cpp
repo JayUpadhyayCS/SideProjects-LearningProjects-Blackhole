@@ -1,14 +1,13 @@
 #include <iostream>
+#include "AddressBook.h"
 // ADDRESSBOOK pointer to a person
 //PERSON holds data
 // PersonList
 
-struct node {
-	Record data;
-	Record* ptr;
-};
 using namespace std;
 int main()
 {
+	AddressBook recList;
+	recList.Load();
 	cout << "Hello world" << endl;
 }
