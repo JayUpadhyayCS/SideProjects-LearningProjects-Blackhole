@@ -30,6 +30,10 @@ void AddressBook::Load()
 	while (!inFile.eof())
 	{
 		buffer = new (std::nothrow) RecordList;
+		if (!buffer)
+		{
+			std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
+		}
 		trav->ptr = buffer;
 		trav = buffer;
 		inFile >> buffer->data.firstName >> buffer->data.lastName >> buffer->data.numStreet >> buffer->data.streetName >> buffer->data.cityName// Maybe prime 
@@ -40,7 +44,16 @@ void AddressBook::Load()
 	//nullptrs are false
 	std::cout << "Complete" << std::endl;
 	//oscar peterson
-	//beatles essential
+	//beatles essentia
+
+}
+void AddressBook::Search(std::string name)
+{
+	RecordList* trav = head;
+	do {
+		trav
+	}while (trav->ptr != nullptr);
 	
 
 }
+
