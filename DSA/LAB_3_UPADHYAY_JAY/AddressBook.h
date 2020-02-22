@@ -1,7 +1,14 @@
 #pragma once
+#include "Record.h"
+
+struct RecordList {
+	Record data;
+	Record* ptr;
+};
 class AddressBook
 {
 public:
+	RecordList* head;
 	AddressBook();
 	~AddressBook();
 	void Load();// Load and stores into structure

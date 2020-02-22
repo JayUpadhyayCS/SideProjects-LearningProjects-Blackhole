@@ -23,7 +23,7 @@ public:
 	bool InputRecords();// Input records into unsorted vec
 	void UnsortPrint();//Print Unsorted vec
 	void BubSort(int userInput); // sort ptr to a field based on userinput
-	void PrintSortedInventory(); // print data sortedvec ptr pointing to
+	void PrintSorted(); // print data sortedvec ptr pointing to
 	void SearchInv(string userInput); // Search unsorted vec for id/name
 	void PrintReport();// print uniqueitems// total price // total quantity 
 };
@@ -33,7 +33,6 @@ bool MainMenu(InventoryItems&);
 
 int main()
 {
-	
 	InventoryItems itmList;
 	bool errorFound = itmList.InputRecords();// Input datafile and check for errors
 	
@@ -65,12 +64,12 @@ bool MainMenu(InventoryItems & itmList)
 	case 2: // Print inventory sorted in ascending order by any field
 		cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n5:Back to Main Menu\n";
 		cin >> numInput;
-		if (numInput > 0 && userInput < 5)//check if it is  one of the options
+		if (numInput > 0 && numInput < 5)//check if it is  one of the options
 		{
-			itmList.BubSort(userInput);
-			itmList.PrintSortedInventory();
+			itmList.BubSort(numInput);
+			itmList.PrintSorted();
 		}
-		else if (userInput == 5)
+		else if (numInput == 5)
 		{
 			cout << "Returning to main menu" << endl;
 		}
@@ -102,8 +101,8 @@ bool MainMenu(InventoryItems & itmList)
 
 bool InventoryItems:: InputRecords() {
 	ifstream inputStream;
-	//inputStream.open("input.txt");
-	inputStream.open("E:\\SideProjects\\DSA\\LAB_1_UPADHYAY_JAY\\input.txt");
+	inputStream.open("input.txt");
+	//inputStream.open("E:\\SideProjects\\DSA\\LAB_1_UPADHYAY_JAY\\input.txt");
 	if (!inputStream) 
 		return true;// error found
 	InventoryItem bufferItm;
@@ -185,7 +184,7 @@ void InventoryItems::BubSort(int userChoice) {
 	}
 	
 }
-void InventoryItems::PrintSortedInventory()// Print array of pointer values
+void InventoryItems::PrintSorted()// Print array of pointer values
 {
 	cout << left << setw(SPACE) << "Item ID" << left << setw(SPACE) << "Item Name" << left << setw(SPACE) << "Quantity" << left << setw(SPACE) << "Price" << endl;
 	int vecSize = sortedItms.size();
