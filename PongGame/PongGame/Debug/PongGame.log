@@ -1,8 +1,0 @@
-﻿  Game.cpp
-c:\users\jay\desktop\sideprojects\ponggame\ponggame\game.h(11): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\jay\desktop\sideprojects\ponggame\ponggame\game.h(12): warning C4305: 'initializing': truncation from 'double' to 'float'
-  Main.cpp
-c:\users\jay\desktop\sideprojects\ponggame\ponggame\game.h(11): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\jay\desktop\sideprojects\ponggame\ponggame\game.h(12): warning C4305: 'initializing': truncation from 'double' to 'float'
-  Generating Code...
-  PongGame.vcxproj -> C:\Users\Jay\Desktop\SideProjects\PongGame\Debug\PongGame.exe

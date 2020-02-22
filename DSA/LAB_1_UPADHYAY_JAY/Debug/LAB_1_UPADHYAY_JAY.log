@@ -1,7 +1,0 @@
-﻿  LAB_1_UPADHYAY_JAY.cpp
-E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(125,20): warning C4018: '<': signed/unsigned mismatch
-E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(134,20): warning C4018: '<': signed/unsigned mismatch
-E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(213,20): warning C4018: '<': signed/unsigned mismatch
-E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(215,59): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
-E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\LAB_1_UPADHYAY_JAY.cpp(225,20): warning C4018: '<': signed/unsigned mismatch
-  LAB_1_UPADHYAY_JAY.vcxproj -> E:\SideProjects\DSA\LAB_1_UPADHYAY_JAY\Debug\LAB_1_UPADHYAY_JAY.exe
