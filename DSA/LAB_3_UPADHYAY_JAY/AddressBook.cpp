@@ -3,6 +3,6 @@
 AddressBook::AddressBook()
 {
 }
-~AddressBook::AddressBook()
+AddressBook::~AddressBook()
 {
 }
