@@ -3,7 +3,7 @@
 Record::Record()
 {
 }
-Record::Record(std::string firstNameTemp, std::string lastNameTemp, std::string numStreetTemp, std::string streetNameTemp, std::string cityNameTemp, int numPhoneTemp, int monthTemp, int dayTemp, int yearTemp)
+Record::Record(std::string firstNameTemp, std::string lastNameTemp, std::string numStreetTemp, std::string streetNameTemp, std::string cityNameTemp, std::string numPhoneTemp, int monthTemp, int dayTemp, int yearTemp)
 {
 	firstName = firstNameTemp;
 	lastName = lastNameTemp;

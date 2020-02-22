@@ -8,12 +8,12 @@ public:
 	std::string numStreet;
 	std::string streetName;
 	std::string cityName;
-	int numPhone;
+	std::string numPhone;
 	int month;
 	int day;
 	int year;
 public:
 	Record();
-	Record(std::string firstName, std::string lastName, std::string numStreet, std::string streetName, std::string cityName, int numPhone, int month, int day, int year);
+	Record(std::string firstName, std::string lastName, std::string numStreet, std::string streetName, std::string cityName, std::string numPhone, int month, int day, int year);
 	~Record();
 };

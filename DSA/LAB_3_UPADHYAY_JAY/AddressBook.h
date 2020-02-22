@@ -3,7 +3,7 @@
 
 struct RecordList {
 	Record data;
-	Record* ptr;
+	RecordList* ptr;
 };
 class AddressBook
 {
