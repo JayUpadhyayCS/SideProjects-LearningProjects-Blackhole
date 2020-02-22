@@ -14,5 +14,6 @@ private:
 	int year;
 public:
 	Record();
+	Record(std::string firstName, std::string lastName, int numStreet, std::string streetName, std::string cityName, int numPhone, int month, int day, int year);
 	~Record();
 };
