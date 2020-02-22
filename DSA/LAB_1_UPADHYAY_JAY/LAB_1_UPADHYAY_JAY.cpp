@@ -14,7 +14,6 @@ struct InventoryItem{
 	string itmName;// item name
 	int numItems;// quantity on hand
 	double itmPrice;// item price
-
 };
 class InventoryItems{
 private:
@@ -53,20 +52,20 @@ int main()
 
 bool MainMenu(InventoryItems & itmList)
 {
-	int userInput;
+	int numInput;
 	string strInput;
 	cout << "\nEnter a numeric choice that corresponds to the desired operation.\n"
 		<< "1: Print Inventory Unsorted\n2: Print Inventory Sorted\n3. Search Record with ID or Name\n4. Print Totals Report\n5. End Program" << endl;
-	cin >> userInput;
-	switch (userInput)
+	cin >> numInput;
+	switch (numInput)
 	{
 	case 1: // Print Unsorted
 		itmList.UnsortPrint();
 		break;
 	case 2: // Print inventory sorted in ascending order by any field
 		cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n5:Back to Main Menu\n";
-		cin >> userInput;
-		if (userInput > 0 && userInput < 5)//check if it is  one of the options
+		cin >> numInput;
+		if (numInput > 0 && userInput < 5)//check if it is  one of the options
 		{
 			itmList.BubSort(userInput);
 			itmList.PrintSortedInventory();
