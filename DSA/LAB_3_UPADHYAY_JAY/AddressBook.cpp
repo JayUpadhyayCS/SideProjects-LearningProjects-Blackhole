@@ -24,8 +24,9 @@ void AddressBook::Load()
 		std::cout << "Error opening or finding file." << std::endl;
 	}
 	//John Doe 6202 Winnetka CanogaPark 8185555555 01 01 1991
-	inFile >> buffer->data.firstName >> buffer->data.lastName >> buffer->data.numStreet;
-	inFile >> buffer->data.streetName >> buffer->data.cityName>> buffer->data.numPhone >> buffer->data.day >> buffer->data.month >> buffer->data.year;
+	inFile >> buffer->data.firstName >> buffer->data.lastName >> buffer->data.numStreet
+		>> buffer->data.streetName >> buffer->data.cityName>> buffer->data.numPhone >> buffer->data.day >> buffer->data.month >> buffer->data.year;
+	size++;
 	head =trav= buffer;
 	while (!inFile.eof())
 	{
@@ -36,6 +37,7 @@ void AddressBook::Load()
 		}
 		trav->ptr = buffer;
 		trav = buffer;
+		size++;
 		inFile >> buffer->data.firstName >> buffer->data.lastName >> buffer->data.numStreet >> buffer->data.streetName >> buffer->data.cityName// Maybe prime 
 			>> buffer->data.numPhone >> buffer->data.day >> buffer->data.month >> buffer->data.year;
 		buffer->ptr = nullptr;
@@ -59,7 +61,7 @@ void AddressBook::Search(std::string name)
 			found = true;
 		}
 		trav = trav->ptr;
-	}while (trav->ptr != nullptr&&!found);
+	}while (trav != nullptr&&!found);
 	if (!found)
 	{
 		std::cout<<"Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
@@ -68,3 +70,54 @@ void AddressBook::Search(std::string name)
 
 }
 
+void AddressBook::AddEntry(RecordList* buffer, int index) 
+{
+	//If zero
+	RecordList* trav = head;
+	if (!index)
+	{
+		buffer->ptr = head;
+		head = buffer;
+	}
+	else if (index >= size)// End
+	{
+		std::cout <<"Adding it to end of file since index exceeded Book size." << std::endl;
+		
+		while (trav->ptr != nullptr)
+		{
+			trav = trav->ptr;
+		}
+		trav->ptr = buffer;
+
+	}
+	// Middle
+	else {
+
+		while(index)
+		{
+			index--;
+			trav = trav->ptr;
+			
+		}
+		buffer->ptr = trav->ptr;
+		trav->ptr = buffer;
+
+	}
+}
+void AddressBook::Delete(std::string name)
+{
+	RecordList* trav;
+	do {
+		if (trav->data.lastName == name || trav->data.numPhone == name)
+		{
+			std::cout << "Record found, Outputting below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
+				<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+			found = true;
+		}
+		trav = trav->ptr;
+	} while (trav != nullptr && !found);
+	if (!found)
+	{
+		std::cout << "Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
+	}
+}
