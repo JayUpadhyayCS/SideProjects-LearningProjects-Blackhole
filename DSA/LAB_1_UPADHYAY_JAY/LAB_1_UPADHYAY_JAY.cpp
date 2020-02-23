@@ -29,7 +29,7 @@ public:
 };
 void strLower(string& tempStr);// Make string lowercase
 void clearCin(); // Clear cin stream
-bool MainMenu(InventoryItems&);
+bool RunMenu(InventoryItems&);
 
 int main()
 {
@@ -43,13 +43,13 @@ int main()
 		bool runProg = true;
 		while (runProg)// continue until user wants to quit
 		{
-			runProg = MainMenu(itmList);
+			runProg = RunMenu(itmList);
 		}
 	}
 }
 
 
-bool MainMenu(InventoryItems & itmList)
+bool RunMenu(InventoryItems & itmList)
 {
 	int numInput;
 	string strInput;
@@ -80,10 +80,13 @@ bool MainMenu(InventoryItems & itmList)
 		}
 		break;
 	case 3: // Search for item by ID or name
-		cout << "Enter name or ID of an item you are searching for.\n"; cin >> strInput;
+		cout << "Enter name or ID of an item you are searching for, or enter 1 to return to Main Menu.\n"; cin >> strInput;
 		clearCin();
-		strLower(strInput);
-		itmList.SearchInv(strInput);
+		if (strInput != "1")
+		{
+			strLower(strInput);
+			itmList.SearchInv(strInput);
+		}
 		break;
 	case 4: // Print report of number of unique items, and total count/worth of items
 		itmList.PrintReport();
