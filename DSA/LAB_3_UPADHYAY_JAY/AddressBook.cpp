@@ -108,16 +108,20 @@ void AddressBook::Delete(std::string name)
 {
 	RecordList* trav;
 	do {
-		if (trav->data.lastName == name || trav->data.numPhone == name)
+		if (trav->ptr->data.lastName == name || trav->ptr->data.numPhone == name)
 		{
-			std::cout << "Record found, Outputting below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
+			RecordList* toDelete;
+			std::cout << "Record found, deleting following record below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
 				<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
 			found = true;
+			toDelete = trav->ptr;
+			trav->ptr = trav->ptr->ptr;
+			delete toDelete;
 		}
 		trav = trav->ptr;
 	} while (trav != nullptr && !found);
 	if (!found)
 	{
-		std::cout << "Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
+		std::cout << "Sorry could not find any records matching, " << name << ". Please try again or another option." << std::endl;
 	}
 }
