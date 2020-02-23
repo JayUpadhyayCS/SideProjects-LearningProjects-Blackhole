@@ -56,6 +56,7 @@ void AddressBook::Search(std::string name)
 	do {
 		if (trav->data.lastName == name || trav->data.numPhone == name)
 		{
+			///////////////////////////////////////////////////////Format
 			std::cout << "Record found, Outputting below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
 				<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
 			found = true;
@@ -104,13 +105,15 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 
 	}
 }
-void AddressBook::Delete(std::string name)
+void AddressBook::DeleteRec(std::string name)
 {
+	bool found = false;
 	RecordList* trav;
 	do {
 		if (trav->ptr->data.lastName == name || trav->ptr->data.numPhone == name)
 		{
 			RecordList* toDelete;
+			///////////////////////////////////////////////////////Format
 			std::cout << "Record found, deleting following record below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
 				<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
 			found = true;
@@ -124,4 +127,13 @@ void AddressBook::Delete(std::string name)
 	{
 		std::cout << "Sorry could not find any records matching, " << name << ". Please try again or another option." << std::endl;
 	}
+}
+void WriteFile()
+{
+	std::ofstream outFile;
+	outFile.open("test.txt",std::fstream::out);
+	RecordList* trav;
+	outFile << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
+		<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+
 }

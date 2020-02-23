@@ -13,9 +13,10 @@ public:
 	AddressBook();
 	~AddressBook();
 	void Load();// Load and stores into structure
+	void WriteFile();
 	void Search(std::string); // Last Name or phone numebr
 	void AddEntry(RecordList* buffer,int index);
-	void Delete(string name);// Last Name or phone number
+	void DeleteRec(std::string name);// Last Name or phone number
 
 
 
