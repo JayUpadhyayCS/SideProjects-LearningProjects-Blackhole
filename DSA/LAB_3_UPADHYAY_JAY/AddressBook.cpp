@@ -41,7 +41,7 @@ void AddressBook::Load()
 		buffer->ptr = nullptr;
 
 	}
-	//nullptrs are false
+	
 	std::cout << "Complete" << std::endl;
 	//oscar peterson
 	//beatles essentia
@@ -50,9 +50,20 @@ void AddressBook::Load()
 void AddressBook::Search(std::string name)
 {
 	RecordList* trav = head;
+	bool found = false;
 	do {
-		trav
-	}while (trav->ptr != nullptr);
+		if (trav->data.lastName == name || trav->data.numPhone == name)
+		{
+			std::cout << "Record found, Outputting below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
+				<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+			found = true;
+		}
+		trav = trav->ptr;
+	}while (trav->ptr != nullptr&&!found);
+	if (!found)
+	{
+		std::cout<<"Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
+	}
 	
 
 }

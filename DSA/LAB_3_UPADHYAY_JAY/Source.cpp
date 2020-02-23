@@ -9,5 +9,6 @@ int main()
 {
 	AddressBook recList;
 	recList.Load();
+	recList.Search("818555");
 	cout << "Hello world" << endl;
 }
