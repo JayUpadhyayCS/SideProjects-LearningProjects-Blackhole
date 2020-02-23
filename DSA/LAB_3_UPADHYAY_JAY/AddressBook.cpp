@@ -108,7 +108,7 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 void AddressBook::DeleteRec(std::string name)
 {
 	bool found = false;
-	RecordList* trav;
+	RecordList* trav=head;
 	do {
 		if (trav->ptr->data.lastName == name || trav->ptr->data.numPhone == name)
 		{
@@ -128,11 +128,11 @@ void AddressBook::DeleteRec(std::string name)
 		std::cout << "Sorry could not find any records matching, " << name << ". Please try again or another option." << std::endl;
 	}
 }
-void WriteFile()
+void AddressBook::WriteFile()
 {
 	std::ofstream outFile;
 	outFile.open("test.txt",std::fstream::out);
-	RecordList* trav;
+	RecordList* trav=head;
 	outFile << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
 		<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
 
