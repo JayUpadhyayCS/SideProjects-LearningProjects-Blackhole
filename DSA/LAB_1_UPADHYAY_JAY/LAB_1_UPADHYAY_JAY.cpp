@@ -60,23 +60,27 @@ void RunMenu(InventoryItems & itmList)
 			itmList.UnsortPrint();
 			break;
 		case 2: // Print inventory sorted in ascending order by any field
-			cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n5:Back to Main Menu\n";
-			cin >> numInput;
-			if (numInput > 0 && numInput < 5)//check if it is  one of the options
+			while (numInput != 5)
 			{
-				itmList.BubSort(numInput);
-				itmList.PrintSorted();
-			}
-			else if (numInput == 5)
-			{
-				cout << "Returning to main menu" << endl;
-			}
-			else
-			{
-				cout << "Putting you back into main menu. Could not understand input.\n";
-				clearCin();
+				cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n5:Back to Main Menu\n";
+				cin >> numInput;
+				if (numInput > 0 && numInput < 5)//check if it is  one of the options
+				{
+					itmList.BubSort(numInput);
+					itmList.PrintSorted();
+				}
+				else if (numInput == 5)
+				{
+					cout << "Returning to main menu" << endl;
+				}
+				else
+				{
+					cout << "Putting you back into main menu. Could not understand input.\n";
+					clearCin();
+				}
 			}
 			break;
+
 		case 3: // Search for item by ID or name
 			do {
 				cout << "\nEnter name or ID of an item you are searching for, or enter 1 to return to Main Menu.\n"; cin >> strInput;
