@@ -29,7 +29,7 @@ public:
 };
 void strLower(string& tempStr);// Make string lowercase
 void clearCin(); // Clear cin stream
-bool RunMenu(InventoryItems&);
+void RunMenu(InventoryItems&);
 
 int main()
 {
@@ -39,67 +39,67 @@ int main()
 	if (errorFound)  
 		cout << "Error taking input. File may be missing or empty.\n"; 
 	else {// if no errors then continue
-
-		bool runProg = true;
-		while (runProg)// continue until user wants to quit
-		{
-			runProg = RunMenu(itmList);
-		}
+		RunMenu(itmList);
 	}
 }
 
 
-bool RunMenu(InventoryItems & itmList)
+void RunMenu(InventoryItems & itmList)
 {
 	int numInput;
 	string strInput;
-	cout << "\nEnter a numeric choice that corresponds to the desired operation.\n"
-		<< "1: Print Inventory Unsorted\n2: Print Inventory Sorted\n3. Search Record with ID or Name\n4. Print Totals Report\n5. End Program" << endl;
-	cin >> numInput;
-	switch (numInput)
+	bool runMenu = true;
+	while (runMenu)
 	{
-	case 1: // Print Unsorted
-		itmList.UnsortPrint();
-		break;
-	case 2: // Print inventory sorted in ascending order by any field
-		cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n5:Back to Main Menu\n";
+		cout << "\nEnter a numeric choice that corresponds to the desired operation.\n"
+			<< "1: Print Inventory Unsorted\n2: Print Inventory Sorted\n3. Search Record with ID or Name\n4. Print Totals Report\n5. End Program" << endl;
 		cin >> numInput;
-		if (numInput > 0 && numInput < 5)//check if it is  one of the options
+		switch (numInput)
 		{
-			itmList.BubSort(numInput);
-			itmList.PrintSorted();
-		}
-		else if (numInput == 5)
-		{
-			cout << "Returning to main menu" << endl;
-		}
-		else
-		{
-			cout << "Putting you back into main menu. Could not understand input.\n";
+		case 1: // Print Unsorted
+			itmList.UnsortPrint();
+			break;
+		case 2: // Print inventory sorted in ascending order by any field
+			cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n5:Back to Main Menu\n";
+			cin >> numInput;
+			if (numInput > 0 && numInput < 5)//check if it is  one of the options
+			{
+				itmList.BubSort(numInput);
+				itmList.PrintSorted();
+			}
+			else if (numInput == 5)
+			{
+				cout << "Returning to main menu" << endl;
+			}
+			else
+			{
+				cout << "Putting you back into main menu. Could not understand input.\n";
+				clearCin();
+			}
+			break;
+		case 3: // Search for item by ID or name
+			do {
+				cout << "\nEnter name or ID of an item you are searching for, or enter 1 to return to Main Menu.\n"; cin >> strInput;
+				clearCin();
+				if (strInput != "1")
+				{
+					strLower(strInput);
+					itmList.SearchInv(strInput);
+				}
+			} while (strInput != "1");
+			break;
+		case 4: // Print report of number of unique items, and total count/worth of items
+			itmList.PrintReport();
+			break;
+		case 5:// End program
+
+			cout << "Terminating program" << endl;
+			runMenu= false;
+			break;
+		default: cout << "Please retry. Could not understand input.\n"; // Input error, clear cin and retry
 			clearCin();
 		}
-		break;
-	case 3: // Search for item by ID or name
-		cout << "Enter name or ID of an item you are searching for, or enter 1 to return to Main Menu.\n"; cin >> strInput;
-		clearCin();
-		if (strInput != "1")
-		{
-			strLower(strInput);
-			itmList.SearchInv(strInput);
-		}
-		break;
-	case 4: // Print report of number of unique items, and total count/worth of items
-		itmList.PrintReport();
-		break;
-	case 5:// End program
-		
-		cout << "Terminating program" << endl;
-		return false;
-		break;
-	default: cout << "Please retry. Could not understand input.\n"; // Input error, clear cin and retry
-		clearCin();
 	}
-	return true;
 }
 
 bool InventoryItems:: InputRecords() {
