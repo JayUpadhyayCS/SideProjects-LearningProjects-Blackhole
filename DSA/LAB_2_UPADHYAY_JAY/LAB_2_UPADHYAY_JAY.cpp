@@ -1,20 +1,22 @@
 // Lab1 Upadhyay, Jay T TH  2/20/20
+
+//Erro with neg number
 #include <iostream>
 const int MAXNUM = 10;// Maximum number for base, exponent, and sum of squares input
 const int MINNUM = -10;// Minumum number for base, exponent input
 const int MINPOS = 1;// Minimum input for sum of squares input
-float RecPower(double , int&);//Recursive exponenet power function
+float RecPower(double , int);//Recursive exponenet power function
 int SumSquaresUp(int numInput);// Sum of squares start low then ascend
 int SumSquaresDown(int numInput);// sum of squares, start max then descend
 
 using namespace std;
 int main()
 {
-	double answer;
+	double numSolution;
 	int numInput;
 	int userInput;
 	bool continueProg = true;// Repeat menu until user wants out
-	bool errorCatch = false;// no errors caught so far
+	bool rePrompt = true;// no errors caught so far
 	while (continueProg)
 	{
 		cout << "\n1. Use power function\n2. Sum of Squares(low to high)\n3. Sum of Squares(high to low)\n4. End program\n";
@@ -24,41 +26,64 @@ int main()
 		case 1:
 			double base;
 			int exponent;
+			rePrompt = true;
 			do
 			{
-				errorCatch = false;
 				cin.clear();
 				cin.ignore(1000, '\n');
-				cout << "Enter a base and exponent. Example: 1 3" << endl;
-				cin >> base >> exponent;
-				if (!cin || base > MAXNUM || base<MINNUM || exponent >MAXNUM || exponent < MINNUM)
+				cout << "Enter a base and exponent. Example: 1 3. Press any character or 0 to go back to main menu." << endl;
+				cin >> base;
+				if (!base)// ASCII value of q
 				{
-					cout << "Please reenter input. Two integers with a space between please. Must be in range of -10 to 10." << endl;
-					errorCatch = true;
+					cout << "Exiting to main menu." << endl;
+					cin.clear();
+					cin.ignore(1000, '\n');
+					rePrompt = false;
 				}
-			} while (errorCatch);
-			answer = RecPower(base, exponent);
-			cout << answer;
+				else
+				{
+					cin >> exponent;
+					if (!cin || base > MAXNUM || base<MINNUM || exponent >MAXNUM || exponent < MINNUM)
+					{
+						cout << "Error with input. Two integers with a space between please. Must be in range of -10 to 10." << endl;
+						rePrompt= true;
+					}
+					else
+						cout << base << " to the power of " << exponent << " equals " << RecPower(base, exponent)<< "!" << endl;
+				}
+			}
+			while (rePrompt);// could use base instead but rePrompt is more understandable.
 			break;
 		case 2:
 		case 3:
 			do {
-				errorCatch = false;
+				rePrompt = true;
 				cin.clear();
 				cin.ignore(1000, '\n');
-				cout << "Enter numerical input" << endl;
+				cout << "Enter numerical input 1-10 for the sum of squares.Otherwise please enter 0 to quit." << endl;
 				cin >> numInput;
-				if (!cin || numInput > MAXNUM || numInput < MINPOS)
+				if (!numInput)// ASCII value of q
+				{
+					cin.clear();
+					cin.ignore(1000, '\n');
+					cout << "Exiting to main menu." << endl;
+					rePrompt = false;
+				}
+				else if (!cin || numInput > MAXNUM || numInput < MINPOS)
 				{
 					cout << "Please reenter input. One integer within 1-10." << endl;
-					errorCatch = true;
 				}
-			} while (errorCatch);
-			if (userInput == 2)
-				answer = SumSquaresUp(numInput);
-			else
-				answer = SumSquaresDown(numInput);
-			cout << "=" <<  answer;
+				else if (userInput == 2)
+				{
+					numSolution = SumSquaresUp(numInput);
+					cout << "=" << numSolution << endl;
+				}
+				else
+				{
+					numSolution = SumSquaresDown(numInput);
+					cout << "=" << numSolution << endl;
+				}
+			} while (rePrompt);
 			break;
 		//case 3:
 		case 4: // end program
@@ -71,7 +96,7 @@ int main()
 		}
 	}
 }
-float RecPower(double base, int &exponent)// Recursive power function
+float RecPower(double base, int exponent)// Recursive power function
 {
 	if (exponent < 0)// If its negative exponent, I need to multiple 1/base against itself. Otherwise base*base;
 	{
@@ -80,8 +105,8 @@ float RecPower(double base, int &exponent)// Recursive power function
 	}
 	else if (!exponent)
 		return 1;
-	exponent--;
-	return base * RecPower(base, exponent);
+	//exponent--;
+	return base * RecPower(base, exponent-1);
 }
 int SumSquaresUp(int numInput)
 {
