@@ -11,6 +11,10 @@ AddressBook::~AddressBook()
 }
 std::string strLower(std::string tempStr)
 {
+	if (!tempStr.size())
+	{
+		return tempStr;
+	}
 	tempStr.at(0) = toupper(tempStr.at(0));// What if they send empty string
 	for (int x = 1; x < tempStr.size(); x++)
 	{
