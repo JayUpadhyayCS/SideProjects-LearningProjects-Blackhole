@@ -27,7 +27,7 @@ public:
 	void SearchInv(string userInput); // Search unsorted vec for id/name
 	void PrintReport();// print uniqueitems// total price // total quantity 
 };
-void strLower(string& tempStr);// Make string lowercase
+string strLower(string tempStr);// Make string lowercase
 void clearCin(); // Clear cin stream
 void RunMenu(InventoryItems&);
 
@@ -87,7 +87,7 @@ void RunMenu(InventoryItems & itmList)
 				clearCin();
 				if (strInput != "1")
 				{
-					strLower(strInput);
+					strInput=strLower(strInput);
 					itmList.SearchInv(strInput);
 				}
 			} while (strInput != "1");
@@ -120,7 +120,7 @@ bool InventoryItems:: InputRecords() {
 			return true;// error founds
 		if (bufferItm.numItems > 0 && bufferItm.itmPrice > 0)
 		{
-			strLower(bufferItm.itmName);
+			bufferItm.itmName=strLower(bufferItm.itmName);
 			vecItms.push_back(bufferItm);
 		}
 		else
@@ -233,13 +233,14 @@ void InventoryItems::PrintReport()// Basic print records function
 		<< "\nTotal Amount of Items in Inventory: "  <<  numTotAmnt << endl;
 }
 
-void strLower(string& tempStr)
+std::string strLower(std::string tempStr)
 {
 	tempStr.at(0) = toupper(tempStr.at(0));// What if they send empty string
 	for (int x = 1; x < tempStr.size(); x++)
 	{
 		tempStr.at(x) = tolower(tempStr.at(x));
 	}
+	return tempStr;
 }
 void clearCin() 
 {
