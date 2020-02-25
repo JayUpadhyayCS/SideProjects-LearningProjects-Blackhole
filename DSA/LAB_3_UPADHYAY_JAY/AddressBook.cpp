@@ -3,6 +3,9 @@
 #include <iostream>
 #include <new>
 #include <cctype>
+#include <iomanip>
+
+const int SPACE = 15;
 AddressBook::AddressBook()
 {
 }
@@ -72,8 +75,8 @@ void AddressBook::Search(std::string name)
 		if (trav->data.lastName == name || trav->data.numPhone == name)
 		{
 			///////////////////////////////////////////////////////Format
-			std::cout << "Record found, Outputting below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
-				<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+			std::cout << "Record found, Outputting below: \n" << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::setw(SPACE)<< trav->data.numStreet << std::setw(SPACE)<<trav->data.streetName
+				<< std::setw(SPACE)<<trav->data.cityName << std::setw(SPACE)<< trav->data.numPhone << std::setw(SPACE)<< trav->data.day << trav->data.month << trav->data.year << std::endl;
 			found = true;
 		}
 		trav = trav->ptr;
