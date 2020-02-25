@@ -235,7 +235,9 @@ void InventoryItems::PrintReport()// Basic print records function
 
 std::string strLower(std::string tempStr)
 {
-	tempStr.at(0) = toupper(tempStr.at(0));// What if they send empty string
+	if (!tempStr.size())
+		return tempStr;
+	tempStr.at(0) = toupper(tempStr.at(0));
 	for (int x = 1; x < tempStr.size(); x++)
 	{
 		tempStr.at(x) = tolower(tempStr.at(x));
