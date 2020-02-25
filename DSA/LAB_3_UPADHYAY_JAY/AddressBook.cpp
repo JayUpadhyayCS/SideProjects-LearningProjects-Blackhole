@@ -2,13 +2,22 @@
 #include <fstream>
 #include <iostream>
 #include <new>
+#include <cctype>
 AddressBook::AddressBook()
 {
 }
 AddressBook::~AddressBook()
 {
 }
-
+std::string strLower(std::string tempStr)
+{
+	tempStr.at(0) = toupper(tempStr.at(0));// What if they send empty string
+	for (int x = 1; x < tempStr.size(); x++)
+	{
+		tempStr.at(x) = tolower(tempStr.at(x));
+	}
+	return tempStr;
+}
 void AddressBook::Load()
 {
 	std::ifstream inFile;
@@ -40,6 +49,7 @@ void AddressBook::Load()
 		size++;
 		inFile >> buffer->data.firstName >> buffer->data.lastName >> buffer->data.numStreet >> buffer->data.streetName >> buffer->data.cityName// Maybe prime 
 			>> buffer->data.numPhone >> buffer->data.day >> buffer->data.month >> buffer->data.year;
+		buffer->data.lastName = strLower(buffer->data.lastName);
 		buffer->ptr = nullptr;
 
 	}
@@ -53,6 +63,7 @@ void AddressBook::Search(std::string name)
 {
 	RecordList* trav = head;
 	bool found = false;
+	name=strLower(name);
 	do {
 		if (trav->data.lastName == name || trav->data.numPhone == name)
 		{

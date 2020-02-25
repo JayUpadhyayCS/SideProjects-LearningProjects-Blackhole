@@ -4,7 +4,7 @@
 //PERSON holds data
 // PersonList
 void clearCin();
-void strLower(string& tempStr);
+
 using namespace std;
 int main()
 {
@@ -31,10 +31,9 @@ int main()
 			cout << "Enter a name or number youd like to search for.Enter Quit to return to main menu." << endl;
 			cin >> userStr;
 			clearCin();
-			strLower(userStr);
+			//userStr=strLower(userStr);
 			if (userStr != "Quit")
 			{
-				strLower(userStr);
 				recList.Search(userStr);
 			}
 			break;
@@ -58,14 +57,7 @@ int main()
 	}
 	
 }
-void strLower(string& tempStr)
-{
-	tempStr.at(0) = toupper(tempStr.at(0));// What if they send empty string
-	for (int x = 1; x < tempStr.size(); x++)
-	{
-		tempStr.at(x) = tolower(tempStr.at(x));
-	}
-}
+
 void clearCin()
 {
 	cin.clear();
