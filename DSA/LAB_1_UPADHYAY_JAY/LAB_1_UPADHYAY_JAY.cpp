@@ -60,7 +60,7 @@ void RunMenu(InventoryItems & itmList)// Requires inventory populated
 			itmList.UnsortPrint();
 			break;
 		case 2: // Print inventory sorted in ascending order by any field
-			while (numInput != 5)
+			while (numInput != 5) // 5 is the option to exit
 			{
 				cout << "What would you like to sort by?\n1:ID\n2:Name\n3:Quantity\n4:Price\n5:Back to Main Menu\n";
 				cin >> numInput;
@@ -75,7 +75,7 @@ void RunMenu(InventoryItems & itmList)// Requires inventory populated
 				}
 				else
 				{
-					cout << "Putting you back into main menu. Could not understand input.\n";
+					cout << "Problem with input. Retry and enter a number.\n";
 					clearCin();
 				}
 			}
