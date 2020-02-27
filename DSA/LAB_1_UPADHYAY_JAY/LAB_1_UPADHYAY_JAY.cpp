@@ -44,7 +44,7 @@ int main()
 }
 
 
-void RunMenu(InventoryItems & itmList)
+void RunMenu(InventoryItems & itmList)// Requires inventory populated
 {
 	int numInput;
 	string strInput;
@@ -191,7 +191,7 @@ void InventoryItems::BubSort(int userChoice) {
 	}
 	
 }
-void InventoryItems::PrintSorted()// Print array of pointer values
+void InventoryItems::PrintSorted()// Print array of pointer values. Requires pointers initialized and sorted.
 {
 	cout << left << setw(SPACE) << "Item ID" << left << setw(SPACE) << "Item Name" << left << setw(SPACE) << "Quantity" << left << setw(SPACE) << "Price" << endl;
 	int vecSize = sortedItms.size();
@@ -201,7 +201,7 @@ void InventoryItems::PrintSorted()// Print array of pointer values
 			<< left << setw(SPACE) << fixed << showpoint << setprecision(2)<< sortedItms.at(x)->itmPrice << endl;
 	}
 }
-void InventoryItems::SearchInv(string userInput)
+void InventoryItems::SearchInv(string userInput)// Requires an inventory to search and valid userInput
 {
 	bool notFound = true;
 	int vecSize = sortedItms.size();
@@ -220,7 +220,7 @@ void InventoryItems::SearchInv(string userInput)
 		cout << "Record not found. Sorry, Please retry with different data.";
 	}
 }
-void InventoryItems::PrintReport()// Basic print records function
+void InventoryItems::PrintReport()// Basic print records function // requires inventory to calculate current values.
 {
 	double numTotPrice = 0;
 	int numTotAmnt = 0;

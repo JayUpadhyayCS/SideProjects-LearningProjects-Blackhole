@@ -8,9 +8,15 @@ const int MINPOS = 1;// Minimum input for sum of squares input
 float RecPower(double , int);//Recursive exponenet power function
 int SumSquaresUp(int numInput);// Sum of squares start low then ascend
 int SumSquaresDown(int numInput);// sum of squares, start max then descend
+void promptMenu();
 
 using namespace std;
 int main()
+{
+	//No precondition.
+	promptMenu();
+}
+void promptMenu()
 {
 	double numSolution;
 	int numInput;
@@ -46,13 +52,12 @@ int main()
 					if (!cin || base > MAXNUM || base<MINNUM || exponent >MAXNUM || exponent < MINNUM)
 					{
 						cout << "Error with input. Two integers with a space between please. Must be in range of -10 to 10." << endl;
-						rePrompt= true;
+						rePrompt = true;
 					}
 					else
-						cout << base << " to the power of " << exponent << " equals " << RecPower(base, exponent)<< "!" << endl;
+						cout << base << " to the power of " << exponent << " equals " << RecPower(base, exponent) << "!" << endl;// check to make sure base and exponent are valid
 				}
-			}
-			while (rePrompt);// could use base instead but rePrompt is more understandable.
+			} while (rePrompt);// could use base instead but rePrompt is more understandable.
 			break;
 		case 2:
 		case 3:
@@ -75,17 +80,17 @@ int main()
 				}
 				else if (userInput == 2)
 				{
-					numSolution = SumSquaresUp(numInput);
+					numSolution = SumSquaresUp(numInput);// requires numInput to be >0 and initialized
 					cout << "=" << numSolution << endl;
 				}
 				else
 				{
-					numSolution = SumSquaresDown(numInput);
+					numSolution = SumSquaresDown(numInput);// requires numInput to be >0 and initialized
 					cout << "=" << numSolution << endl;
 				}
 			} while (rePrompt);
 			break;
-		//case 3:
+			//case 3:
 		case 4: // end program
 			continueProg = false;
 			break;
