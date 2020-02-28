@@ -1,4 +1,4 @@
-// Lab1 Upadhyay, Jay T TH  2/20/20
+// Lab2 Upadhyay, Jay T TH  2/20/20
 
 //Erro with neg number
 #include <iostream>
@@ -8,7 +8,7 @@ double RecPower(double , int);//Recursive exponenet power function
 int SumSquaresUp(int numInput);// Sum of squares start low then ascend
 int SumSquaresDown(int numInput);// sum of squares, start max then descend
 void promptMenu();
-int GetNum();
+
 void RunPowerCase();
 void RunSquareUp();
 void RunSquareDown();
