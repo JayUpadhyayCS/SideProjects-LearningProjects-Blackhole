@@ -1,0 +1,2 @@
+Error with this piece of data: 404 PeanutButter -2 2.00
+Error with this piece of data: 1404 Jelly 2 -2.00
