@@ -37,15 +37,6 @@ int main()
 		}
 
 	}
-	// Year -- 7 bits
-	// Month-- 4 bits
-	// Day -- 5 bits
-	//cin >> year >> month >> day;
-	//0100 1100 0111 0100
-	//Year--010 0110   Month--0 011 Day--1 0100
-	//       38                   3          20    
-	// Maybe has to do with amount of digits.
-	//010 01100000 shift left 4 times
 	year -=1980;
 	data = data | year;
 	data = data << 4;

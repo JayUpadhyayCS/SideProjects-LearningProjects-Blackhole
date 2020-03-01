@@ -5,7 +5,7 @@
 //print output file with all test data, main headers, implementations
 //dont leave it on the desk, get signature before turning it in.
 //leave it whre laptop is on gray table
-// write your name across on the program. Put T so she knows which class.
+//write your name across on the program. Put T so she knows which class.
 
 
 #include <cctype>
@@ -121,6 +121,7 @@ void InventoryItems::InputRecords() {
 			<< bufferItm.numItems << " " << fixed << showpoint << setprecision(2) << bufferItm.itmPrice << "\n";// Put buffer items details here
 	}
 	inputStream.close();
+	outStream.close();
 	for (int i = 0; i < vecItms.size(); i++)// Initialize array of pointers
 	{
 		sortedItms.push_back(&vecItms.at(i));
@@ -266,8 +267,6 @@ void RunSortCase(InventoryItems& itmList)
 void RunSearchCase(InventoryItems& itmList)
 {
 	string strInput = "";
-
-	
 	do
 	{
 		cout << "\nEnter name or ID of an item you are searching for, or enter 1 to return to Main Menu.\n";

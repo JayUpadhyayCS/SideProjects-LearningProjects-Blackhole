@@ -4,11 +4,10 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-double RecPower(double , int);//Recursive exponenet power function
+double RecPower(double , int);//Recursive exponent power function
 int SumSquaresUp(int numInput);// Sum of squares start low then ascend
 int SumSquaresDown(int numInput);// sum of squares, start max then descend
 void promptMenu();
-
 void RunPowerCase();
 void RunSquareUp();
 void RunSquareDown();
