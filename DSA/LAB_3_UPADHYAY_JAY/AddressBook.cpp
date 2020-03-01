@@ -79,9 +79,10 @@ void AddressBook::Search()
 	bool rePrompt = true;
 	while (rePrompt)
 	{
+		trav = head;
 		std::cout << "Enter a name or number youd like to search for.Enter Quit to return to main menu." << std::endl;
 		std::cin >> name;
-		strLower(name);
+		name=strLower(name);
 		clearCin();
 		if (name == "Quit"||name== "quit")
 		{
@@ -149,22 +150,35 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 }
 void AddressBook::DeleteRec(std::string name)
 {
+	RecordList* toDelete;
 	bool found = false;
 	RecordList* trav=head;
-	do {
-		if (trav->ptr->data.lastName == name || trav->ptr->data.numPhone == name)
-		{
-			RecordList* toDelete;
-			///////////////////////////////////////////////////////Format
-			std::cout << "Record found, deleting following record below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
-				<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
-			found = true;
-			toDelete = trav->ptr;
-			trav->ptr = trav->ptr->ptr;
-			delete toDelete;
-		}
-		trav = trav->ptr;
-	} while (trav != nullptr && !found);
+	if (trav->data.lastName == name || trav->data.numPhone == name)// if head needs to be deleted
+	{
+		toDelete = trav;
+		head = head->ptr;
+		delete toDelete;
+		found = true;
+		std::cout << "Record found, deleting following record below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
+			<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+	}
+	else {
+
+		do {
+			if (trav->ptr->data.lastName == name || trav->ptr->data.numPhone == name)
+			{
+
+				///////////////////////////////////////////////////////Format
+				std::cout << "Record found, deleting following record below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
+					<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+				found = true;
+				toDelete = trav->ptr;
+				trav->ptr = trav->ptr->ptr;
+				delete toDelete;
+			}
+			trav = trav->ptr;
+		} while (trav != nullptr && !found);
+	}
 	if (!found)
 	{
 		std::cout << "Sorry could not find any records matching, " << name << ". Please try again or another option." << std::endl;
