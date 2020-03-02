@@ -155,6 +155,7 @@ void AddressBook::DeleteRec(std::string name)
 	RecordList* toDelete;
 	bool found = false;
 	RecordList* trav=head;
+	name = strLower(name);
 	if (trav->data.lastName == name || trav->data.numPhone == name)// if head needs to be deleted
 	{
 		toDelete = trav;
@@ -172,15 +173,15 @@ void AddressBook::DeleteRec(std::string name)
 			{
 
 				///////////////////////////////////////////////////////Format
-				std::cout << "Record found, deleting following record below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
-					<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+				std::cout << "Record found, deleting following record below: \n" << trav->ptr->data.firstName << trav->ptr->data.lastName << trav->ptr->data.numStreet << trav->ptr->data.streetName
+					<< trav->ptr->data.cityName << trav->ptr->data.numPhone << trav->ptr->data.day << trav->ptr->data.month << trav->ptr->data.year << std::endl;
 				found = true;
 				toDelete = trav->ptr;
 				trav->ptr = trav->ptr->ptr;
 				delete toDelete;
 			}
 			trav = trav->ptr;
-		} while (trav != nullptr && !found);
+		} while (trav->ptr != nullptr && !found);
 	}
 	if (!found)
 	{
