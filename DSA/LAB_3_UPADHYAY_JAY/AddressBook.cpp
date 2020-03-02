@@ -102,6 +102,10 @@ void AddressBook::Search(std::string name)
 		//std::cout << "Exiting to main menu" << std::endl;
 		return;
 	}
+	else if (trav == nullptr)
+	{
+		std::cout << "List is empty, cannot delete anything." << std::endl;
+	}
 	else
 	{
 		do {
@@ -176,13 +180,20 @@ void AddressBook::DeleteRec(std::string name)
 		//std::cout << "Returning to main menu" << std::endl;
 		return;
 	}
+	else if (trav == nullptr)
+	{
+		std::cout << "List is empty, cannot delete anything." << std::endl;
+	}
 	else if (trav->data.lastName == name || trav->data.numPhone == name)// if head needs to be deleted
 	{
 		toDelete = trav;
 		head = head->ptr;
-		std::cout << "Record found, deleting below: \n" << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::setw(SPACE) 
-			<< trav->data.numStreet << std::setw(SPACE) << trav->data.streetName<< std::setw(SPACE) << trav->data.cityName << std::setw(SPACE) 
-			<< trav->data.numPhone << std::setw(SPACE) << trav->data.day << trav->data.month << trav->data.year << std::endl;
+		std::cout << "Record found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+			<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
+			<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
+		std::cout << std::setw(SPACE) << std::left << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::left << std::setw(SPACE)
+			<< trav->data.numStreet << std::setw(SPACE) << std::left << trav->data.streetName << std::setw(SPACE) << std::left << trav->data.cityName
+			<< std::setw(SPACE) << std::left << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
 		delete toDelete;
 		found = true;
 		
@@ -192,18 +203,23 @@ void AddressBook::DeleteRec(std::string name)
 		do {
 			if (trav->ptr->data.lastName == name || trav->ptr->data.numPhone == name)
 			{
-
+				std::cout << "Record found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
+					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
 				///////////////////////////////////////////////////////Format
-				std::cout << "Record found, deleting following record below: \n" << std::setw(SPACE) << std::left << trav->ptr->data.firstName << std::setw(SPACE) << trav->ptr->data.lastName
-					<< std::left << std::setw(SPACE)<< trav->ptr->data.numStreet << std::setw(SPACE) << std::left << trav->ptr->data.streetName << std::setw(SPACE) << std::left 
-					<< trav->ptr->data.cityName<< std::setw(SPACE) << std::left << trav->ptr->data.numPhone << std::right << std::setw(SPACE) 
-					<< trav->ptr->data.day << trav->ptr->data.month << trav->ptr->data.year << std::endl;
+				std::cout << std::setw(SPACE) << std::left << trav->ptr->data.firstName << std::setw(SPACE) << trav->ptr->data.lastName << std::left << std::setw(SPACE)
+					<< trav->ptr->data.numStreet << std::setw(SPACE) << std::left << trav->ptr->data.streetName << std::setw(SPACE) << std::left << trav->ptr->data.cityName
+					<< std::setw(SPACE) << std::left << trav->ptr->data.numPhone << trav->ptr->data.day << trav->ptr->data.month << trav->ptr->data.year << std::endl;
 				found = true;
 				toDelete = trav->ptr;
+				
+				
+				
 				trav->ptr = trav->ptr->ptr;
 				delete toDelete;
 			}
-			trav = trav->ptr;
+			if(trav->ptr!=nullptr)
+				trav = trav->ptr;
 		} while (trav->ptr != nullptr && !found);
 	}
 	if (!found)
