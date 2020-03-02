@@ -8,7 +8,7 @@ double RecPower(double , int);//Recursive exponent power function
 int SumSquaresUp(int numInput);// Sum of squares start low then ascend
 int SumSquaresDown(int numInput);// sum of squares, start max then descend
 void promptMenu();
-void RunPowerCase();
+void RunPower();
 void RunSquareUp();
 void RunSquareDown();
 void clearCin();
@@ -32,7 +32,7 @@ void promptMenu()
 		switch (userInput)
 		{
 		case 1:
-			RunPowerCase();
+			RunPower();
 			break;
 		case 2:
 			RunSquareUp();
@@ -112,7 +112,7 @@ int SumSquaresDown(int numInput)
 		return (numInput * numInput) + answer;
 	}
 }
-void RunPowerCase()
+void RunPower()
 {
 	double base;
 	int power;
