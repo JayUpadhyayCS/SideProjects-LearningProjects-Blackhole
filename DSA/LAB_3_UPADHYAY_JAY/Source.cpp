@@ -4,7 +4,6 @@
 //PERSON holds data
 // PersonList
 //Need to fix menu infinite loop bad input. Now it is exiting when it gets string input.
-void clearCin();
 
 using namespace std;
 int main()
@@ -30,7 +29,7 @@ int main()
 			recList.WriteFile();
 			break;
 		case 2:
-			recList.Search();
+			SearchCase(recList);
 			break;
 		case 3:
 		{

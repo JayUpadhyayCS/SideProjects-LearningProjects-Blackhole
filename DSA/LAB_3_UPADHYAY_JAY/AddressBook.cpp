@@ -25,6 +25,20 @@ std::string strLower(std::string tempStr)
 	}
 	return tempStr;
 }
+void SearchCase(AddressBook& recList)
+{
+	std::string name="";
+	bool rePrompt = true;
+	while (name!="Quit")
+	{
+		
+		std::cout << "Enter a name or number youd like to search for.Enter Quit to return to main menu." << std::endl;
+		std::cin >> name;
+		name = strLower(name);
+		clearCin();
+		recList.Search(name);
+	}
+}
 void clearCin()
 {
 	std::cin.clear();
@@ -71,50 +85,40 @@ void AddressBook::Load()
 	//beatles essentia
 
 }
-void AddressBook::Search()
+void AddressBook::Search(std::string name)
 {
 	RecordList* trav = head;
 	bool found = false;
-	std::string name;
-	bool rePrompt = true;
-	while (rePrompt)
+	if (name == "Quit" || name == "quit")
 	{
-		found = false;
-		trav = head;
-		std::cout << "Enter a name or number youd like to search for.Enter Quit to return to main menu." << std::endl;
-		std::cin >> name;
-		name=strLower(name);
-		clearCin();
-		if (name == "Quit"||name== "quit")
-		{
-			std::cout << "Exiting to main menu" << std::endl;
-			rePrompt = false;
-		}
-		else
-		{
-			do {
+		std::cout << "Exiting to main menu" << std::endl;
+		return;
+	}
+	else
+	{
+		do {
 
-				if (trav->data.lastName == name || trav->data.numPhone == name)
-				{
-					///////////////////////////////////////////////////////Format
-					std::cout << "Record found, Outputting below: \n" << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::setw(SPACE) << trav->data.numStreet << std::setw(SPACE) << trav->data.streetName
-						<< std::setw(SPACE) << trav->data.cityName << std::setw(SPACE) << trav->data.numPhone << std::setw(SPACE) << trav->data.day << trav->data.month << trav->data.year << std::endl;
-					found = true;
-				}
-				else
-				{
-					trav = trav->ptr;
-				}
-			} while (trav != nullptr && !found);
-			if (!found)
+			if (trav->data.lastName == name || trav->data.numPhone == name)
 			{
-				std::cout << "Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
+				///////////////////////////////////////////////////////Format
+				found = true;
+				std::cout << "Record found, Outputting below: \n" << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::setw(SPACE) << trav->data.numStreet << std::setw(SPACE) << trav->data.streetName
+					<< std::setw(SPACE) << trav->data.cityName << std::setw(SPACE) << trav->data.numPhone << std::setw(SPACE) << trav->data.day << trav->data.month << trav->data.year << std::endl;
+				return;
 			}
+			else
+			{
+				trav = trav->ptr;
+			}
+		} while (trav != nullptr && !found);
+		if (!found)
+		{
+			std::cout << "Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
+			return;
 		}
 	}
-	
-
 }
+
 
 void AddressBook::AddEntry(RecordList* buffer, int index) 
 {
@@ -181,7 +185,7 @@ void AddressBook::DeleteRec(std::string name)
 				delete toDelete;
 			}
 			trav = trav->ptr;
-		} while (trav->ptr != nullptr && !found);
+		} while (trav != nullptr && !found);
 	}
 	if (!found)
 	{
