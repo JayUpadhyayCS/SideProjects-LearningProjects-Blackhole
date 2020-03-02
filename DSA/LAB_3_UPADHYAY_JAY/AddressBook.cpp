@@ -157,10 +157,11 @@ void AddressBook::DeleteRec(std::string name)
 	{
 		toDelete = trav;
 		head = head->ptr;
-		delete toDelete;
-		found = true;
 		std::cout << "Record found, deleting following record below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
 			<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+		delete toDelete;
+		found = true;
+		
 	}
 	else {
 
