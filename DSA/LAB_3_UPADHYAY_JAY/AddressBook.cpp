@@ -197,7 +197,7 @@ void AddressBook::DeleteRec(std::string name)
 				delete toDelete;
 			}
 			trav = trav->ptr;
-		} while (trav != nullptr && !found);
+		} while (trav->ptr != nullptr && !found);
 	}
 	if (!found)
 	{
