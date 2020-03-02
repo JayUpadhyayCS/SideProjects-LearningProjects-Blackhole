@@ -34,12 +34,7 @@ int main()
 			break;
 		case 3:
 		{
-			RecordList* temp = new (nothrow) RecordList();
-			if (!temp)
-			{
-				cout << "Could not allocate memory. Ending program" << endl;
-			}
-			recList.AddEntry(temp, 1);
+			GetEntryInput(recList);
 			break;
 		}
 		default:

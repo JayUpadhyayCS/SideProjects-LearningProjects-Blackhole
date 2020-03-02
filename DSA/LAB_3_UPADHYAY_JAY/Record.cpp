@@ -8,6 +8,7 @@ Record::Record(std::string firstNameTemp, std::string lastNameTemp, std::string 
 	firstName = firstNameTemp;
 	lastName = lastNameTemp;
 	numStreet = numStreetTemp;
+	streetName = streetNameTemp;
 	cityName = cityNameTemp; 
 	numPhone = numPhoneTemp;
 	month = monthTemp;

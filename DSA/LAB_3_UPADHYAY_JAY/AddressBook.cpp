@@ -46,7 +46,27 @@ void InputMenu(AddressBook& recList, int choice)
 	}
 	std::cout << "Returning to main menu" << std::endl;
 }
-
+void GetEntryInput(AddressBook& recList)
+{
+	std::string fName,lName,buildNum,streetName,cityName,phoneNum;
+	int day, month, year;
+	
+	std::cout << "Enter in data format below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
+		<< std::setw(SPACE) << std::left << "PhoneNumber" << " DD " << "MM " << " YY" << std::endl;
+	std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> phoneNum >> day >> month >> year;
+	//Record temp = new (std::nothrow) Record(fName,lName,buildNum,streetName,cityName,phoneNum,day,month,year);
+	Record temp(fName, lName, buildNum, streetName, cityName, phoneNum, day, month, year);
+	RecordList* temp2= new (std::nothrow) RecordList;
+	temp2->data = temp;
+	temp2->ptr = nullptr;
+	if (!temp2)
+	{
+		std::cout << "Could not allocate memory. Returning to main menu." << std::endl;
+		return;
+	}
+	recList.AddEntry(temp2, 1);
+}
 void clearCin()
 {
 	std::cin.clear();
@@ -140,10 +160,11 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 	{
 		buffer->ptr = head;
 		head = buffer;
+		std::cout << "Successfully added to Addressbook " << std::endl;
 	}
 	else if (index >= size)// End
 	{
-		std::cout <<"Adding it to end of file since index exceeded Book size." << std::endl;
+		std::cout <<"Adding it to end of file since index exceeded AddressBook size." << std::endl;
 		
 		while (trav->ptr != nullptr)
 		{
@@ -163,8 +184,9 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 		}
 		buffer->ptr = trav->ptr;
 		trav->ptr = buffer;
-
+		std::cout << "Successfully added to Addressbook " << std::endl;
 	}
+	
 }
 void AddressBook::DeleteRec(std::string name)
 {
@@ -242,5 +264,6 @@ void AddressBook::WriteFile()
 		
 	}
 	outFile.close();
+	std::cout << "Successfully entered into file." << std::endl;
 
 }

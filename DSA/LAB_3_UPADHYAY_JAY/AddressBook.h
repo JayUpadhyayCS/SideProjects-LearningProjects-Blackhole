@@ -10,6 +10,7 @@ class AddressBook
 public:
 	RecordList* head=nullptr;
 	int size=0;
+	
 	AddressBook();
 	~AddressBook();
 	void Load();// Load and stores into structure
@@ -28,4 +29,4 @@ private:
 void clearCin();
 std::string strLower(std::string tempStr);
 void InputMenu(AddressBook& reclist, int choice);
-void DeleteCase(AddressBook& reclist);
+void GetEntryInput(AddressBook& reclist);
