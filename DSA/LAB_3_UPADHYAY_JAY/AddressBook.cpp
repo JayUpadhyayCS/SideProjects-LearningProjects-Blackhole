@@ -79,6 +79,7 @@ void AddressBook::Search()
 	bool rePrompt = true;
 	while (rePrompt)
 	{
+		found = false;
 		trav = head;
 		std::cout << "Enter a name or number youd like to search for.Enter Quit to return to main menu." << std::endl;
 		std::cin >> name;
@@ -91,7 +92,6 @@ void AddressBook::Search()
 		}
 		else
 		{
-			name = strLower(name);
 			do {
 
 				if (trav->data.lastName == name || trav->data.numPhone == name)
@@ -102,7 +102,9 @@ void AddressBook::Search()
 					found = true;
 				}
 				else
+				{
 					trav = trav->ptr;
+				}
 			} while (trav != nullptr && !found);
 			if (!found)
 			{
