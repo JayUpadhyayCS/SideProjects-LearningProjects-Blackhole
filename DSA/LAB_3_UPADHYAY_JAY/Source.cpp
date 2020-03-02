@@ -29,7 +29,8 @@ int main()
 			recList.WriteFile();
 			break;
 		case 2:
-			SearchCase(recList);
+		case 4:
+			InputMenu(recList,userChoice);
 			break;
 		case 3:
 		{
@@ -41,12 +42,6 @@ int main()
 			recList.AddEntry(temp, 1);
 			break;
 		}
-		case 4:
-			cout << "Enter what you'd like to delete" << endl;
-			cin >> userStr;
-			clearCin();
-			recList.DeleteRec(userStr);
-			break;
 		default:
 			cout << "Had error understanding input" << endl;
 			clearCin();

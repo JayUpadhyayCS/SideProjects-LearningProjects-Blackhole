@@ -27,4 +27,5 @@ private:
 };
 void clearCin();
 std::string strLower(std::string tempStr);
-void SearchCase(AddressBook& reclist);
+void InputMenu(AddressBook& reclist, int choice);
+void DeleteCase(AddressBook& reclist);

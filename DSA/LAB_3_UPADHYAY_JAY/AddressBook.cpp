@@ -25,10 +25,9 @@ std::string strLower(std::string tempStr)
 	}
 	return tempStr;
 }
-void SearchCase(AddressBook& recList)
+void InputMenu(AddressBook& recList, int choice)
 {
 	std::string name="";
-	bool rePrompt = true;
 	while (name!="Quit")
 	{
 		
@@ -36,9 +35,18 @@ void SearchCase(AddressBook& recList)
 		std::cin >> name;
 		name = strLower(name);
 		clearCin();
-		recList.Search(name);
+		if (choice == 2)
+		{
+			recList.Search(name);
+		}
+		else if(choice == 4)
+		{
+			recList.DeleteRec(name);
+		}
 	}
+	std::cout << "Returning to main menu" << std::endl;
 }
+
 void clearCin()
 {
 	std::cin.clear();
@@ -89,9 +97,9 @@ void AddressBook::Search(std::string name)
 {
 	RecordList* trav = head;
 	bool found = false;
-	if (name == "Quit" || name == "quit")
+	if (name == "Quit")
 	{
-		std::cout << "Exiting to main menu" << std::endl;
+		//std::cout << "Exiting to main menu" << std::endl;
 		return;
 	}
 	else
@@ -159,8 +167,12 @@ void AddressBook::DeleteRec(std::string name)
 	RecordList* toDelete;
 	bool found = false;
 	RecordList* trav=head;
-	name = strLower(name);
-	if (trav->data.lastName == name || trav->data.numPhone == name)// if head needs to be deleted
+	if (name == "Quit")
+	{
+		//std::cout << "Returning to main menu" << std::endl;
+		return;
+	}
+	else if (trav->data.lastName == name || trav->data.numPhone == name)// if head needs to be deleted
 	{
 		toDelete = trav;
 		head = head->ptr;
