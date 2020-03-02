@@ -39,8 +39,8 @@ public:
 string strLower(string tempStr);// Make string lowercase
 void clearCin(); // Clear cin stream
 void RunMenu(InventoryItems&);
-void RunSortCase(InventoryItems& itmList);
-void RunSearchCase(InventoryItems& itmList);
+void RunSort(InventoryItems& itmList);
+void RunSearch(InventoryItems& itmList);
 int main()
 {
 	InventoryItems itmList;
@@ -65,11 +65,11 @@ void RunMenu(InventoryItems& itmList)// Requires inventory populated
 			itmList.UnsortPrint();
 			break;
 		case 2: // Print inventory sorted in ascending order by any field
-			RunSortCase(itmList);
+			RunSort(itmList);
 			break;
 
 		case 3: // Search for item by ID or name
-			RunSearchCase(itmList);
+			RunSearch(itmList);
 
 			break;
 		case 4: // Print report of number of unique items, and total count/worth of items
@@ -234,7 +234,7 @@ void clearCin()
 	cin.ignore(1000, '\n');
 }
 
-void RunSortCase(InventoryItems& itmList)
+void RunSort(InventoryItems& itmList)
 {
 	int numInput;
 	bool reRun = true;
@@ -264,7 +264,7 @@ void RunSortCase(InventoryItems& itmList)
 	}
 }
 
-void RunSearchCase(InventoryItems& itmList)
+void RunSearch(InventoryItems& itmList)
 {
 	string strInput = "";
 	do
