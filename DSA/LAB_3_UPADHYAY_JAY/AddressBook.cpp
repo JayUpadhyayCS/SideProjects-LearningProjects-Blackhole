@@ -87,7 +87,7 @@ void AddressBook::Load()
 		buffer->ptr = nullptr;
 
 	}
-	
+	inFile.close();
 	std::cout << "Complete" << std::endl;
 	//oscar peterson
 	//beatles essentia
@@ -109,9 +109,13 @@ void AddressBook::Search(std::string name)
 			if (trav->data.lastName == name || trav->data.numPhone == name)
 			{
 				///////////////////////////////////////////////////////Format
+				std::cout <<"Record found, Outputting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
+					<< std::setw(SPACE) << std::left << "PhoneNumber" <<    "DD" <<  "MM" <<  "YY" << std::endl;
 				found = true;
-				std::cout << "Record found, Outputting below: \n" << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::setw(SPACE) << trav->data.numStreet << std::setw(SPACE) << trav->data.streetName
-					<< std::setw(SPACE) << trav->data.cityName << std::setw(SPACE) << trav->data.numPhone << std::setw(SPACE) << trav->data.day << trav->data.month << trav->data.year << std::endl;
+				std::cout << std::setw(SPACE) << std::left << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::left << std::setw(SPACE)
+					<< trav->data.numStreet << std::setw(SPACE) << std::left << trav->data.streetName << std::setw(SPACE) << std::left << trav->data.cityName
+					<< std::setw(SPACE) << std::left << trav->data.numPhone <<   trav->data.day << trav->data.month  << trav->data.year << std::endl;
 				return;
 			}
 			else
@@ -176,8 +180,9 @@ void AddressBook::DeleteRec(std::string name)
 	{
 		toDelete = trav;
 		head = head->ptr;
-		std::cout << "Record found, deleting following record below: \n" << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
-			<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+		std::cout << "Record found, deleting below: \n" << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::setw(SPACE) 
+			<< trav->data.numStreet << std::setw(SPACE) << trav->data.streetName<< std::setw(SPACE) << trav->data.cityName << std::setw(SPACE) 
+			<< trav->data.numPhone << std::setw(SPACE) << trav->data.day << trav->data.month << trav->data.year << std::endl;
 		delete toDelete;
 		found = true;
 		
@@ -189,8 +194,10 @@ void AddressBook::DeleteRec(std::string name)
 			{
 
 				///////////////////////////////////////////////////////Format
-				std::cout << "Record found, deleting following record below: \n" << trav->ptr->data.firstName << trav->ptr->data.lastName << trav->ptr->data.numStreet << trav->ptr->data.streetName
-					<< trav->ptr->data.cityName << trav->ptr->data.numPhone << trav->ptr->data.day << trav->ptr->data.month << trav->ptr->data.year << std::endl;
+				std::cout << "Record found, deleting following record below: \n" << std::setw(SPACE) << std::left << trav->ptr->data.firstName << std::setw(SPACE) << trav->ptr->data.lastName
+					<< std::left << std::setw(SPACE)<< trav->ptr->data.numStreet << std::setw(SPACE) << std::left << trav->ptr->data.streetName << std::setw(SPACE) << std::left 
+					<< trav->ptr->data.cityName<< std::setw(SPACE) << std::left << trav->ptr->data.numPhone << std::right << std::setw(SPACE) 
+					<< trav->ptr->data.day << trav->ptr->data.month << trav->ptr->data.year << std::endl;
 				found = true;
 				toDelete = trav->ptr;
 				trav->ptr = trav->ptr->ptr;
@@ -208,8 +215,20 @@ void AddressBook::WriteFile()
 {
 	std::ofstream outFile;
 	outFile.open("test.txt",std::fstream::out);
-	RecordList* trav=head;
-	outFile << trav->data.firstName << trav->data.lastName << trav->data.numStreet << trav->data.streetName
-		<< trav->data.cityName << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+	outFile << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
+		<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
+
+	for (RecordList* trav = head; trav != nullptr; trav = trav->ptr)
+	{
+
+		
+		
+		outFile << std::setw(SPACE) << std::left << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::left << std::setw(SPACE)
+			<< trav->data.numStreet << std::setw(SPACE) << std::left << trav->data.streetName << std::setw(SPACE) << std::left << trav->data.cityName
+			<< std::setw(SPACE) << std::left << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+		
+	}
+	outFile.close();
 
 }
