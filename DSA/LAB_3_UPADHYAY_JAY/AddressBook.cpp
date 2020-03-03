@@ -49,12 +49,14 @@ void InputMenu(AddressBook& recList, int choice)
 void GetEntryInput(AddressBook& recList)
 {
 	std::string fName,lName,buildNum,streetName,cityName,phoneNum;
-	int day, month, year;
+	int day, month, year, index;
 	
 	std::cout << "Enter in data format below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 		<< std::setw(SPACE) << std::left << "PhoneNumber" << " DD " << "MM " << " YY" << std::endl;
 	std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> phoneNum >> day >> month >> year;
+	std::cout << "Enter the index you want to insert it. 1 means at front of list." << std::endl;
+	std::cin >> index;
 	//Record temp = new (std::nothrow) Record(fName,lName,buildNum,streetName,cityName,phoneNum,day,month,year);
 	Record temp(fName, lName, buildNum, streetName, cityName, phoneNum, day, month, year);
 	RecordList* temp2= new (std::nothrow) RecordList;
@@ -65,7 +67,7 @@ void GetEntryInput(AddressBook& recList)
 		std::cout << "Could not allocate memory. Returning to main menu." << std::endl;
 		return;
 	}
-	recList.AddEntry(temp2, 1);
+	recList.AddEntry(temp2, index-1);
 }
 void clearCin()
 {
