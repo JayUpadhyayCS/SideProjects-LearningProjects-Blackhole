@@ -21,7 +21,7 @@ public:
 	PersonList();
 	~PersonList();
 	void InputPpl(int numPpl);
-	//void HotPotato(int numPass, int numPpl);
+	void HotPotato(int numPass, int numPpl);
 private:
 	Person* head = nullptr;
 
@@ -45,7 +45,7 @@ void main()
 	cout << "Enter number of people: ";
 	cin >> numPpl;
 	pplList.InputPpl(numPpl);
-	//pplList.HotPotato(numPass, numPpl);
+	pplList.HotPotato(numPass, numPpl);
 }
 
 void PersonList::InputPpl(int numPpl)
@@ -79,6 +79,15 @@ void PersonList::InputPpl(int numPpl)
 		inFile >> name;
 		trav->name = name;
 	}
-	trav->next = nullptr;
+	trav->next = head;// circular linked lsit
+	
+}
+void PersonList::HotPotato(int numPass, int numPpl)
+{
+	Person* trav = head;
+	while (numPpl != 1)
+	{
+		
+	}
 	
 }
