@@ -7,6 +7,8 @@ Make sure each function has a description, postand pre conditions
 */
 #include <iostream>
 #include <fstream>
+#include <string>
+using namespace std;
 //Linked lists of names/strings
 struct Person
 {
@@ -18,10 +20,10 @@ class PersonList
 public:
 	PersonList();
 	~PersonList();
-	void InputPpl(Person pplList,int numPpl);
-	void HotPotato(int numPass, int numPpl);
+	void InputPpl(int numPpl);
+	//void HotPotato(int numPass, int numPpl);
 private:
-	Person* head;
+	Person* head = nullptr;
 
 };
 
@@ -32,39 +34,51 @@ PersonList::PersonList()
 PersonList::~PersonList()
 {
 }
-using namespace std;
+
 void main()
 {
 	int numPass, numPpl;
 	PersonList pplList;
 	cout << "Enter amount of passes: ";
 	cin >> numPass;
-	pplList.InputPpl(pplList,numPass);
+	
 	cout << "Enter number of people: ";
 	cin >> numPpl;
-	pplList.HotPotato(numPass, numPpl);
+	pplList.InputPpl(numPpl);
+	//pplList.HotPotato(numPass, numPpl);
 }
 
-void InputPpl(int numPpl)
+void PersonList::InputPpl(int numPpl)
 {
 	Person* buffer;
 	
-	string name;
+	string name=" ";
 	ifstream inFile;
 	inFile.open("input.txt");
 	//while
-	
-	
+	Person* trav;
+	head=trav = new (nothrow) Person;
+	numPpl--;
+	inFile >> name;
+	trav->name = name;
+
+	if (!trav)
+	{
+		cout << "Ran out of heap memory. Ending program";// CHANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+		return;
+	}
 	for (int x = 0; x < numPpl; x++)
 	{
-		inFile >> name;
-		buffer = new(nothrow) Person;
-		if (!buffer)
+		trav->next = new (nothrow) Person;
+		if (!trav)
 		{
-			cout << "Ran out of heap memory. Ending program";
+			cout << "Ran out of heap memory. Ending program";// CHANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 			return;
 		}
-		buffer->name = name;
-
+		trav = trav->next;
+		inFile >> name;
+		trav->name = name;
 	}
+	trav->next = nullptr;
+	
 }
