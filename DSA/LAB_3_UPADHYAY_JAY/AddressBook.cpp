@@ -116,6 +116,7 @@ void AddressBook::Load()
 void AddressBook::Search(std::string name)
 {
 	RecordList* trav = head;
+	int index = 1;
 	bool found = false;
 	if (name == "Quit")
 	{
@@ -129,7 +130,7 @@ void AddressBook::Search(std::string name)
 			if (trav->data.lastName == name || trav->data.numPhone == name)
 			{
 				///////////////////////////////////////////////////////Format
-				std::cout << "Record found, Outputting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+				std::cout << "Record #" << index <<" found, Outputting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
 				found = true;
@@ -141,6 +142,7 @@ void AddressBook::Search(std::string name)
 			else
 			{
 				trav = trav->ptr;
+				index++;
 			}
 		}
 		if (!found)
@@ -191,6 +193,7 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 void AddressBook::DeleteRec(std::string name)
 {
 	RecordList* toDelete;
+	int index = 1;
 	bool found = false;
 	RecordList* trav=head;
 	if (name == "Quit")
@@ -206,7 +209,7 @@ void AddressBook::DeleteRec(std::string name)
 	{
 		toDelete = trav;
 		head = head->ptr;
-		std::cout << "Record found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+		std::cout << "Record #"<< index <<  " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 			<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 			<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
 		std::cout << std::setw(SPACE) << std::left << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::left << std::setw(SPACE)
@@ -217,11 +220,11 @@ void AddressBook::DeleteRec(std::string name)
 		
 	}
 	else {
-
 		while (trav->ptr != nullptr && !found) {
+			index++;
 			if (trav->ptr->data.lastName == name || trav->ptr->data.numPhone == name)
 			{
-				std::cout << "Record found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+				std::cout << "Record "<< index << " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
 				///////////////////////////////////////////////////////Format
