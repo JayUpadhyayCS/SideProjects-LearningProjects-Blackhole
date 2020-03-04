@@ -1,5 +1,6 @@
 #pragma once
-#include <string>
+//#include <string>
+#include <fstream>
 class Record // Made class in case they want to alter data. Methods should be here.
 {
 private:
@@ -20,5 +21,6 @@ public:
 
 
 	void Print();
+	void SaveToFile(std::ofstream &);
 	~Record();
 };

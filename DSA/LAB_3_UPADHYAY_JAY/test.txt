@@ -1,9 +1,10 @@
 FirstName      LastName       BuildingNum    StreetName     CityName       PhoneNumber    DDMMYY
+
 John           Doe            6202           Winnetka       CanogaPark     8185555555     111991
-Alex           Deer           555            Wia            Canoga         8185555566     121991
-Jon            Snow           4343           Hart           LA             8185556595     511991
-Rudolf         Zapata         1201           Gloria         LasVEGAS       8183665535     911991
-Joann          Bloom          602            Saticoy        ShermanOaks    817566555      421991
-Qiu            Peng           9382           DeSoto         VanNuys        8181115555     231991
-Joker          Bat            3202           Roscoe         Encino         8184444555     391991
-Joso           Fat            5952           Devon          WestHills      8189999995     121991
+Alex           Deer           555            Wia            Canoga         8185555566     211991
+Jon            Snow           4343           Hart           LA             8185556595     151991
+Rudolf         Zapata         1201           Gloria         LasVEGAS       8183665535     191991
+Joann          Bloom          602            Saticoy        ShermanOaks    817566555      241991
+Qiu            Peng           9382           DeSoto         VanNuys        8181115555     321991
+Joker          Bat            3202           Roscoe         Encino         8184444555     931991
+Joso           Fat            5952           Devon          WestHills      8189999995     211991

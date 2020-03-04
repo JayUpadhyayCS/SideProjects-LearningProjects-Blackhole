@@ -77,11 +77,20 @@ AddressBook::~AddressBook()
 
 bool AddressBook::Load()
 {
-
+	std::string firstName;
+	std::string lastName;
+	std::string numStreet;
+	std::string streetName;
+	std::string cityName;
+	std::string numPhone;
+	int month;
+	int day;
+	int year;
 	// need single variables
 	//rewrite
 	// RecordList needs to be dynamically allocated., it is a struct. Structs dont have constructors.
 	// if I dynamically allocate a single record, I could save it into record list, may be more efficient and dont need to dynamically allocate the record either.
+	Record data;
 	std::ifstream inFile;
 	inFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\input.txt");
 	if (!inFile)
@@ -89,34 +98,39 @@ bool AddressBook::Load()
 		std::cout << "Error opening or finding file." << std::endl;
 		return false;
 	}
-	RecordList* buffer= new (std::nothrow) RecordList;
+	//RecordList* buffer= new (std::nothrow) RecordList;
 	
-	RecordList* trav = buffer;
-	if (!buffer)
+	RecordList* trav = new (std::nothrow) RecordList;
+	if (!trav)
 	{
 		std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
 	}
 	//inFile.open("input.txt");
 	
 	//John Doe 6202 Winnetka CanogaPark 8185555555 01 01 1991
-	inFile >> buffer->data.firstName >> buffer->data.lastName >> buffer->data.numStreet
-		>> buffer->data.streetName >> buffer->data.cityName>> buffer->data.numPhone >> buffer->data.day >> buffer->data.month >> buffer->data.year;
+	inFile >> firstName >> lastName >> numStreet
+		>> streetName >> cityName>> numPhone >> day >> month >> year;
+	lastName = strLower(lastName);
+	data = Record(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
+	trav->data = data;
 	size++;
-	head =trav= buffer;
+	head =trav;
 	while (!inFile.eof())
-	{
-		buffer = new (std::nothrow) RecordList;
-		if (!buffer)
+	{ 
+		
+		trav->ptr = new (std::nothrow) RecordList;
+		if (!trav->ptr)
 		{
 			std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
 		}
-		trav->ptr = buffer;
-		trav = buffer;
+		trav = trav->ptr;
 		size++;
-		inFile >> buffer->data.firstName >> buffer->data.lastName >> buffer->data.numStreet >> buffer->data.streetName >> buffer->data.cityName// Maybe prime 
-			>> buffer->data.numPhone >> buffer->data.day >> buffer->data.month >> buffer->data.year;
-		buffer->data.lastName = strLower(buffer->data.lastName);
-		buffer->ptr = nullptr;
+		inFile >> firstName >> lastName >> numStreet
+			>> streetName >> cityName >> numPhone >> day >> month >> year;
+		data = Record(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
+		trav->data = data;
+		lastName = strLower(lastName);
+		trav->ptr = nullptr;
 
 	}
 	inFile.close();
@@ -137,7 +151,7 @@ void AddressBook::Search(std::string name)
 	{
 		while (trav != nullptr && !found) {
 
-			if (trav->data.GetLastName == name || trav->data.GetPhoneNum == name)
+			if (trav->data.GetLastName() == name || trav->data.GetPhoneNum() == name)
 			{
 				///////////////////////////////////////////////////////Format
 				std::cout << "Record #" << index <<" found, Outputting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
@@ -213,7 +227,7 @@ void AddressBook::DeleteRec(std::string name)
 	{
 		std::cout << "List is empty, cannot delete anything." << std::endl;
 	}
-	else if (trav->data.GetLastName== name || trav->data.GetPhoneNum == name)// if head needs to be deleted
+	else if (trav->data.GetLastName()== name || trav->data.GetPhoneNum() == name)// if head needs to be deleted
 	{
 		toDelete = trav;
 		head = head->ptr;
@@ -228,7 +242,7 @@ void AddressBook::DeleteRec(std::string name)
 	else {
 		while (trav->ptr != nullptr && !found) {
 			index++;
-			if (trav->ptr->data.GetLastName == name || trav->ptr->data.GetPhoneNum == name)
+			if (trav->ptr->data.GetLastName() == name || trav->ptr->data.GetPhoneNum() == name)
 			{
 				std::cout << "Record "<< index << " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
@@ -263,9 +277,7 @@ void AddressBook::WriteFile()
 	for (RecordList* trav = head; trav != nullptr; trav = trav->ptr)
 	{
 		// could make this record function
-		outFile << std::setw(SPACE) << std::left << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::left << std::setw(SPACE)
-			<< trav->data.numStreet << std::setw(SPACE) << std::left << trav->data.streetName << std::setw(SPACE) << std::left << trav->data.cityName
-			<< std::setw(SPACE) << std::left << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+		trav->data.SaveToFile(outFile);
 		
 	}
 	outFile.close();
