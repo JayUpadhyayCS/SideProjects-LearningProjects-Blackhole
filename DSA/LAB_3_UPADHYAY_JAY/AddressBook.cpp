@@ -6,19 +6,13 @@
 #include <iomanip>
 
 const int SPACE = 15;
-AddressBook::AddressBook()
-{
-}
-AddressBook::~AddressBook()
-{
-}
 std::string strLower(std::string tempStr)
 {
 	if (!tempStr.size())
 	{
 		return tempStr;
 	}
-	tempStr.at(0) = toupper(tempStr.at(0));// What if they send empty string
+	tempStr.at(0) = toupper(tempStr.at(0));
 	for (int x = 1; x < tempStr.size(); x++)
 	{
 		tempStr.at(x) = tolower(tempStr.at(x));
@@ -27,10 +21,10 @@ std::string strLower(std::string tempStr)
 }
 void InputMenu(AddressBook& recList, int choice)
 {
-	std::string name="";
-	while (name!="Quit")
+	std::string name = "";
+	while (name != "Quit")
 	{
-		
+
 		std::cout << "Enter a name or number youd like to search for.Enter Quit to return to main menu." << std::endl;
 		std::cin >> name;
 		name = strLower(name);
@@ -39,7 +33,7 @@ void InputMenu(AddressBook& recList, int choice)
 		{
 			recList.Search(name);
 		}
-		else if(choice == 4)
+		else if (choice == 4)
 		{
 			recList.DeleteRec(name);
 		}
@@ -48,9 +42,9 @@ void InputMenu(AddressBook& recList, int choice)
 }
 void GetEntryInput(AddressBook& recList)
 {
-	std::string fName,lName,buildNum,streetName,cityName,phoneNum;
+	std::string fName, lName, buildNum, streetName, cityName, phoneNum;
 	int day, month, year, index;
-	
+
 	std::cout << "Enter in data format below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 		<< std::setw(SPACE) << std::left << "PhoneNumber" << " DD " << "MM " << " YY" << std::endl;
@@ -59,35 +53,51 @@ void GetEntryInput(AddressBook& recList)
 	std::cin >> index;
 	//Record temp = new (std::nothrow) Record(fName,lName,buildNum,streetName,cityName,phoneNum,day,month,year);
 	Record temp(fName, lName, buildNum, streetName, cityName, phoneNum, day, month, year);
-	RecordList* temp2= new (std::nothrow) RecordList;
-	temp2->data = temp;
-	temp2->ptr = nullptr;
+	RecordList* temp2 = new (std::nothrow) RecordList;
 	if (!temp2)
 	{
 		std::cout << "Could not allocate memory. Returning to main menu." << std::endl;
 		return;
 	}
-	recList.AddEntry(temp2, index-1);
+	temp2->data = temp;
+	temp2->ptr = nullptr;
+	recList.AddEntry(temp2, index - 1);
 }
 void clearCin()
 {
 	std::cin.clear();
 	std::cin.ignore(1000, '\n');
 }
-void AddressBook::Load()
+AddressBook::AddressBook()
 {
+}
+AddressBook::~AddressBook()
+{
+}
+
+bool AddressBook::Load()
+{
+
+	// need single variables
+	//rewrite
+	// RecordList needs to be dynamically allocated., it is a struct. Structs dont have constructors.
+	// if I dynamically allocate a single record, I could save it into record list, may be more efficient and dont need to dynamically allocate the record either.
 	std::ifstream inFile;
+	inFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\input.txt");
+	if (!inFile)
+	{
+		std::cout << "Error opening or finding file." << std::endl;
+		return false;
+	}
 	RecordList* buffer= new (std::nothrow) RecordList;
+	
 	RecordList* trav = buffer;
 	if (!buffer)
 	{
 		std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
 	}
-	inFile.open("input.txt");
-	if (!inFile)
-	{
-		std::cout << "Error opening or finding file." << std::endl;
-	}
+	//inFile.open("input.txt");
+	
 	//John Doe 6202 Winnetka CanogaPark 8185555555 01 01 1991
 	inFile >> buffer->data.firstName >> buffer->data.lastName >> buffer->data.numStreet
 		>> buffer->data.streetName >> buffer->data.cityName>> buffer->data.numPhone >> buffer->data.day >> buffer->data.month >> buffer->data.year;
@@ -111,9 +121,7 @@ void AddressBook::Load()
 	}
 	inFile.close();
 	std::cout << "Complete" << std::endl;
-	//oscar peterson
-	//beatles essentia
-
+	return true;
 }
 void AddressBook::Search(std::string name)
 {
@@ -129,16 +137,14 @@ void AddressBook::Search(std::string name)
 	{
 		while (trav != nullptr && !found) {
 
-			if (trav->data.lastName == name || trav->data.numPhone == name)
+			if (trav->data.GetLastName == name || trav->data.GetPhoneNum == name)
 			{
 				///////////////////////////////////////////////////////Format
 				std::cout << "Record #" << index <<" found, Outputting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
 				found = true;
-				std::cout << std::setw(SPACE) << std::left << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::left << std::setw(SPACE)
-					<< trav->data.numStreet << std::setw(SPACE) << std::left << trav->data.streetName << std::setw(SPACE) << std::left << trav->data.cityName
-					<< std::setw(SPACE) << std::left << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+				trav->data.Print();
 				return;
 			}
 			else
@@ -207,16 +213,14 @@ void AddressBook::DeleteRec(std::string name)
 	{
 		std::cout << "List is empty, cannot delete anything." << std::endl;
 	}
-	else if (trav->data.lastName == name || trav->data.numPhone == name)// if head needs to be deleted
+	else if (trav->data.GetLastName== name || trav->data.GetPhoneNum == name)// if head needs to be deleted
 	{
 		toDelete = trav;
 		head = head->ptr;
 		std::cout << "Record #"<< index <<  " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 			<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 			<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
-		std::cout << std::setw(SPACE) << std::left << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::left << std::setw(SPACE)
-			<< trav->data.numStreet << std::setw(SPACE) << std::left << trav->data.streetName << std::setw(SPACE) << std::left << trav->data.cityName
-			<< std::setw(SPACE) << std::left << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;
+		trav->data.Print();
 		delete toDelete;
 		found = true;
 		
@@ -224,15 +228,13 @@ void AddressBook::DeleteRec(std::string name)
 	else {
 		while (trav->ptr != nullptr && !found) {
 			index++;
-			if (trav->ptr->data.lastName == name || trav->ptr->data.numPhone == name)
+			if (trav->ptr->data.GetLastName == name || trav->ptr->data.GetPhoneNum == name)
 			{
 				std::cout << "Record "<< index << " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YY" << std::endl;
-				///////////////////////////////////////////////////////Format
-				std::cout << std::setw(SPACE) << std::left << trav->ptr->data.firstName << std::setw(SPACE) << trav->ptr->data.lastName << std::left << std::setw(SPACE)
-					<< trav->ptr->data.numStreet << std::setw(SPACE) << std::left << trav->ptr->data.streetName << std::setw(SPACE) << std::left << trav->ptr->data.cityName
-					<< std::setw(SPACE) << std::left << trav->ptr->data.numPhone << trav->ptr->data.day << trav->ptr->data.month << trav->ptr->data.year << std::endl;
+				
+				trav->ptr->data.Print();
 				found = true;
 				toDelete = trav->ptr;
 
@@ -260,9 +262,7 @@ void AddressBook::WriteFile()
 
 	for (RecordList* trav = head; trav != nullptr; trav = trav->ptr)
 	{
-
-		
-		
+		// could make this record function
 		outFile << std::setw(SPACE) << std::left << trav->data.firstName << std::setw(SPACE) << trav->data.lastName << std::left << std::setw(SPACE)
 			<< trav->data.numStreet << std::setw(SPACE) << std::left << trav->data.streetName << std::setw(SPACE) << std::left << trav->data.cityName
 			<< std::setw(SPACE) << std::left << trav->data.numPhone << trav->data.day << trav->data.month << trav->data.year << std::endl;

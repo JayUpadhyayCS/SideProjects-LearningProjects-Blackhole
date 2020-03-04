@@ -13,7 +13,7 @@ public:
 	
 	AddressBook();
 	~AddressBook();
-	void Load();// Load and stores into structure
+	bool Load();// Load and stores into structure
 	void WriteFile();
 	void Search(std::string); // Last Name or phone numebr
 	void AddEntry(RecordList* buffer,int index);

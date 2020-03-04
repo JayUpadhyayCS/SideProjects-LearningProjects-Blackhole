@@ -86,7 +86,7 @@ void RunMenu(InventoryItems& itmList)// Requires inventory populated
 		}
 	}
 }
-void InventoryItems::InputRecords() {
+void InventoryItems::InputRecords() {// input records, if error end program.
 	ifstream inputStream;
 	//inputStream.open("input.txt");
 	inputStream.open("E:\\SideProjects\\DSA\\LAB_1_UPADHYAY_JAY\\input.txt");
@@ -101,6 +101,11 @@ void InventoryItems::InputRecords() {
 	while (!inputStream.eof() && vecItms.size() < ARRSIZE) {
 		inputStream >> bufferItm.uniqId >> bufferItm.itmName
 			>> bufferItm.numItems >> bufferItm.itmPrice;
+		if (!inputStream)
+		{
+			cout << "Error taking input.File may be missing or empty.Ending program.\n";
+			exit(-1);// Error Code-1
+		}
 		if (bufferItm.numItems >= 0 && bufferItm.itmPrice >= 0)
 		{
 			bufferItm.itmName = strLower(bufferItm.itmName);
@@ -127,7 +132,7 @@ void InventoryItems::InputRecords() {
 		sortedItms.push_back(&vecItms.at(i));
 	}
 }
-void InventoryItems::UnsortPrint()
+void InventoryItems::UnsortPrint()// Output unsorted
 {
 	cout << left << setw(SPACE) << "Item ID" << left << setw(SPACE) << "Item Name" << right << setw(SPACE) << "Quantity" << right << setw(SPACE) << "Price" << endl;
 	for (int x = 0; x < vecItms.size(); x++)
@@ -217,7 +222,7 @@ void InventoryItems::PrintReport()// Basic print records function // requires in
 	cout << "Number of unique items: " << vecItms.size() << "\nTotal Price of Current Inventory: $" << fixed << showpoint << setprecision(2) << numTotPrice
 		<< "\nTotal Amount of Items in Inventory: " << numTotAmnt << endl;
 }
-std::string strLower(std::string tempStr)
+std::string strLower(std::string tempStr)// return string lowercase
 {
 	if (!tempStr.size())
 		return tempStr;
@@ -234,7 +239,7 @@ void clearCin()
 	cin.ignore(1000, '\n');
 }
 
-void RunSort(InventoryItems& itmList)
+void RunSort(InventoryItems& itmList)// Takes input for sort then run sort inside
 {
 	int numInput;
 	bool reRun = true;
@@ -248,6 +253,7 @@ void RunSort(InventoryItems& itmList)
 		{
 			itmList.BubSort(numInput);
 			itmList.PrintSorted();
+			reRun = true;
 		}
 		else if (numInput == 5)
 		{
@@ -264,7 +270,7 @@ void RunSort(InventoryItems& itmList)
 	}
 }
 
-void RunSearch(InventoryItems& itmList)
+void RunSearch(InventoryItems& itmList)// takes inpt for search then run search
 {
 	string strInput = "";
 	do
@@ -340,13 +346,33 @@ What would you like to sort by?
 3:Quantity
 4:Price
 5:Back to Main Menu
+2
+Item ID        Item Name             Quantity          Price
+1228           Apple                        1           1.00
+9658           Bagels                       3           0.00
+1338           Banana                       2           0.50
+1010           Bread                       15           0.15
+1991           Coke                        12           1.00
+92             Fanta                       12           1.00
+388            Granolabar                   1           1.50
+95             Milk                         0           5.00
+9653           Orange                       9           1.50
+6767           Paper                     1000           0.10
+1000           Poptarts                     2           1.50
+2828           Tissues                     50           0.05
+What would you like to sort by?
+1:ID
+2:Name
+3:Quantity
+4:Price
+5:Back to Main Menu
 3
 Item ID        Item Name             Quantity          Price
 95             Milk                         0           5.00
 1228           Apple                        1           1.00
 388            Granolabar                   1           1.50
-1000           Poptarts                     2           1.50
 1338           Banana                       2           0.50
+1000           Poptarts                     2           1.50
 9658           Bagels                       3           0.00
 9653           Orange                       9           1.50
 1991           Coke                        12           1.00
@@ -395,9 +421,9 @@ Enter name or ID of an item you are searching for, or enter 1 to return to Main 
 hello
 Record not found. Sorry, Please retry with different data.
 Enter name or ID of an item you are searching for, or enter 1 to return to Main Menu.
-banana
+milk
 Record has been found!
-1338           Banana         2              0.50
+95             Milk           0              5.00
 
 Enter name or ID of an item you are searching for, or enter 1 to return to Main Menu.
 1
@@ -419,9 +445,92 @@ Enter a numeric choice that corresponds to the desired operation.
 3. Search Record with ID or Name
 4. Print Totals Report
 5. End Program
+
 5
 Terminating program
 
 c:\Users\student.CS\source\repos\Project1\Debug\Project1.exe (process 11364) exited with code 0.
 Press any key to close this window . . .
+////////////////////////Errorchecking.
+Error with this piece of data: 404 PeanutButter -2 2.00
+Saving to error.txt
+Error with this piece of data: 1404 Jelly 2 -2.00
+Saving to error.txt
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+hello
+Please retry. Could not understand input.
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+2
+What would you like to sort by?
+1:ID
+2:Name
+3:Quantity
+4:Price
+5:Back to Main Menu
+hello
+Problem with input. Retry and enter a number.
+What would you like to sort by?
+1:ID
+2:Name
+3:Quantity
+4:Price
+5:Back to Main Menu
+quit
+Problem with input. Retry and enter a number.
+What would you like to sort by?
+1:ID
+2:Name
+3:Quantity
+4:Price
+5:Back to Main Menu
+5
+Returning to main menu
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+3
+
+Enter name or ID of an item you are searching for, or enter 1 to return to Main Menu.
+dsalps
+Record not found. Sorry, Please retry with different data.
+Enter name or ID of an item you are searching for, or enter 1 to return to Main Menu.
+sda[pldsa
+Record not found. Sorry, Please retry with different data.
+Enter name or ID of an item you are searching for, or enter 1 to return to Main Menu.
+hello
+Record not found. Sorry, Please retry with different data.
+Enter name or ID of an item you are searching for, or enter 1 to return to Main Menu.
+1
+
+Enter a numeric choice that corresponds to the desired operation.
+1: Print Inventory Unsorted
+2: Print Inventory Sorted
+3. Search Record with ID or Name
+4. Print Totals Report
+5. End Program
+
+5
+Terminating program
+///////////////////////////////No input file
+Error taking input.File may be missing or empty.Ending program.
+
+C:\Users\student.CS\source\repos\Project1\Debug\Project1.exe (process 3744) exited with code -1.
+Press any key to close this window . . .
+
 */
