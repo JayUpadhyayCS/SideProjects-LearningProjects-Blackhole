@@ -38,7 +38,8 @@ PersonList::PersonList()
 PersonList::~PersonList()
 {
 }
-
+bool GetInput(int &numPass,int& numPpl);//Input and check for errors. if true, run program, if false quit.
+void clearCin();
 void main()
 {
 	int numPass, numPpl;
@@ -46,20 +47,12 @@ void main()
 	//Input and check for errors.
 	// Take input and check for errors. Allow -1 through in case user wants to quit.
 	// 
-	do
+	while (GetInput(numPass, numPpl))
 	{
-		cout << "Enter amount of passes: ";
-		cin >> numPass;
-		if (numPass > -1)
-		{
-			cout << "Enter number of people: ";
-			cin >> numPpl;
-			pplList.InputPpl(numPpl);
-			pplList.HotPotato(numPass, numPpl);
-			pplList.Clear();
-		}
+		pplList.InputPpl(numPpl);
+		pplList.HotPotato(numPass, numPpl);
+		pplList.Clear();
 	}
-	while (numPass != -1);
 }
 
 void PersonList::InputPpl(int numPpl)
@@ -67,6 +60,11 @@ void PersonList::InputPpl(int numPpl)
 	string name=" ";
 	ifstream inFile;
 	inFile.open("input2.txt");
+	if (!inFile)
+	{
+		cout << "Error with file. Most likely finding the file to open. Ending program." << endl;
+		exit(-1);
+	}
 	//while
 	Person* trav;
 	head=trav = new (nothrow) Person;
@@ -77,11 +75,16 @@ void PersonList::InputPpl(int numPpl)
 	}
 	numPpl--;
 	inFile >> name;
+	if (!inFile)
+	{
+		cout << "Error with file. Most likely lack of data. Ending program." << endl; 
+		exit(-1);
+	}
 	trav->name = name;
 	trav->index = 1;
 
 	
-	for (int x = 0; x < numPpl; x++)
+	for (int x = 0; x < numPpl&&inFile.eof(); x++)
 	{
 		trav->next = new (nothrow) Person;
 		if (!trav)
@@ -92,6 +95,10 @@ void PersonList::InputPpl(int numPpl)
 		trav->next->prev = trav;
 		trav = trav->next;
 		inFile >> name;
+		if (!inFile||inFile.eof())
+		{
+			cout << "You entered a higher number than we have names for! Exiting program." << endl;
+		}
 		trav->name = name;
 	}
 	trav->next = head;// circular linked lsit
@@ -149,4 +156,43 @@ void PersonList::Clear()
 		}
 	}
 	cout << "List is empty." << endl;
+}
+bool GetInput(int& numPass, int& numPpl)
+{
+	//ask for one piece of input, if its bad repeat, if they want exit quit.
+	// ask for second piece 
+	bool errorFound;
+	do
+	{
+		cout << "Enter -1 to end program at any time.\nEnter amount of passes: ";
+		cin >> numPass;
+		if (!cin || numPass < -1)
+		{
+			cout << "Please reenter input. One integer greater than or equal to zero. " << endl;
+			clearCin();
+			numPass = -2;// get caught in error while loop.
+		}
+		else if (numPass == -1)
+			return false;
+
+	} while ( numPass < -1);
+	do {
+
+		cout << "Enter number of people: ";
+		cin >> numPpl;
+		if (!cin || numPpl < 2)
+		{
+			cout << "Please reenter input. One integer greater than or equal to two. " << endl;
+			clearCin();
+			numPpl = -2;// get caught in error while loop
+		}
+		else if (numPpl == -1)
+			return false;
+	} while (numPpl < 2);
+	return true;
+}
+void clearCin()
+{	
+	cin.clear();
+	cin.ignore(1000, '\n');
 }
