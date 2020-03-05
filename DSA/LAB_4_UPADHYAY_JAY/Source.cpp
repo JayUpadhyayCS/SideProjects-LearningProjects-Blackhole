@@ -84,8 +84,15 @@ void PersonList::InputPpl(int numPpl)
 	trav->index = 1;
 
 	
-	for (int x = 0; x < numPpl&&inFile.eof(); x++)
+	for (int x = 0; x < numPpl; x++)
 	{
+		if (!inFile || inFile.eof())
+		{
+			cout << "You entered a higher number than we have names for! Please add more names to input file. Exiting program." << endl;
+
+			inFile.close();///// close infile
+			exit(-5);
+		}
 		trav->next = new (nothrow) Person;
 		if (!trav)
 		{
@@ -94,11 +101,9 @@ void PersonList::InputPpl(int numPpl)
 		}
 		trav->next->prev = trav;
 		trav = trav->next;
+		
 		inFile >> name;
-		if (!inFile||inFile.eof())
-		{
-			cout << "You entered a higher number than we have names for! Exiting program." << endl;
-		}
+		
 		trav->name = name;
 	}
 	trav->next = head;// circular linked lsit
@@ -119,7 +124,7 @@ void PersonList::HotPotato(int numPass, int numPpl)
 		{
 			index = 0;
 			toDelete = trav;
-			cout << "Player "<< trav->name << " lost the game!" << numPpl << " players left!" << endl;
+			cout << numPpl << " players left!" << "Player "<< trav->name << " lost the game!" << endl;
 			numPpl--;
 			trav->prev->next = trav->next;
 			trav->next->prev = trav->prev;// god this logic send help'
@@ -155,7 +160,7 @@ void PersonList::Clear()
 			trav = nullptr;
 		}
 	}
-	cout << "List is empty." << endl;
+	cout << "Emptied list for reuse." << endl;
 }
 bool GetInput(int& numPass, int& numPpl)
 {
