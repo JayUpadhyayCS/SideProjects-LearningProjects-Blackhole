@@ -1,0 +1,30 @@
+9000	9999	AE	ArmedForcesAtlantic
+6000	6389	CT	Connecticut
+6391	6999	CT	Connecticut
+19700	19999	DE	Delaware
+20000	20099	DC	DistrictofColumbia
+20200	20599	DC	DistrictofColumbia
+32000	32767	FL	Florida
+30000	31999	GA	Georgia
+3900	4999	ME	Maine
+20600	21999	MD	Maryland
+1000	2799	MA	Massachusetts
+3000	3899	NH	NewHampshire
+7000	8999	NJ	NewJersey
+10000	14999	NY	NewYork
+6390	6390	NY	NewYork
+501	501	NY	NewYork
+544	544	NY	NewYork
+27000	28999	NC	NorthCarolina
+15000	19699	PA	Pennsylvania
+600	999	PR	PuertoRico
+2800	2999	RI	RhodeIsland
+29000	29999	SC	SouthCarolina
+5000	5999	VT	Vermont
+20100	20199	VA	Virginia
+22000	24699	VA	Virginia
+24700	26999	WV	WestVirginia
+
+
+
+

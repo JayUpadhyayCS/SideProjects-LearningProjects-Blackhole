@@ -1,0 +1,130 @@
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+class Building {
+public:
+    int getFloors();
+    string getSiding();
+    void setFloors(int floor);
+    void setSiding(string siding);
+    Building(int floor, string siding);
+    Building();
+    
+private:
+    int numberOfFloors;
+    string siding;
+};
+
+int Building::getFloors() {
+    return numberOfFloors;
+}
+
+string Building::getSiding() {
+    return siding;
+}
+
+void Building::setFloors(int floor) {
+    numberOfFloors = floor;
+}
+
+void Building::setSiding(string siding) {
+    this->siding = siding;
+}
+
+Building::Building(int floor, string siding) {
+    numberOfFloors = floor;
+    this->siding = siding;
+}
+
+Building::Building(){}
+
+class Window {
+public:
+    string windowStyle;
+};
+
+class House: public Building {
+public:
+    Window* window;
+    string getRoof();
+    string getDoor();
+    void setRoof(string roof);
+    void setDoor(string door);
+    House(int floor, string siding, string roof, string door);
+    House();
+    ~House();
+    
+private:
+    string roof;
+    string door;
+};
+
+string House::getRoof() {
+    return roof;
+}
+
+string House::getDoor() {
+    return door;
+}
+
+void House::setRoof(string roof) {
+    this->roof = roof;
+}
+
+void House::setDoor(string door) {
+    this->door = door;
+}
+
+House::House(int floor, string siding, string roof, string door):Building(floor,siding) {
+    this->roof = roof;
+    this->door = door;
+    window = new Window;
+}
+
+House::House(){
+    window = new Window;
+}
+
+House::~House() {
+    delete window;
+    window = NULL;
+}
+
+int main() {
+	const int size = 2;
+	House* arr[size];
+	int floor;
+	string siding;
+	string roof;
+	string door;
+	string window;
+	for (int i = 0; i < size; i++)
+	{
+		arr[i] = new House;
+		cout << "Enter details for house " << i + 1 << ": "<< endl;
+		cout << "How many floors? ";
+		cin >> floor;
+		cout << "What type of siding? ";
+		cin >> siding;
+		cout << "What type of roof? ";
+		cin >> roof;
+		cout << "What type of door? ";
+		cin >> door;
+		cout << "What type of window? ";
+		cin >> window;
+		arr[i]->setFloors(floor); 
+		arr[i]->setSiding(siding);
+		arr[i]->setDoor(door);
+		arr[i]->setRoof(roof);
+		arr[i]->window->windowStyle= window;
+	}
+	cout << endl << endl;
+	for (int x = 0; x < size; x++)
+	{
+		cout << "House " << x + 1 << " has: " << arr[x]->getFloors() << " floors, " << arr[x]->getSiding() << " siding, " << arr[x]->getRoof() << " roof, " << arr[x]->getDoor() << " doors, and ";
+		cout << arr[x]->window->windowStyle << " windows" << endl;
+		delete arr[x];
+	}
+}
