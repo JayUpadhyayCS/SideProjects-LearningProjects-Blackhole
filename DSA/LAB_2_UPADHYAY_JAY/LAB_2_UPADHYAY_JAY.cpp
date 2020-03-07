@@ -1,6 +1,4 @@
-// Lab2 Upadhyay, Jay T TH  3/3/20
-
-//Erro with neg number
+// Lab2 Upadhyay, Jay T TH  3/5/20
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -11,6 +9,7 @@ void promptMenu();// ask menu and get input
 void RunPower();// run case for input for power function
 void RunSquareUp();// run sum of squares ascending
 void RunSquareDown();// run sum of squares descending
+int GetNum();// get number for sum of squares both functions
 void clearCin();// clear cin
 using namespace std;
 int main()
@@ -48,7 +47,7 @@ void promptMenu()
 		}
 	}
 }
-void RunPower()
+void RunPower()// no requirements
 {
 	double base;
 	int power;
@@ -64,10 +63,21 @@ void RunPower()
 			error = true;
 		}
 	} while (error);
-	cout << base << " to the power of " << power << " equals " << RecPower(base, power) << "!" << endl;
+	double answer = RecPower(base, power);
+	if (answer == 99999)
+	{
+		cout << base << " to the power of " << power << " is undefined!" << endl;// Undefine cases
+
+	}
+	else
+		cout << base << " to the power of " << power << " equals " << answer << "!" << endl;
 }
-double RecPower(double base, int exponent)// Recursive power function
+double RecPower(double base, int exponent)// Recursive power function // requires good input
 {
+	if (base == 0&& exponent <0)
+	{
+		return 99999;
+	}
 	if (exponent < 0)// If its negative exponent, I need to multiple 1/base against itself. Otherwise base*base;
 	{
 		exponent = -exponent;
@@ -82,7 +92,7 @@ double RecPower(double base, int exponent)// Recursive power function
 	//exponent--;
 	return base * RecPower(base, exponent-1);
 }
-void RunSquareUp()
+void RunSquareUp()// gets input and runs respective function
 {
 	int userInput;
 	int numSolution;
@@ -95,7 +105,7 @@ void RunSquareUp()
 		userInput = GetNum();
 	}
 }
-void RunSquareDown() 
+void RunSquareDown() // gets input and runs respective function
 {
 	int userInput;
 	int numSolution;
@@ -107,15 +117,15 @@ void RunSquareDown()
 		userInput = GetNum();
 	}
 }
-int GetNum() 
+int GetNum() // gets input and returns it for later use
 {
 	int userInput;
 	string quitCheck;
 	do
 	{
-		cout << "Enter an amount of terms. Must be a positive integer >0 or enter Q to quit" << endl;
+		cout << "Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu." << endl;
 		cin >> quitCheck;
-		if (quitCheck == "Q"|| quitCheck=="q")
+		if (quitCheck == "M"|| quitCheck=="m")
 			return -1;
 		userInput = atoi(quitCheck.c_str());
 		if (userInput > 0)
@@ -125,7 +135,7 @@ int GetNum()
 	}
 	while (!cin|| userInput <=0);
 }
-int SumSquaresUp(int numInput)
+int SumSquaresUp(int numInput)//require good input >=1
 {
 	int answer;
 	if (numInput == 1)// end condition 
@@ -140,7 +150,7 @@ int SumSquaresUp(int numInput)
 		return (numInput*numInput)+answer;
 	}
 }
-int SumSquaresDown(int numInput)
+int SumSquaresDown(int numInput)//require good input >=1
 {
 	int answer;
 	if (numInput == 1)// end condition
@@ -164,83 +174,105 @@ void clearCin()
 		cin.ignore(1000, '\n');
 	}
 }
-/* USER INPUT GOOD
+/* 
 1. Use power function
 2. Sum of Squares(low to high)
 3. Sum of Squares(high to low)
 4. End program
 1
-Please enter base and power in following format, if you want to quit to main menu, enter Q.
-2 3
-2 to the power of 3 equals 8!
-Please enter base and power in following format, if you want to quit to main menu, enter Q.
-q
+Enter base and power:  0 0
+0 to the power of 0 equals 1!
+
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+1
+
+Enter base and power:  0 -10
+0 to the power of -10 is undefined!
+
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+1
+
+Enter base and power:  10 0
+10 to the power of 0 equals 1!
+
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+1
+Enter base and power:  3 7
+3 to the power of 7 equals 2187!
+
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+1
+Enter base and power:  -2 -3
+-2 to the power of -3 equals -0.125!
+
+1. Use power function
+2. Sum of Squares(low to high)
+3. Sum of Squares(high to low)
+4. End program
+1
+Enter base and power:  -2 3
+-2 to the power of 3 equals -8!
 
 1. Use power function
 2. Sum of Squares(low to high)
 3. Sum of Squares(high to low)
 4. End program
 2
-Enter an amount of terms. Must be a positive integer >0 or enter Q to quit
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+-
+Error with input. Please retry
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+0
+Error with input. Please retry
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+-1
+Error with input. Please retry
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+5
+1+(2*2)+(3*3)+(4*4)+(5*5)=55
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
 3
 1+(2*2)+(3*3)=14
-Enter an amount of terms. Must be a positive integer >0 or enter Q to quit
-q
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+m
 
 1. Use power function
 2. Sum of Squares(low to high)
 3. Sum of Squares(high to low)
 4. End program
 3
-Enter an amount of terms. Must be a positive integer >0 or enter Q to quit
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+0
+Error with input. Please retry
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+-1
+Error with input. Please retry
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+5
+(5*5)+(4*4)+(3*3)+(2*2)+1=55
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
 3
 (3*3)+(2*2)+1=14
-Enter an amount of terms. Must be a positive integer >0 or enter Q to quit
-q
+Enter an amount of terms. Must be a positive integer >0 or enter M to return to main menu.
+m
 
 1. Use power function
 2. Sum of Squares(low to high)
 3. Sum of Squares(high to low)
 4. End program
 4
-
-c:\Users\student.CS\source\repos\Project2\Debug\Project2.exe (process 13596) exited with code 0.
-Press any key to close this window . . .
-
-/////////////////////////////////USER INPUT BAD
-1. Use power function
-2. Sum of Squares(low to high)
-3. Sum of Squares(high to low)
-4. End program
-asdasd
-Error taking input, please try.
-
-1. Use power function
-2. Sum of Squares(low to high)
-3. Sum of Squares(high to low)
-4. End program
-2
-Enter an amount of terms. Must be a positive integer >0 or enter Q to quit
-dsadad
-Error with input. Please retry
-Enter an amount of terms. Must be a positive integer >0 or enter Q to quit
-q
-
-1. Use power function
-2. Sum of Squares(low to high)
-3. Sum of Squares(high to low)
-4. End program
-3
-Enter an amount of terms. Must be a positive integer >0 or enter Q to quit
-adsda
-Error with input. Please retry
-Enter an amount of terms. Must be a positive integer >0 or enter Q to quit
-q
-
-1. Use power function
-2. Sum of Squares(low to high)
-3. Sum of Squares(high to low)
-4. End program
 4
 
 c:\Users\student.CS\source\repos\Project2\Debug\Project2.exe (process 13596) exited with code 0.
