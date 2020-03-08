@@ -51,6 +51,7 @@ void GetEntryInput(AddressBook& recList)
 			<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 			<< std::setw(SPACE) << std::left << "PhoneNumber" << " DD " << "MM " << " YYYY" << std::endl;
 		std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> phoneNum >> day >> month >> year;
+		lName = strLower(lName);
 		std::cout << "Enter the index you want to insert it. 1 means at front of list." << std::endl;
 		std::cin >> index;
 		if (day <= 0 || day > 31 || month <= 0 && month > 12)
@@ -89,7 +90,8 @@ bool AddressBook::Load()
 	int month, day, year;
 	Record data;
 	std::ifstream inFile;
-	inFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\input.txt");
+	inFile.open("input.txt");
+	//inFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\input.txt");
 	if (!inFile)
 	{
 		std::cout << "Error opening or finding file." << std::endl;
@@ -102,7 +104,7 @@ bool AddressBook::Load()
 	{
 		std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
 	}
-	//inFile.open("input.txt");
+	
 	
 	//John Doe 6202 Winnetka CanogaPark 8185555555 01 01 1991
 	inFile >> firstName >> lastName >> numStreet
@@ -181,18 +183,25 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 	{
 		buffer->ptr = head;
 		head = buffer;
-		std::cout << "Successfully added to Addressbook " << std::endl;
+		size++;
 	}
 	else if (index >= size)// End
 	{
-		std::cout <<"Adding it to end of file since index exceeded AddressBook size." << std::endl;
-		
+		if (index > size)
+		{
+			std::cout << "Adding it to end of file since index exceeded AddressBook size." << std::endl;
+		}
+		else
+		{
+			std::cout << "Adding it to end of file." << std::endl;
+		}
 		while (trav->ptr != nullptr)
 		{
 			trav = trav->ptr;
 		}
 		trav->ptr = buffer;
-
+		size++;
+		
 	}
 	// Middle
 	else {
@@ -205,9 +214,10 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 		}
 		buffer->ptr = trav->ptr;
 		trav->ptr = buffer;
-		std::cout << "Successfully added to Addressbook " << std::endl;
+		size++;
+		
 	}
-	
+	std::cout << "Successfully added to Addressbook " << std::endl;
 }
 void AddressBook::DeleteRec(std::string name)
 {
@@ -237,7 +247,7 @@ void AddressBook::DeleteRec(std::string name)
 		found = true;
 		
 	}
-	else {
+	else {// middle and end cases
 		while (trav->ptr != nullptr && !found) {
 			index++;
 			if (trav->ptr->data.GetLastName() == name || trav->ptr->data.GetPhoneNum() == name)
@@ -249,7 +259,7 @@ void AddressBook::DeleteRec(std::string name)
 				trav->ptr->data.Print();
 				found = true;
 				toDelete = trav->ptr;
-
+				size--;
 
 
 				trav->ptr = trav->ptr->ptr;
@@ -267,8 +277,14 @@ void AddressBook::DeleteRec(std::string name)
 void AddressBook::WriteFile()
 {
 	std::ofstream outFile;
-	outFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\test.txt", std::fstream::out);
-	//outFile.open("test.txt",std::fstream::out);
+
+	//outFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\test.txt", std::fstream::out);
+	outFile.open("test.txt", std::fstream::out);
+	if (!outFile)
+	{
+		std::cout << "Could not properly open outfile. Please alter path in source file. Returning to main menu." << std::endl;
+		return;
+	}
 	outFile << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 		<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
