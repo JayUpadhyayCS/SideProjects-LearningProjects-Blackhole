@@ -20,6 +20,13 @@ std::string strLower(std::string tempStr)
 	}
 	return tempStr;
 }
+void strAllLower(std::string& fName, std::string& lName, std::string& streetName, std::string&  cityName)
+{
+	fName= strLower(fName);
+	lName = strLower(lName);
+	streetName = strLower(streetName);
+	cityName = strLower(cityName);
+}
 void InputMenu(AddressBook& recList, int choice)
 {
 	std::string name = "";
@@ -51,7 +58,7 @@ void GetEntryInput(AddressBook& recList)
 			<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 			<< std::setw(SPACE) << std::left << "PhoneNumber" << " DD " << "MM " << " YYYY" << std::endl;
 		std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> phoneNum >> day >> month >> year;
-		lName = strLower(lName);
+		strAllLower(fName, lName, streetName, cityName);
 		std::cout << "Enter the index you want to insert it. 1 means at front of list." << std::endl;
 		std::cin >> index;
 		if (day <= 0 || day > 31 || month <= 0 && month > 12)
@@ -109,7 +116,7 @@ bool AddressBook::Load()
 	//John Doe 6202 Winnetka CanogaPark 8185555555 01 01 1991
 	inFile >> firstName >> lastName >> numStreet
 		>> streetName >> cityName>> numPhone >> day >> month >> year;
-	lastName = strLower(lastName);
+	strAllLower(firstName, lastName, streetName, cityName);
 	data = Record(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
 	trav->data = data;
 	size++;
@@ -126,9 +133,9 @@ bool AddressBook::Load()
 		size++;
 		inFile >> firstName >> lastName >> numStreet
 			>> streetName >> cityName >> numPhone >> day >> month >> year;
+		strAllLower(firstName, lastName, streetName, cityName);
 		data = Record(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
 		trav->data = data;
-		lastName = strLower(lastName);
 		trav->ptr = nullptr;
 
 	}

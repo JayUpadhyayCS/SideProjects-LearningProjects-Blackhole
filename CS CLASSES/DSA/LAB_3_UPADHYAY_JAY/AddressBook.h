@@ -24,8 +24,8 @@ public:
 
 
 private:
-	RecordList* head = nullptr;// MAY CAUSE ERRORS, MOVED THESE TO PRIVATE
-	int size = 0;// did i ever use this????
+	RecordList* head = nullptr;
+	int size = 0;
 
 };
 void clearCin();
