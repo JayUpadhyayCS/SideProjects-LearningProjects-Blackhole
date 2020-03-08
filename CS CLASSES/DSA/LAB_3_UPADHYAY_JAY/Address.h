@@ -9,13 +9,13 @@ private:
 	std::string numStreet;
 	std::string streetName;
 	std::string cityName;
+	std::string stateName;
+	std::string zipCode;
 	std::string numPhone;
-	int month;
-	int day;
-	int year;
+
 public:
 	Address();
-	Address(std::string firstName, std::string lastName, std::string numStreet, std::string streetName, std::string cityName, std::string numPhone, int month, int day, int year);
+	Address(std::string firstName, std::string lastName, std::string numStreet, std::string streetName, std::string cityName, std::string stateName,std::string zipCodeTemp, std::string numPhone);
 	std::string GetPhoneNum();
 	std::string GetLastName();
 

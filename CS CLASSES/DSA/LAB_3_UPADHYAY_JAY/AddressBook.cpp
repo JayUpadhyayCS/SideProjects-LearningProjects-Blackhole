@@ -7,6 +7,12 @@
 #include <string>
 
 const int SPACE = 15;
+void printLayout()
+{
+	std::cout << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
+		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
+		<< std::setw(SPACE) << std::left <<"State"<<std::setw(SPACE) << std::left <<"ZipCode" << std::setw(SPACE) << std::right << "PhoneNumber" <<std::endl;
+}
 std::string strLower(std::string tempStr)
 {
 	if (!tempStr.size())
@@ -20,7 +26,7 @@ std::string strLower(std::string tempStr)
 	}
 	return tempStr;
 }
-void strAllLower(std::string& fName, std::string& lName, std::string& streetName, std::string&  cityName)
+void strAllLower(std::string& fName, std::string& lName, std::string& streetName, std::string&  cityName, std::string& state)
 {
 	fName= strLower(fName);
 	lName = strLower(lName);
@@ -50,25 +56,23 @@ void InputMenu(AddressBook& recList, int choice)
 }
 void GetEntryInput(AddressBook& recList)
 {
-	std::string fName, lName, buildNum, streetName, cityName, phoneNum;
-	int day, month, year, index;
+	std::string fName, lName, buildNum, streetName, cityName,state,zip, phoneNum;
+	int index;
 	do
 	{
-		std::cout << "Enter in data format below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
-			<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
-			<< std::setw(SPACE) << std::left << "PhoneNumber" << " DD " << "MM " << " YYYY" << std::endl;
-		std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> phoneNum >> day >> month >> year;
-		strAllLower(fName, lName, streetName, cityName);
+		std::cout << "Enter in data format below: \n";
+		printLayout();
+		std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> state>>zip>> phoneNum;
+		strAllLower(fName, lName, streetName, cityName,state);
 		std::cout << "Enter the index you want to insert it. 1 means at front of list." << std::endl;
 		std::cin >> index;
-		if (day <= 0 || day > 31 || month <= 0 && month > 12)
+		if (index <= 0 || phoneNum.size() != 10)
 		{
-			std::cout << "Please try again, your birthday is invalid." << std::endl;
+			std::cout << "Error with input. Make sure phone number is 10 digits, and index is a positive nonzero number." << std::endl;
 		}
-	}
-	while (day <= 0 || day > 31 || month <= 0 && month > 12);
+	} while (index <= 0 || phoneNum.size() != 10);
 	//Record temp = new (std::nothrow) Record(fName,lName,buildNum,streetName,cityName,phoneNum,day,month,year);
-	Address temp(fName, lName, buildNum, streetName, cityName, phoneNum, day, month, year);
+	Address temp(fName, lName, buildNum, streetName, cityName,state,zip,phoneNum);
 	Record* temp2 = new (std::nothrow) Record;
 	if (!temp2)
 	{
@@ -93,8 +97,8 @@ AddressBook::~AddressBook()
 
 bool AddressBook::Load()
 {
-	std::string firstName, lastName, numStreet,streetName, cityName, numPhone;
-	int month, day, year;
+	printLayout();
+	std::string firstName, lastName, numStreet,streetName, cityName,state,zip, numPhone;
 	Address data;
 	std::ifstream inFile;
 	inFile.open("input.txt");
@@ -115,9 +119,9 @@ bool AddressBook::Load()
 	
 	//John Doe 6202 Winnetka CanogaPark 8185555555 01 01 1991
 	inFile >> firstName >> lastName >> numStreet
-		>> streetName >> cityName>> numPhone >> day >> month >> year;
-	strAllLower(firstName, lastName, streetName, cityName);
-	data = Address(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
+		>> streetName >> cityName >>state>>zip>> numPhone;
+	strAllLower(firstName, lastName, streetName, cityName,state);
+	data = Address(firstName, lastName, numStreet, streetName, cityName,state,zip, numPhone);
 	trav->SetData( data);
 	size++;
 	head =trav;
@@ -132,9 +136,9 @@ bool AddressBook::Load()
 		trav = trav->GetPtr();
 		size++;
 		inFile >> firstName >> lastName >> numStreet
-			>> streetName >> cityName >> numPhone >> day >> month >> year;
-		strAllLower(firstName, lastName, streetName, cityName);
-		data = Address(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
+			>> streetName >> cityName >> state >> zip >> numPhone;
+		strAllLower(firstName, lastName, streetName, cityName,state);
+		data = Address(firstName, lastName, numStreet, streetName, cityName, state, zip, numPhone);
 		trav->SetDataPtr(data, nullptr);
 
 	}
@@ -159,9 +163,8 @@ void AddressBook::Search(std::string name)
 			if (trav->GetData().GetLastName() == name || trav->GetData().GetPhoneNum() == name)
 			{
 				///////////////////////////////////////////////////////Format
-				std::cout << "Record #" << index <<" found, Outputting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
-					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
-					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
+				std::cout << "Record #" << index << " found, Outputting below: \n";
+				printLayout();
 				found = true;
 				trav->GetData().Print();
 				return;
@@ -245,9 +248,8 @@ void AddressBook::DeleteRec(std::string name)
 		size--;
 		toDelete = trav;
 		head = head->GetPtr();
-		std::cout << "Record #"<< index <<  " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
-			<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
-			<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
+		std::cout << "Record #" << index << " found, deleting below: \n";
+		printLayout();
 		trav->GetData().Print();
 		delete toDelete;
 		found = true;
@@ -258,9 +260,8 @@ void AddressBook::DeleteRec(std::string name)
 			index++;
 			if (trav->GetPtr()->GetData().GetLastName() == name || trav->GetPtr()->GetData().GetPhoneNum() == name)
 			{
-				std::cout << "Record "<< index << " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
-					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
-					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
+				std::cout << "Record " << index << " found, deleting below: \n";
+				printLayout();
 				
 				trav->GetPtr()->GetData().Print();
 				found = true;
@@ -293,7 +294,7 @@ void AddressBook::WriteFile()
 	}
 	outFile << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
-		<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
+		<< std::setw(SPACE) << std::left << "State" << std::setw(SPACE) << std::left << "ZipCode" << std::setw(SPACE) << std::right << "PhoneNumber\n" << std::endl;
 
 	for (Record* trav = head; trav != nullptr; trav = trav->GetPtr())
 	{
