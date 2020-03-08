@@ -68,15 +68,15 @@ void GetEntryInput(AddressBook& recList)
 	}
 	while (day <= 0 || day > 31 || month <= 0 && month > 12);
 	//Record temp = new (std::nothrow) Record(fName,lName,buildNum,streetName,cityName,phoneNum,day,month,year);
-	Record temp(fName, lName, buildNum, streetName, cityName, phoneNum, day, month, year);
-	RecordList* temp2 = new (std::nothrow) RecordList;
+	Address temp(fName, lName, buildNum, streetName, cityName, phoneNum, day, month, year);
+	Record* temp2 = new (std::nothrow) Record;
 	if (!temp2)
 	{
 		std::cout << "Could not allocate memory. Returning to main menu." << std::endl;
 		return;
 	}
-	temp2->data = temp;
-	temp2->ptr = nullptr;
+	temp2->SetDataPtr ( temp,nullptr); //////////////////////////////////////////////////////////////////////////////////////// ERROR POSSIBLY
+	//temp2->ptr = nullptr;
 	recList.AddEntry(temp2, index - 1);// sent in index -1 to account for starting at 0.
 }
 void clearCin()
@@ -95,7 +95,7 @@ bool AddressBook::Load()
 {
 	std::string firstName, lastName, numStreet,streetName, cityName, numPhone;
 	int month, day, year;
-	Record data;
+	Address data;
 	std::ifstream inFile;
 	inFile.open("input.txt");
 	//inFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\input.txt");
@@ -106,7 +106,7 @@ bool AddressBook::Load()
 	}
 	//RecordList* buffer= new (std::nothrow) RecordList;
 	
-	RecordList* trav = new (std::nothrow) RecordList;
+	Record* trav = new (std::nothrow) Record;
 	if (!trav)
 	{
 		std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
@@ -117,26 +117,25 @@ bool AddressBook::Load()
 	inFile >> firstName >> lastName >> numStreet
 		>> streetName >> cityName>> numPhone >> day >> month >> year;
 	strAllLower(firstName, lastName, streetName, cityName);
-	data = Record(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
-	trav->data = data;
+	data = Address(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
+	trav->SetData( data);
 	size++;
 	head =trav;
 	while (!inFile.eof())
 	{ 
 		
-		trav->ptr = new (std::nothrow) RecordList;
-		if (!trav->ptr)
+		trav->SetPtr(new (std::nothrow) Record);////////Test
+		if (!trav->GetPtr())//TEST
 		{
 			std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
 		}
-		trav = trav->ptr;
+		trav = trav->GetPtr();
 		size++;
 		inFile >> firstName >> lastName >> numStreet
 			>> streetName >> cityName >> numPhone >> day >> month >> year;
 		strAllLower(firstName, lastName, streetName, cityName);
-		data = Record(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
-		trav->data = data;
-		trav->ptr = nullptr;
+		data = Address(firstName, lastName, numStreet, streetName, cityName, numPhone, day, month, year);
+		trav->SetDataPtr(data, nullptr);
 
 	}
 	inFile.close();
@@ -145,7 +144,7 @@ bool AddressBook::Load()
 }
 void AddressBook::Search(std::string name)
 {
-	RecordList* trav = head;
+	Record* trav = head;
 	int index = 1;
 	bool found = false;
 	if (name == "Quit")
@@ -157,19 +156,19 @@ void AddressBook::Search(std::string name)
 	{
 		while (trav != nullptr && !found) {
 
-			if (trav->data.GetLastName() == name || trav->data.GetPhoneNum() == name)
+			if (trav->GetData().GetLastName() == name || trav->GetData().GetPhoneNum() == name)
 			{
 				///////////////////////////////////////////////////////Format
 				std::cout << "Record #" << index <<" found, Outputting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
 				found = true;
-				trav->data.Print();
+				trav->GetData().Print();
 				return;
 			}
 			else
 			{
-				trav = trav->ptr;
+				trav = trav->GetPtr();
 				index++;
 			}
 		}
@@ -182,13 +181,13 @@ void AddressBook::Search(std::string name)
 }
 
 
-void AddressBook::AddEntry(RecordList* buffer, int index) 
+void AddressBook::AddEntry(Record* buffer, int index) 
 {
 	//If zero
-	RecordList* trav = head;
+	Record* trav = head;
 	if (!index)
 	{
-		buffer->ptr = head;
+		buffer->SetPtr( head);
 		head = buffer;
 		size++;
 	}
@@ -202,11 +201,11 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 		{
 			std::cout << "Adding it to end of file." << std::endl;
 		}
-		while (trav->ptr != nullptr)
+		while (trav->GetPtr() != nullptr)
 		{
-			trav = trav->ptr;
+			trav = trav->GetPtr();
 		}
-		trav->ptr = buffer;
+		trav->SetPtr( buffer);
 		size++;
 		
 	}
@@ -216,11 +215,11 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 		while(index)
 		{
 			index--;
-			trav = trav->ptr;
+			trav = trav->GetPtr();
 			
 		}
-		buffer->ptr = trav->ptr;
-		trav->ptr = buffer;
+		buffer->SetPtr( trav->GetPtr());
+		trav->SetPtr(  buffer);
 		size++;
 		
 	}
@@ -228,10 +227,10 @@ void AddressBook::AddEntry(RecordList* buffer, int index)
 }
 void AddressBook::DeleteRec(std::string name)
 {
-	RecordList* toDelete;
+	Record* toDelete;
 	int index = 1;
 	bool found = false;
-	RecordList* trav=head;
+	Record* trav=head;
 	if (name == "Quit")
 	{
 		//std::cout << "Returning to main menu" << std::endl;
@@ -241,39 +240,39 @@ void AddressBook::DeleteRec(std::string name)
 	{
 		std::cout << "List is empty, cannot delete anything." << std::endl;
 	}
-	else if (trav->data.GetLastName()== name || trav->data.GetPhoneNum() == name)// if head needs to be deleted
+	else if (trav->GetData().GetLastName()== name || trav->GetData().GetPhoneNum() == name)// if head needs to be deleted
 	{
 		size--;
 		toDelete = trav;
-		head = head->ptr;
+		head = head->GetPtr();
 		std::cout << "Record #"<< index <<  " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 			<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 			<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
-		trav->data.Print();
+		trav->GetData().Print();
 		delete toDelete;
 		found = true;
 		
 	}
 	else {// middle and end cases
-		while (trav->ptr != nullptr && !found) {
+		while (trav->GetPtr() != nullptr && !found) {
 			index++;
-			if (trav->ptr->data.GetLastName() == name || trav->ptr->data.GetPhoneNum() == name)
+			if (trav->GetPtr()->GetData().GetLastName() == name || trav->GetPtr()->GetData().GetPhoneNum() == name)
 			{
 				std::cout << "Record "<< index << " found, deleting below: \n" << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 					<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 					<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
 				
-				trav->ptr->data.Print();
+				trav->GetPtr()->GetData().Print();
 				found = true;
-				toDelete = trav->ptr;
+				toDelete = trav->GetPtr();
 				size--;
 
 
-				trav->ptr = trav->ptr->ptr;
+				trav->SetPtr( trav->GetPtr()->GetPtr());
 				delete toDelete;
 			}
-			if (trav->ptr != nullptr)
-				trav = trav->ptr;
+			if (trav->GetPtr() != nullptr)
+				trav = trav->GetPtr();
 		}
 	}
 	if (!found)
@@ -296,10 +295,10 @@ void AddressBook::WriteFile()
 		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 		<< std::setw(SPACE) << std::left << "PhoneNumber" << "DD" << "MM" << "YYYY" << std::endl;
 
-	for (RecordList* trav = head; trav != nullptr; trav = trav->ptr)
+	for (Record* trav = head; trav != nullptr; trav = trav->GetPtr())
 	{
 		// could make this record function
-		trav->data.SaveToFile(outFile);
+		trav->GetData().SaveToFile(outFile);
 		
 	}
 	outFile.close();

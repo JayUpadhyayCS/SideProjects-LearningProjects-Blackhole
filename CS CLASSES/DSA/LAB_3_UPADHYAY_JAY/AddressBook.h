@@ -1,11 +1,7 @@
 #pragma once
 #include "Record.h"
 
-struct RecordList {
-	Record data;
-	RecordList* ptr = nullptr;
 
-};
 class AddressBook
 {
 public:
@@ -17,14 +13,14 @@ public:
 	bool Load();// Load and stores into structure
 	void WriteFile();
 	void Search(std::string); // Last Name or phone numebr
-	void AddEntry(RecordList* buffer,int index);
+	void AddEntry(Record* buffer,int index);
 	void DeleteRec(std::string name);// Last Name or phone number
 
 
 
 
 private:
-	RecordList* head = nullptr;
+	Record* head = nullptr;
 	int size = 0;
 
 };

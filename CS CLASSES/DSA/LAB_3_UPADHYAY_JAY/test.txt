@@ -1,4 +1,12 @@
 FirstName      LastName       BuildingNum    StreetName     CityName       PhoneNumber    DDMMYYYY
 
-John           Doe            6202           Winnetka       CanogaPark     8185555555     01011991
-jay            u              81818          name           name2          8181111111     19061995
+J              U              818            Name1          Name2          8182222222     19061995
+John           Doe            6202           Winnetka       Canogapark     8185555555     01011991
+Alex           Deer           555            Wia            Canoga         8185555566     02011991
+Jon            Snow           4343           Hart           La             8185556595     01051991
+Rudolf         Zapata         1201           Gloria         Lasvegas       8183665535     01091991
+Joann          Bloom          602            Saticoy        Shermanoaks    817566555      02041991
+Qiu            Peng           9382           Desoto         Vannuys        8181115555     03021991
+Joker          Bat            3202           Roscoe         Encino         8184444555     09031991
+Joso           Fat            5952           Devon          Westhills      8189999995     02011991
+J              Du             818            Name1          Name2          8184422222     19061995
