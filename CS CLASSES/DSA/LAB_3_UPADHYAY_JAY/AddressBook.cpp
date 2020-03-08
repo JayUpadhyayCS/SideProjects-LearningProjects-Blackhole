@@ -11,7 +11,7 @@ void printLayout()
 {
 	std::cout << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
-		<< std::setw(SPACE) << std::left <<"State"<<std::setw(SPACE) << std::left <<"ZipCode" << std::setw(SPACE) << std::right << "PhoneNumber" <<std::endl;
+		<< std::setw(SPACE) << std::left <<"State"<<std::setw(SPACE) << std::left <<"ZipCode" << std::right << "PhoneNumber" <<std::endl;
 }
 std::string strLower(std::string tempStr)
 {
@@ -294,7 +294,7 @@ void AddressBook::WriteFile()
 	}
 	outFile << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
 		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
-		<< std::setw(SPACE) << std::left << "State" << std::setw(SPACE) << std::left << "ZipCode" << std::setw(SPACE) << std::right << "PhoneNumber\n" << std::endl;
+		<< std::setw(SPACE) << std::left << "State" << std::setw(SPACE) << std::left << "ZipCode"  << std::right << "PhoneNumber" << std::endl;
 
 	for (Record* trav = head; trav != nullptr; trav = trav->GetPtr())
 	{
