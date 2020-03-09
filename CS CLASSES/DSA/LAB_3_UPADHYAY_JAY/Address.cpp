@@ -31,13 +31,15 @@ void Address::Print()
 
 	std::cout << std::setw(SPACE) << std::left << firstName << std::setw(SPACE) << lastName << std::left << std::setw(SPACE)
 		<< numStreet << std::setw(SPACE) << std::left << streetName << std::setw(SPACE) << std::left << cityName
-		<< std::setw(SPACE) << std::left << stateName << std::setw(SPACE) << std::left << zipCode <<  std::right << numPhone << std::endl;
+		<< std::setw(SPACE) << std::left << stateName << std::setw(SPACE) << std::left << zipCode <<  std::right 
+		<< "(" << numPhone.substr(0, 3) << ") " << numPhone.substr(4, 3) << " " << numPhone.substr(6, 4)<<std::endl;
 }
 void Address::SaveToFile(std::ofstream& outFile)
 {
 	outFile << std::endl << std::setw(SPACE) << std::left << firstName << std::setw(SPACE) << lastName << std::left << std::setw(SPACE)
 		<< numStreet << std::setw(SPACE) << std::left << streetName << std::setw(SPACE) << std::left << cityName
-		<< std::setw(SPACE) << std::left << stateName << std::setw(SPACE) << std::left << zipCode <<  std::right << numPhone;
+		<< std::setw(SPACE) << std::left << stateName << std::setw(SPACE) << std::left << zipCode <<  std::right 
+		<< "("<< numPhone.substr(0,3) << ") "<< numPhone.substr(4,3)<< " "<< numPhone.substr(6,4);
 	
 }
 //John Doe 6202 Winnetka Canoga ca 91336
