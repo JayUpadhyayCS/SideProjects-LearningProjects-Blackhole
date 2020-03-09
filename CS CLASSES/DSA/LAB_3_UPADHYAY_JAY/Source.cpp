@@ -4,7 +4,6 @@
 //PERSON holds data
 // PersonList
 //Need to fix menu infinite loop bad input. Now it is exiting when it gets string input.
-// Need to fix excess birthday input irrelevant
 
 using namespace std;
 int main()
@@ -21,6 +20,11 @@ int main()
 			cout << "\n0.Quit Program\n1.Write Addressbook to file\n2.Search addressbook by last name or phone\n3.Add new entry\n4.Delete entry by name or phone\n"
 				<< "Enter number corresponding to your choice:" << endl;
 			cin >> userChoice;
+			if (!cin)
+			{
+				userChoice = 5;
+				
+			}
 			switch (userChoice)
 			{
 			case 0:
@@ -39,6 +43,7 @@ int main()
 				break;
 			}
 			default:
+			case 5:
 				cout << "Had error understanding input" << endl;
 				clearCin();
 			}

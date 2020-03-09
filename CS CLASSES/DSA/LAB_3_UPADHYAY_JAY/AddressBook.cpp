@@ -97,7 +97,6 @@ AddressBook::~AddressBook()
 
 bool AddressBook::Load()
 {
-	printLayout();
 	std::string firstName, lastName, numStreet,streetName, cityName,state,zip, numPhone;
 	Address data;
 	std::ifstream inFile;
