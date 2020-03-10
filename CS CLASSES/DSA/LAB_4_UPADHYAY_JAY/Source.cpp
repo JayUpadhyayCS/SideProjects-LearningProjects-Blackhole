@@ -13,7 +13,7 @@ using namespace std;
 struct Person
 {
 	string name;
-	int index;
+	//int index;
 	Person* next;
 	Person* prev;
 };
@@ -81,7 +81,7 @@ void PersonList::InputPpl(int numPpl)
 		exit(-1);
 	}
 	trav->name = name;
-	trav->index = 1;
+	//trav->index = 1;
 
 	
 	for (int x = 0; x < numPpl; x++)
@@ -124,7 +124,7 @@ void PersonList::HotPotato(int numPass, int numPpl)
 		{
 			index = 0;
 			toDelete = trav;
-			cout << numPpl << " players left!" << "Player "<< trav->name << " lost the game!" << endl;
+			cout << numPpl << " players left!" << " Player "<< trav->name << " lost the game!" << endl;
 			numPpl--;
 			trav->prev->next = trav->next;
 			trav->next->prev = trav->prev;// god this logic send help'
