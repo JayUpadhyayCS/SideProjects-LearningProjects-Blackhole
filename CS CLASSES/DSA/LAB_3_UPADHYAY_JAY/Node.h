@@ -12,5 +12,6 @@ public:
 	Node* GetPtr()const;
 	void SetData(Record);
 	void SetPtr(Node*);
+	void LoadNode(std::ifstream &infile);
 };
 #endif

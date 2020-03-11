@@ -38,10 +38,10 @@ int main()
 				InputMenu(recList, userChoice);
 				break;
 			case 3:
-			{
+			
 				GetEntryInput(recList);
 				break;
-			}
+			
 			default:
 			case 5:
 				cout << "Had error understanding input" << endl;

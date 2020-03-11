@@ -41,22 +41,35 @@ void strAllLower(std::string& fName, std::string& lName, std::string& streetName
 void InputMenu(AddressBook& recList, int choice)
 {
 	std::string name = "";
-	while (name != "Quit")
+	do 
 	{
-
+		Node* prev;
+		Node* current;
 		std::cout << "Enter a name or number youd like to search for.Enter Quit to return to main menu." << std::endl;
 		std::cin >> name;
 		name = strLower(name);
 		clearCin();
-		if (choice == 2)
+		if (name!="Quit")
 		{
-			recList.Search(name);
+			current = recList.Search(name, prev);// search
+			if (!current)// if not found
+			{
+				std::cout << "Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
+			}
+			else
+			{
+				std::cout << "Data found. Outputting below:" << std::endl;
+				printLayout();
+				current->GetData().Print();// printing found data
+				if (choice == 4)//if user selected delete
+				{
+					recList.DeleteNode(prev);
+					std::cout << "Completed delete operation" << std::endl;
+				}
+			}
 		}
-		else if (choice == 4)
-		{
-			recList.DeleteRec(name);
-		}
-	}
+		
+	} while (name != "Quit");
 	std::cout << "Returning to main menu" << std::endl;
 }
 //get piece of data to add to linked list
@@ -78,8 +91,7 @@ void GetEntryInput(AddressBook& recList)
 		}
 	} while (index <= 0 || phoneNum.size() != 10);
 	//Record temp = new (std::nothrow) Record(fName,lName,buildNum,streetName,cityName,phoneNum,day,month,year);
-	Record temp(fName, lName, buildNum, streetName, cityName, state, zip, phoneNum);
-	Node* temp2 = new (std::nothrow) Node(temp, nullptr);
+	Node* temp2 = new (std::nothrow) Node(Record(fName, lName, buildNum, streetName, cityName, state, zip, phoneNum), nullptr);
 	if (!temp2)
 	{
 		std::cout << "Could not allocate memory. Returning to main menu." << std::endl;

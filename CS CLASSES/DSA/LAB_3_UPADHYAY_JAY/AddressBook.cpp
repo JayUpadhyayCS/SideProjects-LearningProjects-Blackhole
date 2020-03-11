@@ -17,8 +17,7 @@ AddressBook::~AddressBook()
 
 bool AddressBook::Load() //loads data and if false ends program
 {
-	std::string firstName, lastName, numStreet,streetName, cityName,state,zip, numPhone;
-	Record data;
+	
 	std::ifstream inFile;
 	//inFile.open("input.txt");
 	inFile.open("E:\\SideProjects\\CS CLASSES\\DSA\\LAB_3_UPADHYAY_JAY\\input.txt");
@@ -30,77 +29,48 @@ bool AddressBook::Load() //loads data and if false ends program
 	//RecordList* buffer= new (std::nothrow) RecordList;
 	
 	Node* trav = new (std::nothrow) Node;
+	trav->LoadNode(inFile);
 	if (!trav)
 	{
-		std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
+		std::cout << "Error with allocating dynamic memory, ending program. Please reduce file size and try again." << std::endl;
+		return false;
 	}
-	else {}
-	
-	//John Doe 6202 Winnetka CanogaPark 8185555555 01 01 1991
-	inFile >> firstName >> lastName >> numStreet
-		>> streetName >> cityName >>state>>zip>> numPhone;// takes all data
-	strAllLower(firstName, lastName, streetName, cityName,state);// makes all data proper case
-	data = Record(firstName, lastName, numStreet, streetName, cityName,state,zip, numPhone);//constructor for an address
-	trav->SetData( data);// set record data
 	size++;
 	head =trav;// head points to first created node.
 	while (!inFile.eof())// go to get rest of nodes
 	{ 
-		inFile >> firstName >> lastName >> numStreet
-			>> streetName >> cityName >> state >> zip >> numPhone;
-		strAllLower(firstName, lastName, streetName, cityName, state);
-		data = Record(firstName, lastName, numStreet, streetName, cityName, state, zip, numPhone);
-		trav->SetPtr(new (std::nothrow) Node(data, nullptr));
+		trav->SetPtr(new (std::nothrow) Node());
 		if (!trav->GetPtr())
 		{
-			std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
+			std::cout << "Error with allocating dynamic memory, ending program. Please reduce file size and try again." << std::endl;
+			return false;
 		}
-		trav = trav->GetPtr();
+		trav = trav->GetPtr();// traverse forward
+		trav->LoadNode(inFile);
 		size++;
-		
-		
-		//trav=(data, nullptr);// sets data and pointer of the record node
-
 	}
 	inFile.close();
 	std::cout << "Success taking in data." << std::endl;
 	return true;
 }
-void AddressBook::Search(std::string name)// take in string and traverse LL until found. If not found boolean remains false, and outputed
+Node* AddressBook::Search(std::string name, Node* &prev)// take in string and traverse LL until found. If not found boolean remains false, and outputed
 {
 	Node* trav = head;
 	int index = 1;
-	bool found = false;
-	if (name == "Quit")
-	{
-		//std::cout << "Exiting to main menu" << std::endl;
-		return;
-	}
-	else
-	{
-		while (trav != nullptr && !found) {
+	while (trav->GetPtr() != nullptr) {
 
-			if (trav->GetData().GetLastName() == name || trav->GetData().GetPhoneNum() == name)// if found
-			{
-				///////////////////////////////////////////////////////Format
-				std::cout << "Record #" << index << " found, Outputting below: \n";
-				printLayout();
-				found = true;
-				trav->GetData().Print();
-				return;
-			}
-			else
-			{
-				trav = trav->GetPtr();// traverse LL
-				index++;
-			}
+		if (trav->GetPtr()->GetData().GetLastName() == name || trav->GetPtr()->GetData().GetPhoneNum() == name)// if found
+		{	
+			prev = trav;
+			return trav->GetPtr();
 		}
-		if (!found)// if not found
+		else
 		{
-			std::cout << "Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
-			return;
+			trav = trav->GetPtr();// traverse LL
+			index++;
 		}
 	}
+	return nullptr;
 }
 
 
@@ -148,58 +118,12 @@ void AddressBook::AddEntry(Node* buffer, int index)
 	}
 	std::cout << "Successfully added to Addressbook " << std::endl;
 }
-void AddressBook::DeleteRec(std::string name)
+void AddressBook::DeleteNode(Node* prev)
 {
-	Node* toDelete;// points toward node that needs to be deleted while fixing pointers around it
-	int index = 1;
-	bool found = false;
-	Node* trav=head;
-	if (name == "Quit")
-	{
-		//std::cout << "Returning to main menu" << std::endl;
-		return;
-	}
-	else if (trav == nullptr)// if list is empty
-	{
-		std::cout << "List is empty, cannot delete anything." << std::endl;
-	}
-	else if (trav->GetData().GetLastName()== name || trav->GetData().GetPhoneNum() == name)// if head needs to be deleted
-	{
-		size--;
-		toDelete = trav;
-		head = head->GetPtr();
-		std::cout << "Record #" << index << " found, deleting below: \n";
-		printLayout();
-		trav->GetData().Print();
-		delete toDelete;
-		found = true;
-		
-	}
-	else {// middle and end cases
-		while (trav->GetPtr() != nullptr && !found) {
-			index++;
-			if (trav->GetPtr()->GetData().GetLastName() == name || trav->GetPtr()->GetData().GetPhoneNum() == name)
-			{
-				std::cout << "Record " << index << " found, deleting below: \n";
-				printLayout();
-				
-				trav->GetPtr()->GetData().Print();// next node needs to be deleted
-				found = true;
-				toDelete = trav->GetPtr();// todelete points to next node
-				size--;
-
-
-				trav->SetPtr(trav->GetPtr()->GetPtr()); //current node needs to point to node after deleted node
-				delete toDelete;
-			}
-			if (trav->GetPtr() != nullptr)
-				trav = trav->GetPtr();// traverse list
-		}
-	}
-	if (!found)
-	{
-		std::cout << "Sorry could not find any records matching, " << name << ". Please try again or another option." << std::endl;
-	}
+	Node* toDelete=prev->GetPtr();
+	size--;
+	prev->SetPtr(prev->GetPtr()->GetPtr()); //current node needs to point to node after deleted node
+	delete toDelete;
 }
 void AddressBook::WriteFile()
 {

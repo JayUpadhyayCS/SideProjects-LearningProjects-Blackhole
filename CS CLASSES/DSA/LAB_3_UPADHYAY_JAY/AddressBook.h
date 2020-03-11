@@ -11,9 +11,11 @@ public:
 	
 	bool Load();// Load and stores into structure
 	void WriteFile();// Writes data into a file
-	void Search(std::string); // Last Name or phone numebr
+	Node* Search(std::string, Node* &prev); // Last Name or phone numebr
+
+
 	void AddEntry(Node* buffer,int index);// add an entry to linked list.
-	void DeleteRec(std::string name);// Last Name or phone number
+	void DeleteNode(Node* prev);// Last Name or phone number
 
 private:
 	Node* head = nullptr;
