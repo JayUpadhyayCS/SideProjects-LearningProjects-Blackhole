@@ -13,6 +13,7 @@ AddressBook::AddressBook()
 }
 AddressBook::~AddressBook()
 {
+	EmptyList();
 }
 
 bool AddressBook::Load() //loads data and if false ends program
@@ -149,4 +150,14 @@ void AddressBook::WriteFile()
 	outFile.close();
 	std::cout << "Successfully entered into file." << std::endl;
 
+}
+void AddressBook::EmptyList()
+{
+	Node* toDelete;
+	while (head != nullptr)
+	{
+		toDelete = head;
+		head = head->GetPtr();
+		delete toDelete;
+	}
 }

@@ -16,7 +16,7 @@ public:
 
 	void AddEntry(Node* buffer,int index);// add an entry to linked list.
 	void DeleteNode(Node* prev);// Last Name or phone number
-
+	void EmptyList();
 private:
 	Node* head = nullptr;
 	int size = 0;
