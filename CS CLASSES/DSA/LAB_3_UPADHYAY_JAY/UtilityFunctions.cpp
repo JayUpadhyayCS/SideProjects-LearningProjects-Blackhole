@@ -1,11 +1,10 @@
-const int SPACE = 15;
-#include "AddressBook.h"
+
 #include <iostream>
 #include <new>
 #include <cctype>
 #include <iomanip>
 #include <string>
-
+#include "AddressBook.h"
 void clearCin()// clear datastream
 {
 	std::cin.clear();

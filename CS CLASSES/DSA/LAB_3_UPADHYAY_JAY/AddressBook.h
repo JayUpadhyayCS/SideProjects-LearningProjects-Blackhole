@@ -1,6 +1,7 @@
-#pragma once
+#ifndef ADDRESSBOOK
+#define ADDRESSBOOK
 #include "Node.h"
-#include "UtilityFunctions.cpp"
+const int SPACE = 15;
 
 class AddressBook
 {
@@ -18,4 +19,4 @@ private:
 	Node* head = nullptr;
 	int size = 0;
 };
-
+#endif

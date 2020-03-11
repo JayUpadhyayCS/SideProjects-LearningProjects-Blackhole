@@ -1,4 +1,5 @@
-#pragma once
+#ifndef NODE
+#define NODE
 #include "Record.h"
 class Node {
 private:
@@ -12,3 +13,4 @@ public:
 	void SetData(Record);
 	void SetPtr(Node*);
 };
+#endif

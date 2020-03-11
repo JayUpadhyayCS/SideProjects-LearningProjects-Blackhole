@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RECORD
+#define RECORD
 #include "Address.h"
 #include <fstream>
 class Record 
@@ -22,3 +23,4 @@ public:
 	void SaveToFile(std::ofstream &);
 	~Record();
 };
+#endif RECORD

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ADDRESS
+#define ADDRESS
+
 #include <string>
 class Address {
 private:
@@ -17,3 +19,4 @@ public:
 	std::string GetStateName()const;
 	std::string GetZipCode()const;
 };
+#endif

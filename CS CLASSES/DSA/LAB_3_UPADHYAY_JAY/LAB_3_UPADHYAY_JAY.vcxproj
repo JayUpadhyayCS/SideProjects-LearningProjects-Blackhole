@@ -140,13 +140,17 @@
   <ItemGroup>
     <ClCompile Include="AddressBook.cpp" />
     <ClCompile Include="Address.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Record.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="UtilityFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Record.h" />
     <ClInclude Include="AddressBook.h" />
     <ClInclude Include="Address.h" />
+    <ClInclude Include="UtilityFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
