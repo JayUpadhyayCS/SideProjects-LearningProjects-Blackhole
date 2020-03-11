@@ -1,26 +1,19 @@
 #pragma once
-//#include <string>
-#include <fstream>
-class Address // Made class in case they want to alter data. Methods should be here.
-{
+#include <string>
+class Address {
 private:
-	std::string firstName;
-	std::string lastName;
 	std::string numStreet;
 	std::string streetName;
 	std::string cityName;
 	std::string stateName;
 	std::string zipCode;
-	std::string numPhone;
-
 public:
-	Address();
-	Address(std::string firstName, std::string lastName, std::string numStreet, std::string streetName, std::string cityName, std::string stateName,std::string zipCodeTemp, std::string numPhone);
-	std::string GetPhoneNum();
-	std::string GetLastName();
-
-
-	void Print();
-	void SaveToFile(std::ofstream &);
-	~Address();
+	Address() {}
+	Address(std::string numStreetTemp,std::string streetNameTemp,
+	std::string cityNameTemp,std::string stateNameTemp,std::string zipCodeTemp);
+	std::string GetStreetNum()const;
+	std::string GetStreetName()const;
+	std::string GetCityName()const;
+	std::string GetStateName()const;
+	std::string GetZipCode()const;
 };

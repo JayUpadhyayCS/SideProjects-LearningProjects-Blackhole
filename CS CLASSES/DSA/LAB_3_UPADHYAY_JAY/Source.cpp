@@ -3,7 +3,6 @@
 // ADDRESSBOOK pointer to a person
 //PERSON holds data
 // PersonList
-//Need to fix menu infinite loop bad input. Now it is exiting when it gets string input.
 
 using namespace std;
 int main()

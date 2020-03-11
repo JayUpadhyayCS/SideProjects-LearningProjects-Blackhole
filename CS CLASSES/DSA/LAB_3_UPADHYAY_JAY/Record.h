@@ -1,13 +1,24 @@
 #pragma once
 #include "Address.h"
-class Record {
+#include <fstream>
+class Record 
+{
 private:
-	Address data;
-	Record* next = nullptr;
+	std::string firstName;
+	std::string lastName;
+	// needs to be in seperate class
+	Address homeAddress;
+	// seperate
+	std::string numPhone;
+
 public:
-	Address GetData()const;
-	Record* GetPtr()const;
-	void SetData(Address);
-	void SetPtr(Record*);
-	void SetDataPtr(Address input, Record* ptr);
+	Record();
+	Record(std::string firstName, std::string lastName, std::string numStreet, std::string streetName, std::string cityName, std::string stateName,std::string zipCodeTemp, std::string numPhone);
+	std::string GetPhoneNum()const;
+	std::string GetLastName()const;
+
+
+	void Print();
+	void SaveToFile(std::ofstream &);
+	~Record();
 };

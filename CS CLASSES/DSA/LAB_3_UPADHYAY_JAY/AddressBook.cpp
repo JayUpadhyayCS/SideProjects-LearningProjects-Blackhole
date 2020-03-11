@@ -1,4 +1,5 @@
 #include "AddressBook.h"
+#include "UtilityFunctions.cpp"
 #include <fstream>
 #include <iostream>
 #include <new>
@@ -6,88 +7,7 @@
 #include <iomanip>
 #include <string>
 
-const int SPACE = 15;
-void printLayout()
-{
-	std::cout << std::setw(SPACE) << std::left << "FirstName" << std::setw(SPACE) << "LastName" << std::left << std::setw(SPACE)
-		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
-		<< std::setw(SPACE) << std::left <<"State"<<std::setw(SPACE) << std::left <<"ZipCode" << std::right << "PhoneNumber" <<std::endl;
-}
-std::string strLower(std::string tempStr)
-{
-	if (!tempStr.size())
-	{
-		return tempStr;
-	}
-	tempStr.at(0) = toupper(tempStr.at(0));
-	for (int x = 1; x < tempStr.size(); x++)
-	{
-		tempStr.at(x) = tolower(tempStr.at(x));
-	}
-	return tempStr;
-}
-void strAllLower(std::string& fName, std::string& lName, std::string& streetName, std::string&  cityName, std::string& state)
-{
-	fName= strLower(fName);
-	lName = strLower(lName);
-	streetName = strLower(streetName);
-	cityName = strLower(cityName);
-}
-void InputMenu(AddressBook& recList, int choice)
-{
-	std::string name = "";
-	while (name != "Quit")
-	{
 
-		std::cout << "Enter a name or number youd like to search for.Enter Quit to return to main menu." << std::endl;
-		std::cin >> name;
-		name = strLower(name);
-		clearCin();
-		if (choice == 2)
-		{
-			recList.Search(name);
-		}
-		else if (choice == 4)
-		{
-			recList.DeleteRec(name);
-		}
-	}
-	std::cout << "Returning to main menu" << std::endl;
-}
-void GetEntryInput(AddressBook& recList)
-{
-	std::string fName, lName, buildNum, streetName, cityName,state,zip, phoneNum;
-	int index;
-	do
-	{
-		std::cout << "Enter in data format below: \n";
-		printLayout();
-		std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> state>>zip>> phoneNum;
-		strAllLower(fName, lName, streetName, cityName,state);
-		std::cout << "Enter the index you want to insert it. 1 means at front of list." << std::endl;
-		std::cin >> index;
-		if (index <= 0 || phoneNum.size() != 10)
-		{
-			std::cout << "Error with input. Make sure phone number is 10 digits, and index is a positive nonzero number." << std::endl;
-		}
-	} while (index <= 0 || phoneNum.size() != 10);
-	//Record temp = new (std::nothrow) Record(fName,lName,buildNum,streetName,cityName,phoneNum,day,month,year);
-	Address temp(fName, lName, buildNum, streetName, cityName,state,zip,phoneNum);
-	Record* temp2 = new (std::nothrow) Record;
-	if (!temp2)
-	{
-		std::cout << "Could not allocate memory. Returning to main menu." << std::endl;
-		return;
-	}
-	temp2->SetDataPtr ( temp,nullptr); //////////////////////////////////////////////////////////////////////////////////////// ERROR POSSIBLY
-	//temp2->ptr = nullptr;
-	recList.AddEntry(temp2, index - 1);// sent in index -1 to account for starting at 0.
-}
-void clearCin()
-{
-	std::cin.clear();
-	std::cin.ignore(1000, '\n');
-}
 AddressBook::AddressBook()
 {
 }
@@ -95,13 +15,13 @@ AddressBook::~AddressBook()
 {
 }
 
-bool AddressBook::Load()
+bool AddressBook::Load() //loads data and if false ends program
 {
 	std::string firstName, lastName, numStreet,streetName, cityName,state,zip, numPhone;
-	Address data;
+	Record data;
 	std::ifstream inFile;
-	inFile.open("input.txt");
-	//inFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\input.txt");
+	//inFile.open("input.txt");
+	inFile.open("E:\\SideProjects\\CS CLASSES\\DSA\\LAB_3_UPADHYAY_JAY\\input.txt");
 	if (!inFile)
 	{
 		std::cout << "Error opening or finding file." << std::endl;
@@ -109,45 +29,46 @@ bool AddressBook::Load()
 	}
 	//RecordList* buffer= new (std::nothrow) RecordList;
 	
-	Record* trav = new (std::nothrow) Record;
+	Node* trav = new (std::nothrow) Node;
 	if (!trav)
 	{
 		std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
 	}
-	
+	else {}
 	
 	//John Doe 6202 Winnetka CanogaPark 8185555555 01 01 1991
 	inFile >> firstName >> lastName >> numStreet
-		>> streetName >> cityName >>state>>zip>> numPhone;
-	strAllLower(firstName, lastName, streetName, cityName,state);
-	data = Address(firstName, lastName, numStreet, streetName, cityName,state,zip, numPhone);
-	trav->SetData( data);
+		>> streetName >> cityName >>state>>zip>> numPhone;// takes all data
+	strAllLower(firstName, lastName, streetName, cityName,state);// makes all data proper case
+	data = Record(firstName, lastName, numStreet, streetName, cityName,state,zip, numPhone);//constructor for an address
+	trav->SetData( data);// set record data
 	size++;
-	head =trav;
-	while (!inFile.eof())
+	head =trav;// head points to first created node.
+	while (!inFile.eof())// go to get rest of nodes
 	{ 
-		
-		trav->SetPtr(new (std::nothrow) Record);////////Test
-		if (!trav->GetPtr())//TEST
+		inFile >> firstName >> lastName >> numStreet
+			>> streetName >> cityName >> state >> zip >> numPhone;
+		strAllLower(firstName, lastName, streetName, cityName, state);
+		data = Record(firstName, lastName, numStreet, streetName, cityName, state, zip, numPhone);
+		trav->SetPtr(new (std::nothrow) Node(data, nullptr));
+		if (!trav->GetPtr())
 		{
 			std::cout << "Error with allocating dynamic memory, contact system admin." << std::endl;
 		}
 		trav = trav->GetPtr();
 		size++;
-		inFile >> firstName >> lastName >> numStreet
-			>> streetName >> cityName >> state >> zip >> numPhone;
-		strAllLower(firstName, lastName, streetName, cityName,state);
-		data = Address(firstName, lastName, numStreet, streetName, cityName, state, zip, numPhone);
-		trav->SetDataPtr(data, nullptr);
+		
+		
+		//trav=(data, nullptr);// sets data and pointer of the record node
 
 	}
 	inFile.close();
-	std::cout << "Complete" << std::endl;
+	std::cout << "Success taking in data." << std::endl;
 	return true;
 }
-void AddressBook::Search(std::string name)
+void AddressBook::Search(std::string name)// take in string and traverse LL until found. If not found boolean remains false, and outputed
 {
-	Record* trav = head;
+	Node* trav = head;
 	int index = 1;
 	bool found = false;
 	if (name == "Quit")
@@ -159,7 +80,7 @@ void AddressBook::Search(std::string name)
 	{
 		while (trav != nullptr && !found) {
 
-			if (trav->GetData().GetLastName() == name || trav->GetData().GetPhoneNum() == name)
+			if (trav->GetData().GetLastName() == name || trav->GetData().GetPhoneNum() == name)// if found
 			{
 				///////////////////////////////////////////////////////Format
 				std::cout << "Record #" << index << " found, Outputting below: \n";
@@ -170,11 +91,11 @@ void AddressBook::Search(std::string name)
 			}
 			else
 			{
-				trav = trav->GetPtr();
+				trav = trav->GetPtr();// traverse LL
 				index++;
 			}
 		}
-		if (!found)
+		if (!found)// if not found
 		{
 			std::cout << "Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
 			return;
@@ -183,17 +104,17 @@ void AddressBook::Search(std::string name)
 }
 
 
-void AddressBook::AddEntry(Record* buffer, int index) 
+void AddressBook::AddEntry(Node* buffer, int index) 
 {
-	//If zero
-	Record* trav = head;
+	//If zero add to start as head
+	Node* trav = head;
 	if (!index)
 	{
 		buffer->SetPtr( head);
 		head = buffer;
 		size++;
 	}
-	else if (index >= size)// End
+	else if (index >= size)//if or index exceeds linked list size, add to End
 	{
 		if (index > size)
 		{
@@ -229,16 +150,16 @@ void AddressBook::AddEntry(Record* buffer, int index)
 }
 void AddressBook::DeleteRec(std::string name)
 {
-	Record* toDelete;
+	Node* toDelete;// points toward node that needs to be deleted while fixing pointers around it
 	int index = 1;
 	bool found = false;
-	Record* trav=head;
+	Node* trav=head;
 	if (name == "Quit")
 	{
 		//std::cout << "Returning to main menu" << std::endl;
 		return;
 	}
-	else if (trav == nullptr)
+	else if (trav == nullptr)// if list is empty
 	{
 		std::cout << "List is empty, cannot delete anything." << std::endl;
 	}
@@ -262,17 +183,17 @@ void AddressBook::DeleteRec(std::string name)
 				std::cout << "Record " << index << " found, deleting below: \n";
 				printLayout();
 				
-				trav->GetPtr()->GetData().Print();
+				trav->GetPtr()->GetData().Print();// next node needs to be deleted
 				found = true;
-				toDelete = trav->GetPtr();
+				toDelete = trav->GetPtr();// todelete points to next node
 				size--;
 
 
-				trav->SetPtr( trav->GetPtr()->GetPtr());
+				trav->SetPtr(trav->GetPtr()->GetPtr()); //current node needs to point to node after deleted node
 				delete toDelete;
 			}
 			if (trav->GetPtr() != nullptr)
-				trav = trav->GetPtr();
+				trav = trav->GetPtr();// traverse list
 		}
 	}
 	if (!found)
@@ -284,8 +205,8 @@ void AddressBook::WriteFile()
 {
 	std::ofstream outFile;
 
-	//outFile.open("E:\\SideProjects\\DSA\\LAB_3_UPADHYAY_JAY\\test.txt", std::fstream::out);
-	outFile.open("test.txt", std::fstream::out);
+	outFile.open("E:\\SideProjects\\CS CLASSES\\DSA\\LAB_3_UPADHYAY_JAY\\outfile.txt", std::fstream::out);
+	//outFile.open("test.txt", std::fstream::out);
 	if (!outFile)
 	{
 		std::cout << "Could not properly open outfile. Please alter path in source file. Returning to main menu." << std::endl;
@@ -295,7 +216,7 @@ void AddressBook::WriteFile()
 		<< "BuildingNum" << std::setw(SPACE) << std::left << "StreetName" << std::setw(SPACE) << std::left << "CityName"
 		<< std::setw(SPACE) << std::left << "State" << std::setw(SPACE) << std::left << "ZipCode"  << std::right << "PhoneNumber" << std::endl;
 
-	for (Record* trav = head; trav != nullptr; trav = trav->GetPtr())
+	for (Node* trav = head; trav != nullptr; trav = trav->GetPtr())
 	{
 		// could make this record function
 		trav->GetData().SaveToFile(outFile);
