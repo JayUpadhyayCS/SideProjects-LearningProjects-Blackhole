@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 const int SPACE = 15;
+//constructors
 Record::Record()
 {
 }
@@ -14,6 +15,7 @@ Record::Record(std::string firstNameTemp, std::string lastNameTemp, std::string 
 	numPhone = numPhoneTemp;
 	
 }
+//getters
 std::string Record::GetLastName()const
 {
 	return lastName;
@@ -38,11 +40,6 @@ void Record::SaveToFile(std::ofstream& outFile)
 		<< "(" << numPhone.substr(0, 3) << ") " << numPhone.substr(4, 3) << " " << numPhone.substr(6, 4);
 	
 }
-//John Doe 6202 Winnetka Canoga ca 91336
-//Record::Record(std::string firstName, std::string lastName, int numStreet, std::string streetName, std::string cityName, int numPhone, int month, int day, int year)
-//{
-//
-//}
 Record::~Record()
 {
 }

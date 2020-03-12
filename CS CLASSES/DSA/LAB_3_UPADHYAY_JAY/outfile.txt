@@ -1,10 +1,1 @@
 FirstName      LastName       BuildingNum    StreetName     CityName       State          ZipCode        PhoneNumber
-
-John           Doe            6202           Winnetka       Canogapark     CA             91405          (818) 555 5555
-Alex           Deer           555            Wia            Canoga         VA             91304          (818) 555 5566
-Jon            Snow           4343           Hart           La             AUS            91121          (818) 556 6595
-Rudolf         Zapata         1201           Gloria         Lasvegas       NV             20202          (818) 665 5535
-Joann          Bloom          602            Saticoy        Shermanoaks    FL             29292          (817) 66S S555
-Qiu            Peng           9382           Desoto         Vannuys        Al             11111          (818) 115 5555
-Joker          Bat            3202           Roscoe         Encino         BV             29299          (818) 444 4555
-Joso           Fat            5952           Devon          Westhills      NA             12131          (818) 999 9995

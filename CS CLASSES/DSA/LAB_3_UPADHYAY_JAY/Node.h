@@ -12,6 +12,7 @@ public:
 	Node* GetPtr()const;
 	void SetData(Record);
 	void SetPtr(Node*);
-	void LoadNode(std::ifstream &infile);
+	void LoadNode(std::ifstream &infile);//FOR LOADING INITIAL ifstream
+	void LoadNode();// FOR ADDING DATA FROM CIN
 };
 #endif

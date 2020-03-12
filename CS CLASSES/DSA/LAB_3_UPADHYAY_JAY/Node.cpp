@@ -1,5 +1,6 @@
 #include "Node.h"
 #include "UtilityFunctions.h"
+#include <iostream>
 //constructors 
 Node::Node() {}
 Node::Node(Record input, Node* ptr)
@@ -34,4 +35,13 @@ void Node::LoadNode(std::ifstream & inFile)
 	strAllLower(firstName, lastName, streetName, cityName, state);// makes all data proper case
 	 data=Record(firstName, lastName, numStreet, streetName, cityName, state, zip, numPhone);//constructor for an address
 	 next = nullptr;
+}
+void Node::LoadNode()
+{
+	std::string firstName, lastName, numStreet, streetName, cityName, state, zip, numPhone;
+	std::cin >> firstName >> lastName >> numStreet
+		>> streetName >> cityName >> state >> zip >> numPhone;// takes all data
+	strAllLower(firstName, lastName, streetName, cityName, state);// makes all data proper case
+	data = Record(firstName, lastName, numStreet, streetName, cityName, state, zip, numPhone);//constructor for an address
+	next = nullptr;
 }

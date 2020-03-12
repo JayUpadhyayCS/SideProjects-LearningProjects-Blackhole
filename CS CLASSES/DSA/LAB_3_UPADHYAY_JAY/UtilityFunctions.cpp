@@ -51,8 +51,8 @@ void InputMenu(AddressBook& recList, int choice)
 		clearCin();
 		if (name!="Quit")
 		{
-			current = recList.Search(name, prev);// search
-			if (!current)// if not found
+			current = recList.Search(name, prev);// search, prev returns previous node, current is the searched node. Prev is for possible deletion.
+			if (!current)// if curren is nullptr then not found
 			{
 				std::cout << "Sorry could not find any records matching " << name << ". Please try again or another option." << std::endl;
 			}
@@ -75,19 +75,16 @@ void InputMenu(AddressBook& recList, int choice)
 //get piece of data to add to linked list
 void GetEntryInput(AddressBook& recList)
 {
-	std::string fName, lName, buildNum, streetName, cityName, state, zip, phoneNum;
-	
-	int index;
-	
+
 	std::cout << "Enter in data format below: \n";
 	printLayout();
-	std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> state >> zip >> phoneNum;
-	strAllLower(fName, lName, streetName, cityName, state);
-	Node * newRecord= new(std::nothrow)Node(Record(fName, lName, buildNum, streetName, cityName, state, zip, phoneNum), nullptr);
+
+	Node * newRecord= new(std::nothrow)Node();
 	if (!newRecord)
 	{
 		std::cout << "Error with allocating dynamic memory, returning to main menu." << std::endl;
 		return;
 	}
-	recList.AddEntry(newRecord);// sent in index -1 to account for starting at 0.
+	newRecord->LoadNode();
+	recList.AddEntry(newRecord);// Add new node to head of list.
 }

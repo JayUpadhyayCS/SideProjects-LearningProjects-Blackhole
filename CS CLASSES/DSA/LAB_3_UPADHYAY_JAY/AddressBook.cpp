@@ -57,6 +57,10 @@ bool AddressBook::Load() //loads data and if false ends program
 Node* AddressBook::Search(std::string name, Node* &prev)// take in string and traverse LL until found. If not found boolean remains false, and outputed
 {
 	Node* trav = head;
+	if (!trav)
+	{
+		return nullptr;
+	}
 	int index = 1;
 	if (trav->GetData().GetLastName() == name || trav->GetData().GetPhoneNum() == name)
 	{
@@ -68,7 +72,7 @@ Node* AddressBook::Search(std::string name, Node* &prev)// take in string and tr
 		if (trav->GetPtr()->GetData().GetLastName() == name || trav->GetPtr()->GetData().GetPhoneNum() == name)// if found
 		{	
 			prev = trav;
-			return trav->GetPtr();
+			return trav->GetPtr();// EXIT IF FOUND
 		}
 		else
 		{
@@ -76,33 +80,35 @@ Node* AddressBook::Search(std::string name, Node* &prev)// take in string and tr
 			index++;
 		}
 	}
-	return nullptr;
+	return nullptr;// EXIT IF NOT FOUND
 }
-
 
 void AddressBook::AddEntry(Node* &buffer) 
 {
 	//If zero add to start as head
 	buffer->SetPtr(head);
 	head = buffer;
+	size++;
 	std::cout << "Successfully added to Addressbook " << std::endl;
 }
 void AddressBook::DeleteNode(Node* current,Node* prev)
 {
-	Node* toDelete;
+	Node* toDelete = current;
 	if (prev == current)// if first node needs to be deleted
 	{
-		toDelete = current;
-		head = current->GetPtr();
+		if (current->GetPtr() == nullptr)
+			head = nullptr;
+		else
+			head = current->GetPtr();
 	}
 	else// delete at the midle or end.
 	{
-		toDelete = current;// set node to be deleted
 		prev->SetPtr(prev->GetPtr()->GetPtr()); //current node needs to point to node after deleted node
 	}
 	delete toDelete;
 	size--;
 }
+
 void AddressBook::WriteFile()
 {
 	std::ofstream outFile;
@@ -128,6 +134,7 @@ void AddressBook::WriteFile()
 	std::cout << "Successfully entered into file." << std::endl;
 
 }
+
 void AddressBook::EmptyList()
 {
 	Node* toDelete;
