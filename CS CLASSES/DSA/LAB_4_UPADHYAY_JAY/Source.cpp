@@ -10,10 +10,50 @@ Make sure each function has a description, postand pre conditions
 #include <string>
 using namespace std;
 //Linked lists of names/strings
-struct Person
+class Person
 {
+public:
+	
+	Person(string nameTemp, Person* nextTemp, Person* prevTemp)
+	{
+		name = nameTemp;
+		next = nextTemp;
+		prev = prevTemp;
+	}
+
+	void SetNext(Person* nextTemp)
+	{
+		next = nextTemp;
+	}
+	string GetName() const
+	{
+		return name;
+	}
+	Person* GetNext()const
+	{
+		return next;
+	}
+	Person* GetPrev() const
+	{
+		return prev;
+	}
+
+	void Delete()
+	{
+		Person* toDelete;
+		toDelete = this;
+		if (prev != nullptr)
+		{
+			prev->next = next;
+		}
+		if (next != nullptr)
+		{
+			next->prev = prev;
+		}
+		delete toDelete;// god this logic send help'
+	}
+private:
 	string name;
-	//int index;
 	Person* next;
 	Person* prev;
 };
@@ -30,14 +70,6 @@ private:
 	Person* head = nullptr;
 
 };
-
-PersonList::PersonList()
-{
-}
-
-PersonList::~PersonList()
-{
-}
 bool GetInput(int &numPass,int& numPpl);//Input and check for errors. if true, run program, if false quit.
 void clearCin();
 void main()
@@ -65,25 +97,23 @@ void PersonList::InputPpl(int numPpl)
 		cout << "Error with file. Most likely finding the file to open. Ending program." << endl;
 		exit(-1);
 	}
-	//while
-	Person* trav;
-	head=trav = new (nothrow) Person;
-	if (!trav)
-	{
-		cout << "Ran out of heap memory. Ending program";// CHANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-		return;
-	}
-	numPpl--;
 	inFile >> name;
 	if (!inFile)
 	{
 		cout << "Error with file. Most likely lack of data. Ending program." << endl; 
 		exit(-1);
 	}
-	trav->name = name;
-	//trav->index = 1;
+	Person* trav;
 
-	
+	//trav = new Person("apple", head, trav);
+	head=trav = new (nothrow) Person(name,nullptr,nullptr);
+
+	if (!trav)
+	{
+		cout << "Ran out of heap memory. Ending program";// CHANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+		return;
+	}
+	numPpl--;
 	for (int x = 0; x < numPpl; x++)
 	{
 		if (!inFile || inFile.eof())
@@ -93,28 +123,22 @@ void PersonList::InputPpl(int numPpl)
 			inFile.close();///// close infile
 			exit(-5);
 		}
-		trav->next = new (nothrow) Person;
+		inFile >> name;
+		trav->SetNext(  new (nothrow) Person(name,nullptr,trav));
 		if (!trav)
 		{
 			cout << "Ran out of heap memory. Ending program";// CHANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 			return;
 		}
-		trav->next->prev = trav;
-		trav = trav->next;
-		
-		inFile >> name;
-		
-		trav->name = name;
+		trav = trav->GetNext();
 	}
-	trav->next = head;// circular linked lsit
-	trav->next->prev = trav;
+	trav->SetNext( head);// circular linked lsit
 	inFile.close();///// close infile
-	
 }
 void PersonList::HotPotato(int numPass, int numPpl)
 {
-	Person* trav = head;// HEAD will get lost here unless I make it part of the record class(but its a struct)
-	Person* toDelete = trav;
+	Person* trav = head;// HEAD will get lost here, can update but why
+
 	
 	int index = 0;
 	while (numPpl != 1)
@@ -123,43 +147,35 @@ void PersonList::HotPotato(int numPass, int numPpl)
 		if (index == numPass)
 		{
 			index = 0;
-			toDelete = trav;
-			cout << numPpl << " players left!" << " Player "<< trav->name << " lost the game!" << endl;
+			
+			cout << numPpl << " players left!" << " Player "<< trav->GetName() << " lost the game!" << endl;
+			trav->Delete();
 			numPpl--;
-			trav->prev->next = trav->next;
-			trav->next->prev = trav->prev;// god this logic send help'
-			trav = trav->next;
-			delete toDelete;
+			
 		}
 		else
 		{
 			index++;
-			trav = trav->next;
+			trav = trav->GetNext();
 		}
 	}
 	head = trav;
-	cout << trav->name << " has won the game!" << endl;
+	cout << trav->GetName() << " has won the game!" << endl;
 }
 void PersonList::Clear() 
+
 {
-	Person* trav;
-	trav = head;
-	head->prev->next = nullptr;
-	Person* toDelete;
-	while (trav != nullptr)
+	head->GetPrev()->SetNext(nullptr);
+	Person* toDelete=head;
+	
+	while (head->GetNext() != nullptr)
 	{
-		if (trav->next != nullptr)
-		{
-			toDelete = trav;
-			trav = trav->next;
-			delete toDelete;
-		}
-		else
-		{
-			delete trav;
-			trav = nullptr;
-		}
+		head = head->GetNext();
+		delete toDelete;
+		toDelete = head;
 	}
+	delete head;
+	head = nullptr;
 	cout << "Emptied list for reuse." << endl;
 }
 bool GetInput(int& numPass, int& numPpl)
@@ -200,4 +216,12 @@ void clearCin()
 {	
 	cin.clear();
 	cin.ignore(1000, '\n');
+}
+PersonList::PersonList()
+{
+}
+
+PersonList::~PersonList()
+{
+	Clear();
 }
