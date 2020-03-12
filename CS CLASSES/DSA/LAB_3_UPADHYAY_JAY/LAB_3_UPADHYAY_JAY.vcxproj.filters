@@ -55,7 +55,7 @@
     <Text Include="input.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="test.txt">
+    <Text Include="outfile.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

@@ -58,6 +58,11 @@ Node* AddressBook::Search(std::string name, Node* &prev)// take in string and tr
 {
 	Node* trav = head;
 	int index = 1;
+	if (trav->GetData().GetLastName() == name || trav->GetData().GetPhoneNum() == name)
+	{
+		prev = head;
+		return prev;
+	}
 	while (trav->GetPtr() != nullptr) {
 
 		if (trav->GetPtr()->GetData().GetLastName() == name || trav->GetPtr()->GetData().GetPhoneNum() == name)// if found
@@ -75,56 +80,28 @@ Node* AddressBook::Search(std::string name, Node* &prev)// take in string and tr
 }
 
 
-void AddressBook::AddEntry(Node* buffer, int index) 
+void AddressBook::AddEntry(Node* &buffer) 
 {
 	//If zero add to start as head
-	Node* trav = head;
-	if (!index)
-	{
-		buffer->SetPtr( head);
-		head = buffer;
-		size++;
-	}
-	else if (index >= size)//if or index exceeds linked list size, add to End
-	{
-		if (index > size)
-		{
-			std::cout << "Adding it to end of file since index exceeded AddressBook size." << std::endl;
-		}
-		else
-		{
-			std::cout << "Adding it to end of file." << std::endl;
-		}
-		while (trav->GetPtr() != nullptr)
-		{
-			trav = trav->GetPtr();
-		}
-		trav->SetPtr( buffer);
-		size++;
-		
-	}
-	// Middle
-	else {
-
-		while(index)
-		{
-			index--;
-			trav = trav->GetPtr();
-			
-		}
-		buffer->SetPtr( trav->GetPtr());
-		trav->SetPtr(  buffer);
-		size++;
-		
-	}
+	buffer->SetPtr(head);
+	head = buffer;
 	std::cout << "Successfully added to Addressbook " << std::endl;
 }
-void AddressBook::DeleteNode(Node* prev)
+void AddressBook::DeleteNode(Node* current,Node* prev)
 {
-	Node* toDelete=prev->GetPtr();
-	size--;
-	prev->SetPtr(prev->GetPtr()->GetPtr()); //current node needs to point to node after deleted node
+	Node* toDelete;
+	if (prev == current)// if first node needs to be deleted
+	{
+		toDelete = current;
+		head = current->GetPtr();
+	}
+	else// delete at the midle or end.
+	{
+		toDelete = current;// set node to be deleted
+		prev->SetPtr(prev->GetPtr()->GetPtr()); //current node needs to point to node after deleted node
+	}
 	delete toDelete;
+	size--;
 }
 void AddressBook::WriteFile()
 {
@@ -156,8 +133,10 @@ void AddressBook::EmptyList()
 	Node* toDelete;
 	while (head != nullptr)
 	{
+		
 		toDelete = head;
 		head = head->GetPtr();
 		delete toDelete;
+		size--;
 	}
 }

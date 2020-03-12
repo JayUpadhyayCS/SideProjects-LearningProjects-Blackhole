@@ -14,8 +14,8 @@ public:
 	Node* Search(std::string, Node* &prev); // Last Name or phone numebr
 
 
-	void AddEntry(Node* buffer,int index);// add an entry to linked list.
-	void DeleteNode(Node* prev);// Last Name or phone number
+	void AddEntry(Node* &buffer);// add an entry to linked list.
+	void DeleteNode(Node* current,Node* prev);// Last Name or phone number
 	void EmptyList();
 private:
 	Node* head = nullptr;

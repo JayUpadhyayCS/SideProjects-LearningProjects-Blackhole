@@ -35,7 +35,7 @@ void Record::SaveToFile(std::ofstream& outFile)
 	outFile << std::endl << std::setw(SPACE) << std::left << firstName << std::setw(SPACE) << lastName << std::left << std::setw(SPACE)
 		<< homeAddress.GetStreetNum() << std::setw(SPACE) << std::left << homeAddress.GetStreetName() << std::setw(SPACE) << std::left << homeAddress.GetCityName()
 		<< std::setw(SPACE) << std::left << homeAddress.GetStateName() << std::setw(SPACE) << std::left << homeAddress.GetZipCode() << std::right
-		<< "(" << numPhone.substr(0, 3) << ") " << numPhone.substr(4, 3) << " " << numPhone.substr(6, 4) << std::endl;
+		<< "(" << numPhone.substr(0, 3) << ") " << numPhone.substr(4, 3) << " " << numPhone.substr(6, 4);
 	
 }
 //John Doe 6202 Winnetka Canoga ca 91336

@@ -63,7 +63,7 @@ void InputMenu(AddressBook& recList, int choice)
 				current->GetData().Print();// printing found data
 				if (choice == 4)//if user selected delete
 				{
-					recList.DeleteNode(prev);
+					recList.DeleteNode(current,prev);
 					std::cout << "Completed delete operation" << std::endl;
 				}
 			}
@@ -76,29 +76,18 @@ void InputMenu(AddressBook& recList, int choice)
 void GetEntryInput(AddressBook& recList)
 {
 	std::string fName, lName, buildNum, streetName, cityName, state, zip, phoneNum;
+	
 	int index;
-	do
+	
+	std::cout << "Enter in data format below: \n";
+	printLayout();
+	std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> state >> zip >> phoneNum;
+	strAllLower(fName, lName, streetName, cityName, state);
+	Node * newRecord= new(std::nothrow)Node(Record(fName, lName, buildNum, streetName, cityName, state, zip, phoneNum), nullptr);
+	if (!newRecord)
 	{
-		std::cout << "Enter in data format below: \n";
-		printLayout();
-		std::cin >> fName >> lName >> buildNum >> streetName >> cityName >> state >> zip >> phoneNum;
-		strAllLower(fName, lName, streetName, cityName, state);
-		std::cout << "Enter the index you want to insert it. 1 means at front of list." << std::endl;
-		std::cin >> index;
-		if (index <= 0 || phoneNum.size() != 10)
-		{
-			std::cout << "Error with input. Make sure phone number is 10 digits, and index is a positive nonzero number." << std::endl;
-		}
-	} while (index <= 0 || phoneNum.size() != 10);
-	//Record temp = new (std::nothrow) Record(fName,lName,buildNum,streetName,cityName,phoneNum,day,month,year);
-	Node* temp2 = new (std::nothrow) Node(Record(fName, lName, buildNum, streetName, cityName, state, zip, phoneNum), nullptr);
-	if (!temp2)
-	{
-		std::cout << "Could not allocate memory. Returning to main menu." << std::endl;
+		std::cout << "Error with allocating dynamic memory, returning to main menu." << std::endl;
 		return;
 	}
-
-	//temp2=( temp,nullptr); 
-	//temp2->ptr = nullptr;
-	recList.AddEntry(temp2, index - 1);// sent in index -1 to account for starting at 0.
+	recList.AddEntry(newRecord);// sent in index -1 to account for starting at 0.
 }
