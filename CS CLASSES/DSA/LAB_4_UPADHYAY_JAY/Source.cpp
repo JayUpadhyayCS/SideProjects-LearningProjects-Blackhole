@@ -25,6 +25,10 @@ public:
 	{
 		next = nextTemp;
 	}
+	void SetPrev(Person* prevTemp)
+	{
+		prev = prevTemp;
+	}
 	string GetName() const
 	{
 		return name;
@@ -38,20 +42,7 @@ public:
 		return prev;
 	}
 
-	void Delete()
-	{
-		Person* toDelete;
-		toDelete = this;
-		if (prev != nullptr)
-		{
-			prev->next = next;
-		}
-		if (next != nullptr)
-		{
-			next->prev = prev;
-		}
-		delete toDelete;// god this logic send help'
-	}
+	
 private:
 	string name;
 	Person* next;
@@ -64,6 +55,15 @@ public:
 	~PersonList();
 	void InputPpl(int numPpl);
 	void HotPotato(int numPass, int numPpl);
+	void Delete(Person* & trav)
+	{
+		Person* toDelete = trav;
+		trav->GetPrev()->SetNext(  trav->GetNext());
+		trav->GetNext()->SetPrev(trav->GetPrev());
+		trav = trav->GetNext();
+
+		delete toDelete;// god this logic send help'
+	}
 	void Clear();
 	
 private:
@@ -149,7 +149,7 @@ void PersonList::HotPotato(int numPass, int numPpl)
 			index = 0;
 			
 			cout << numPpl << " players left!" << " Player "<< trav->GetName() << " lost the game!" << endl;
-			trav->Delete();
+			Delete(trav);
 			numPpl--;
 			
 		}
