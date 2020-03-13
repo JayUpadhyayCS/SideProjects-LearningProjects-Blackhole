@@ -58,8 +58,8 @@ public:
 	void Delete(Person* & trav)
 	{
 		Person* toDelete = trav;
-		trav->GetPrev()->SetNext(  trav->GetNext());
-		trav->GetNext()->SetPrev(trav->GetPrev());
+		trav->GetPrev()->SetNext(  trav->GetNext());// go back a node and set the next node, to next of current node
+		trav->GetNext()->SetPrev(trav->GetPrev());// go forward a node and set prev node , to prev of current node.*
 		trav = trav->GetNext();
 
 		delete toDelete;// god this logic send help'
@@ -133,6 +133,7 @@ void PersonList::InputPpl(int numPpl)
 		trav = trav->GetNext();
 	}
 	trav->SetNext( head);// circular linked lsit
+	trav->GetNext()->SetPrev(trav);
 	inFile.close();///// close infile
 }
 void PersonList::HotPotato(int numPass, int numPpl)
@@ -163,10 +164,11 @@ void PersonList::HotPotato(int numPass, int numPpl)
 	cout << trav->GetName() << " has won the game!" << endl;
 }
 void PersonList::Clear() 
-
 {
-	head->GetPrev()->SetNext(nullptr);
-	Person* toDelete=head;
+	if (!head) // head is pointing to nullptr, list is empty already
+		return;
+	head->GetPrev()->SetNext(nullptr);// lets me find end of linked list in next loop
+	Person* toDelete=head;// trailing pointer deleting nodes
 	
 	while (head->GetNext() != nullptr)
 	{
@@ -207,8 +209,6 @@ bool GetInput(int& numPass, int& numPpl)
 			clearCin();
 			numPpl = -2;// get caught in error while loop
 		}
-		else if (numPpl == -1)
-			return false;
 	} while (numPpl < 2);
 	return true;
 }
