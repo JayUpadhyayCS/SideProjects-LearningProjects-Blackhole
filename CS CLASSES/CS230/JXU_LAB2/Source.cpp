@@ -11,7 +11,7 @@ int main()
 	double stockPrices[SIZE];
 	ifstream infile;
 	double total=0;
-	char input;
+	char input = ' ';
 	infile.open("C:\\Temp\\Dow30.txt");
 	if (!infile)
 	{
@@ -31,9 +31,25 @@ int main()
 			exit(-2);
 		}
 	}
-	total = total / DIVISOR;
-	cout << "Dow Jones Industrial Average is " << setprecision(2) << fixed << total << "." << endl;
-	cout << "Calculate new value of average?    Reply 'Y' or 'N'." << endl;
-	//cin << input;
-	//if ()
+	while (input != 'Y' && input != 'N')
+	{
+		total = total / DIVISOR;
+		cout << "Dow Jones Industrial Average is " << setprecision(2) << fixed << total << "." << endl;
+		cout << "Calculate new value of average?    Reply 'Y' or 'N'." << endl;
+		cin >> input;
+		if (input != 'Y' && input != 'N')
+		{
+			cout << "Value " << input << " not valid, try again." << endl;
+		}
+	}
+	if (input == 'N')
+	{
+		cout << "Ending execution." << endl;
+		exit(0);
+	}
+	else// if Y
+	{
+		cout << "Enter a new stock symbol and value" << endl;
+	}
+
 }
