@@ -562,3 +562,6 @@ MigrationBackup/
 /DSA/LAB_4_UPADHYAY_JAY/LAB_4_UPADHYAY_JAY.vcxproj
 /DSA/LAB_4_UPADHYAY_JAY/LAB_4_UPADHYAY_JAY.vcxproj.filters
 /DSA/LAB_4_UPADHYAY_JAY/LAB_4_UPADHYAY_JAY.sln
+*.filters
+*.vcxproj
+*.sln
