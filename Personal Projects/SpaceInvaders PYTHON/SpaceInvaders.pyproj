@@ -22,7 +22,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="aisettings.py" />
+    <Compile Include="Alien.py" />
+    <Compile Include="bullet.py" />
+    <Compile Include="GF.py" />
     <Compile Include="main.py" />
+    <Compile Include="Ship.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
