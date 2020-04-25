@@ -2,4 +2,4 @@
 Intention was to make a game to learn python,pygame, and practice some object oriented code.
 Game runs but is not anything close to finished. 
 Here is a demo. 
-![](/demo.gif)
+![](SideProjects-LearningProjects-Blackhole/Personal Projects/SpaceInvaders PYTHON/demo.gif)
