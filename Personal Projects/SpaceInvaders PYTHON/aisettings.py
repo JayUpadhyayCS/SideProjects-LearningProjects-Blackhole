@@ -16,6 +16,8 @@ class Settings():
         self.bullets_allowed=3
         #Alien settings
         self.alien_speed_factor=1
+        self.fleet_drop_speed=10#how quickly fleet drops y axis
+        self.fleet_direction=1#1 is right, -1 is left
 
 class Ship():
     def __init__(self,screen):
@@ -61,7 +63,7 @@ def update_screen(screen,color,ship,bullets,aliens):
     pygame.display.update()
 
 
-def checkKeyDown(screen,ai_settings,event,ship,bullets):
+def checkKeyDown(screen,ai_settings,event,ship,bullets):#check  which key is pressed and does something relating to key
     if event.type == pygame.KEYDOWN:
             if event.key==pygame.K_RIGHT:
                 ship.right=True
@@ -77,7 +79,7 @@ def checkKeyDown(screen,ai_settings,event,ship,bullets):
             if event.key==pygame.K_q:
                 sys.exit()
 
-def checkKeyUp(event,ship):
+def checkKeyUp(event,ship): #if a key is let go, it stops moving a direction
      if event.type == pygame.KEYUP:
             if event.key==pygame.K_RIGHT:
                 ship.right=False
