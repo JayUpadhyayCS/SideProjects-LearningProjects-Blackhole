@@ -17,7 +17,7 @@ class Settings():
         #Alien settings
         self.alien_speed_factor=1
         self.fleet_drop_speed=10#how quickly fleet drops y axis
-        self.fleet_direction=1#1 is right, -1 is left
+        self.fleet_directions=1#1 is right, -1 is left
 
 
 

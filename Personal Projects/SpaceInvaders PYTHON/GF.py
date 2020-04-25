@@ -1,7 +1,22 @@
 import pygame
+import sys
 from bullet import Bullet
 from Alien import Alien
 
+def game_over(ship,aliens):
+    for alien in aliens.copy():
+        aliens.remove(alien)
+    #ship.remove(ship)
+
+def change_fleet_direction(ai_settings,aliens):
+    for alien in aliens.sprites():
+        alien.rect.y+=ai_settings.fleet_drop_speed
+    ai_settings.fleet_directions*=-1
+def check_fleet_edges(ai_settings,aliens):
+        for alien in aliens.sprites():
+            if alien.check_edges():
+                change_fleet_direction(ai_settings,aliens)
+                break
     
 def check_events(screen,ai_settings,ship,bullets):
     for event in pygame.event.get():
@@ -50,8 +65,10 @@ def checkKeyUp(event,ship): #if a key is let go, it stops moving a direction
                 ship.up=False
             if event.key==pygame.K_DOWN:
                 ship.down=False
-def update_bullets(bullets):
+def update_bullets(bullets,aliens):
     bullets.update()
+    collisions=pygame.sprite.groupcollide(bullets,aliens,True,True)
+    
     for bullet in bullets.copy():
         if bullet.rect.bottom<=0:
             bullets.remove(bullet)
@@ -72,7 +89,8 @@ def get_number_rows(ai_settings,ship_height,alien_height):# find out how many ro
     number_rows=int(available_space_y/(2*alien_height))
     return number_rows
 
-def update_aliens(aliens):
+def update_aliens(ai_settings,aliens):
+    check_fleet_edges(ai_settings,aliens)
     aliens.update()
 
 def create_fleet(ai_settings,screen,ship,aliens):# create rows of aliens

@@ -18,8 +18,13 @@ class Alien(Sprite):
     def blitme(self):#print
         self.screen.blit(self.image,self.rect)
     def update(self):
-        self.x+=self.ai_settings.alien_speed_factor# move alien right
+        self.x+=(self.ai_settings.alien_speed_factor*self.ai_settings.fleet_directions)# move alien right
         self.rect.x=self.x# #update sprite location
+    def check_edges(self):
+        screen_rect=self.screen.get_rect()
+        if self.rect.right >=screen_rect.right or self.rect.left <=screen_rect.left:# if alien sprite is greater than the x axis for screen, or is less than 0, or the start of screen
+            return True
+        return False
 
     
 
